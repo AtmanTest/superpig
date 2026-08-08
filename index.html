@@ -409,8 +409,9 @@
 <div id="login">
   <div class="login-fade"></div>
   <div id="login-langs">
-    <button data-lang="th" class="active">ไทย</button>
+    <button data-lang="fr" class="active">FR</button>
     <button data-lang="en">EN</button>
+    <button data-lang="th">ไทย</button>
   </div>
   <h1 class="login-quote">"One pig, two lives, endless warmth — and every memory stays with you."</h1>
   <div class="app-title">SuperPapapig App</div>
@@ -654,14 +655,46 @@ const TR = {
     footer: "Papapig Intelligence System · Local LM Studio · no private data shared",
     no_data: "no data yet — journal starts tonight 📔", no_meal: "no meal data yet",
     logout: "Log out", close: "Close",
+  },
+  fr: {
+    login_btn: "Entrer", pwd_ph: "entre ton mot de passe ici",
+    app_title: "Papapig AI — La vraie intelligence", tab_joy: "La vie de Tazou", tab_papapig: "La vie de Papapig", tab_tech: "Neural AI Brain",
+    joy_mood_today: "😊 Humeur du jour", joy_energy: "⚡ Énergie", joy_cal: "📅 Calendrier — Humeur · Météo · Repas · Jours fériés",
+    joy_meals: "🍜 Repas détectés", joy_goal: "🎯 Objectif",
+    cal_today: "Aujourd'hui", cal_month: "Mois", cal_week: "Semaine", cal_agenda: "Agenda",
+    p_energy: "⚡ Énergie", p_hunger: "🍗 Faim", p_sleep: "😴 Sommeil",
+    p_birth: "🎂 ANNIVERSAIRE", p_cd: "🎂 1er mois dans", p_cd_msg: "🎂 j'espère qu'elle me fera un gros gâteau",
+    p_persona: "🎭 Personnalité", p_persona_sub: "Papa Pig — par défaut",
+    p_emotion: "💓 Émotion", p_last_meal: "🍽️ Dernier repas",
+    p_crons: "I love my job", p_activity: "📍 Activité récente",
+    tech_title: "🧠 Papapig AI — cerveau & compétences", tech_sub: "IA 100% locale — zéro donnée personnelle en ligne",
+    t1_t: "Moteur d'émotions", t1_d: "plaisir × excitation (Russell) · 27 émotions · miroir d'humeur 70%",
+    t2_t: "Tamagotchi vivant", t2_d: "énergie · faim · sommeil · XP · humeur — évolue en temps réel",
+    t3_t: "Journal automatique", t3_d: "analyse de mots, zéro LLM — local & gratuit",
+    t4_t: "Automatisations", t4_d: "repas · matin · soir · stickers · rappels (cron locaux)",
+    t5_t: "Calendrier intelligent", t5_d: "humeur + météo + repas + jours fériés français (Open-Meteo Paris)",
+    t6_t: "Trilingue", t6_d: "Français · English · ไทย — entièrement traduit",
+    t7_t: "🎨 Design & polices", t7_d: "polices officielles Peppa · design rose cosy",
+    t8_t: "Sécurité", t8_d: "chiffrement AES-256 · zéro donnée privée en ligne · zéro secret dans le site",
+    t9_t: "100% local", t9_d: "l'IA tourne sur une machine locale, zéro cloud",
+    t10_t: "Connecté", t10_d: "WhatsApp + Telegram · stickers générés localement",
+    lock: "🔐 Toutes les conversations sont chiffrées (AES-256)",
+    footer: "Papapig Intelligence System · LM Studio local · aucune donnée privée partagée",
+    no_data: "pas encore de données — le journal commence ce soir 📔", no_meal: "pas encore de repas",
+    logout: "Se déconnecter", close: "Fermer",
   }
 };
-let LANG = "th";
+let LANG = "fr";
 const MOODS = {
+  fr: {1:"horrible 😭", 2:"pas top 😟", 3:"bof 😐", 4:"bien 🙂", 5:"super 😍"},
   th: {1:"แย่มาก 😭", 2:"ไม่ดี 😟", 3:"เฉยๆ 😐", 4:"ดี 🙂", 5:"สุดยอด 😍"},
   en: {1:"awful 😭", 2:"bad 😟", 3:"ok 😐", 4:"good 🙂", 5:"amazing 😍"}
 };
 const EMOMAP = {
+  fr: {joie:"joie 😄", fatigue:"fatigué 😩", stress:"stressé 😮‍💨", tristesse:"triste 😢",
+       amour:"amour 💕", faim:"faim 🍜", neutre:"neutre 😐", amusement:"amusé 🤣",
+       somnolence:"somnolent 😴", nostalgie:"nostalgie 💭", colère:"en colère 😤", peur:"peur 😨",
+       épuisement:"épuisé 😵", anxiété:"anxieux 😰"},
   th: {joie:"ดีใจ 😄", fatigue:"เหนื่อย 😩", stress:"เครียด 😮‍💨", tristesse:"เศร้า 😢",
        amour:"รัก 💕", faim:"หิว 🍜", neutre:"เฉยๆ 😐", amusement:"สนุก 🤣",
        somnolence:"ง่วง 😴", nostalgie:"คิดถึง 💭", colère:"โมโห 😤", peur:"กลัว 😨",
@@ -689,7 +722,24 @@ const TR_EN_TEXT = {
   "grabfood": "GrabFood", "foodpanda": "Foodpanda", "7-11": "7-Eleven", "เซเว่น": "7-Eleven",
   "มอคค่า": "mocha", "ลาเต้": "latte", "วิปครีม": "whipped cream", "นมสด": "milk", "น้ำเปล่า": "water"
 };
-function _tTxt(s) { return LANG === "en" ? (TR_EN_TEXT[s] || s) : s; }
+/* Traductions FR des textes stockés en thaï (goal + activité + repas) */
+const TR_FR_TEXT = {
+  "นอนเร็วขึ้น 💤": "dormir plus tôt 💤", "ผ่อนคลายสักหน่อย 🧘": "décompresser un peu 🧘", "ทำต่อไปแบบนี้ 💪": "continue comme ça 💪",
+  "🏠 กลับถึงบ้าน": "🏠 rentré à la maison", "🏢 ถึงที่ทำงาน": "🏢 arrivé au travail",
+  "🛵 ไปทำงาน": "🛵 parti au travail", "🌙 ราตรีสวัสดิ์": "🌙 bonne nuit", "☀️ อรุณสวัสดิ์": "☀️ bonjour",
+  "กิน": "manger", "ทาน": "manger", "หิว": "faim", "อิ่ม": "rassasié", "ข้าว": "riz", "กับข้าว": "plat",
+  "อาหาร": "nourriture", "ข้าวผัด": "riz sauté", "ก๋วยเตี๋ยว": "nouilles", "ชาบู": "shabu", "บุฟเฟ่ต์": "buffet",
+  "หมูกระทะ": "BBQ de porc", "ไก่": "poulet", "หมู": "porc", "ปลา": "poisson", "กุ้ง": "crevettes", "ไข่": "œuf",
+  "ส้มตำ": "salade de papaye", "ต้มยำ": "tom yum", "แกง": "curry", "สุกี้": "sukiyaki", "เค้ก": "gâteau",
+  "ไอศกรีม": "glace", "กาแฟ": "café", "ชา": "thé", "สมูทตี้": "smoothie", "บะหมี่": "nouilles",
+  "พิซซ่า": "pizza", "เบอร์เกอร์": "burger", "ฟาสต์ฟู้ด": "fast food", "ของกิน": "snacks", "ของหวาน": "dessert",
+  "ขนม": "bonbons", "ผลไม้": "fruits", "แคลอรี่": "calories", "แคลอรี": "calories", "เคลอรี่": "calories",
+  "calories": "calories", "อร่อย": "délicieux", "ไม่อร่อย": "pas bon", "หวาน": "sucré", "เค็ม": "salé",
+  "เผ็ด": "épicé", "ร้าน": "restaurant", "เมนู": "menu", "สั่ง": "commander", "เดลิเวอรี": "livraison",
+  "grabfood": "GrabFood", "foodpanda": "Foodpanda", "7-11": "7-Eleven", "เซเว่น": "7-Eleven",
+  "มอคค่า": "mocha", "ลาเต้": "latte", "วิปครีม": "crème fouettée", "นมสด": "lait", "น้ำเปล่า": "eau"
+};
+function _tTxt(s) { return LANG === "en" ? (TR_EN_TEXT[s] || s) : (LANG === "fr" ? (TR_FR_TEXT[s] || s) : s); }
 
 /* ═════════ État ═════════ */
 let S = null;
@@ -697,7 +747,7 @@ let S = null;
 function t(key) { return TR[LANG][key] || key; }
 function applyLang() {
   document.querySelectorAll("[data-i18n]").forEach(el => el.textContent = t(el.dataset.i18n));
-  document.getElementById("lang-btn").textContent = LANG === "th" ? "EN" : "TH";
+  document.getElementById("lang-btn").textContent = LANG === "fr" ? "EN" : (LANG === "en" ? "ไทย" : "FR");
   document.querySelectorAll("#login-langs button").forEach(b =>
     b.classList.toggle("active", b.dataset.lang === LANG));
   const pwd = document.getElementById("pwd");
@@ -713,7 +763,7 @@ function tryLogin() {
     sessionStorage.setItem("pp_auth", "1");
     showApp();
   } else {
-    document.getElementById("login-err").textContent = LANG === "th" ? "รหัสผิด ❌" : "wrong password ❌";
+    document.getElementById("login-err").textContent = LANG === "th" ? "รหัสผิด ❌" : (LANG === "en" ? "wrong password ❌" : "mot de passe incorrect ❌");
   }
 }
 document.getElementById("login-form").addEventListener("submit", e => { e.preventDefault(); tryLogin(); });
@@ -749,7 +799,7 @@ function switchTab(which) {
 
 /* ═════════ Lang switch ═════════ */
 document.getElementById("lang-btn").addEventListener("click", () => {
-  LANG = LANG === "th" ? "en" : "th";
+  LANG = LANG === "fr" ? "en" : (LANG === "en" ? "th" : "fr");
   applyLang(); if (S) render(S);
 });
 
@@ -800,7 +850,7 @@ function render(s) {
   document.getElementById("p-hunger-bar").style.width = (P.hunger ?? 40) + "%";
   document.getElementById("p-sleep").textContent = P.sleep ?? 60;
   document.getElementById("p-sleep-bar").style.width = (P.sleep ?? 60) + "%";
-  document.getElementById("p-level").textContent = (LANG === "th" ? "เลเวล " : "Lv. ") + (P.level ?? 2);
+  document.getElementById("p-level").textContent = (LANG === "th" ? "เลเวล " : (LANG === "en" ? "Lv. " : "Niv. ")) + (P.level ?? 2);
   document.getElementById("p-xp").textContent = "XP " + (P.xp ?? 120);
   document.getElementById("p-xp-bar").style.width = ((P.xp ?? 120) % 100) + "%";
   const emoHTML = em => {
@@ -810,7 +860,7 @@ function render(s) {
   };
   document.getElementById("p-status").innerHTML = P.emotion ? emoHTML(P.emotion) : "—";
   document.getElementById("p-emotion").innerHTML = P.emotion ? emoHTML(P.emotion) : "—";
-  document.getElementById("p-valence").textContent = (LANG === "th" ? "วาเลนซ์ " : "valence ") + (P.valence >= 0 ? "+" : "") + (P.valence ?? 0).toFixed(2);
+  document.getElementById("p-valence").textContent = (LANG === "th" ? "วาเลนซ์ " : (LANG === "en" ? "valence " : "valence ")) + (P.valence >= 0 ? "+" : "") + (P.valence ?? 0).toFixed(2);
 
   /* Papapig — naissance + compte à rebours 1er mois (avec secondes) */
   const BIRTH_MS = new Date(2026, 7, 7, 20, 47).getTime();
@@ -957,7 +1007,7 @@ function calRenderSkeleton() {
   el.innerHTML = "<div class='cal-skel'>" + "<span></span>".repeat(42) + "</div>";
   const m = ["January","February","March","April","May","June","July","August","September","October","November","December"];
   const ye = document.getElementById("cal-year");
-  if (ye) ye.textContent = (LANG === "th" ? ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"] : m)[CAL.month] + " " + CAL.year;
+  if (ye) ye.textContent = (LANG === "th" ? ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"] : (LANG === "en" ? m : ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"]))[CAL.month] + " " + CAL.year;
 }
 function calRender() {
   if (CAL.view === "week") return calRenderWeek();
@@ -965,12 +1015,15 @@ function calRender() {
   const el = document.getElementById("j-cal");
   if (!el) return;
   document.querySelectorAll(".cal-v").forEach(b => b.classList.toggle("active", b.dataset.v === "month"));
-  const labels = LANG === "th" ? ["จ","อ","พ","พฤ","ศ","ส","อา"] : ["M","T","W","T","F","S","S"];
+  const labels = LANG === "th" ? ["จ","อ","พ","พฤ","ศ","ส","อา"] : (LANG === "en" ? ["M","T","W","T","F","S","S"] : ["L","M","M","J","V","S","D"]);
   const months = LANG === "th"
     ? ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน",
        "กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"]
-    : ["January","February","March","April","May","June",
-       "July","August","September","October","November","December"];
+    : LANG === "en"
+    ? ["January","February","March","April","May","June",
+       "July","August","September","October","November","December"]
+    : ["Janvier","Février","Mars","Avril","Mai","Juin",
+       "Juillet","Août","Septembre","Octobre","Novembre","Décembre"];
   const ye = document.getElementById("cal-year");
   if (ye) ye.textContent = months[CAL.month] + " " + CAL.year;
   const first = new Date(CAL.year, CAL.month, 1);
@@ -1000,7 +1053,7 @@ function calRender() {
       "</span>" : "";
     const wico = hasWeather && !mood ? "<span class='w'>" + (w.pop >= 40 ? "🌧️" : (w.pop >= 15 ? "⛅" : "☀️")) + "</span>" : "";
     const holDot = hol(ds) ? "<span class='hol'></span>" : "";
-    const badge = isSun ? "<span class='sunb'>" + (LANG === "th" ? "วันพักผ่อน 🌿" : "Rest 🌿") + "</span>" : "";
+    const badge = isSun ? "<span class='sunb'>" + (LANG === "th" ? "วันพักผ่อน 🌿" : (LANG === "en" ? "Rest 🌿" : "Repos 🌿")) + "</span>" : "";
     const ari = "aria-label='" + ds + (evs.length ? " " + evs.length + " events" : "") + "'";
     return "<td><div class='d " + cls + "' tabindex='0' " + ari + " data-ds='" + ds + "'>" + num +
       (dots || wico || holDot || badge ? "<span style='display:flex;flex-direction:column;align-items:center;gap:1px'>" + badge + dots + wico + holDot + "</span>" : "") +
@@ -1041,7 +1094,7 @@ function calRenderWeek() {
   const el = document.getElementById("j-cal");
   if (!el) return;
   document.querySelectorAll(".cal-v").forEach(b => b.classList.toggle("active", b.dataset.v === "week"));
-  const labels = LANG === "th" ? ["จ","อ","พ","พฤ","ศ","ส","อา"] : ["M","T","W","T","F","S","S"];
+  const labels = LANG === "th" ? ["จ","อ","พ","พฤ","ศ","ส","อา"] : (LANG === "en" ? ["M","T","W","T","F","S","S"] : ["L","M","M","J","V","S","D"]);
   const base = CAL.sel ? new Date(CAL.sel) : new Date();
   const dow = (base.getDay() + 6) % 7;
   const monday = new Date(base); monday.setDate(base.getDate() - dow);
@@ -1074,11 +1127,11 @@ function calRenderAgenda() {
   if (!el) return;
   document.querySelectorAll(".cal-v").forEach(b => b.classList.toggle("active", b.dataset.v === "agenda"));
   const ye = document.getElementById("cal-year");
-  ye.textContent = LANG === "th" ? "รายการนัดหมาย" : "Agenda";
+  ye.textContent = LANG === "th" ? "รายการนัดหมาย" : (LANG === "en" ? "Agenda" : "Agenda");
   const days = [...new Set(CAL.events.map(e => e.date))].sort();
   if (!days.length) {
     el.innerHTML = "<div style='text-align:center;color:#b9b2bc;font-size:13px;padding:22px'>" +
-      (LANG === "th" ? "ไม่มีนัดหมาย" : "no events") + "</div>";
+      (LANG === "th" ? "ไม่มีนัดหมาย" : (LANG === "en" ? "no events" : "aucun événement")) + "</div>";
     return;
   }
   let html = "<div class='cal-agenda'>";
@@ -1105,6 +1158,7 @@ function calOpenDay(ds) {
   const mealsDay = (S.joy.meals || []).filter(x => x.date === ds);
   const hol = (S.holidays || {})[ds];
   const T = LANG === "th";
+  const L = (th, en, fr) => LANG === "th" ? th : (LANG === "en" ? en : fr);
   let h = "";
 
   const sec = (label, rows) => { if (!rows) return ""; return "<div class='sec'><div class='sec-t'>" + label + "</div>" + rows + "</div>"; };
@@ -1112,35 +1166,35 @@ function calOpenDay(ds) {
 
   /* Dimanche = jour de congé (toujours affiché en premier) */
   if (new Date(ds).getDay() === 0) {
-    h += sec(T ? "วันหยุด" : "Rest day", row("🌿", T ? "วันพักผ่อน" : "Rest day", T ? "วันอาทิตย์ พักผ่อนสบายๆ" : "Sunday — relax"));
+    h += sec(L("วันหยุด", "Rest day", "Jour de repos"), row("🌿", L("วันพักผ่อน", "Rest day", "Jour de repos"), L("วันอาทิตย์ พักผ่อนสบายๆ", "Sunday — relax", "Dimanche — détente")));
   }
 
   /* Mood (vraie donnée) */
   if (m && m.mood) {
     const em = ["😭","😟","😐","🙂","😍"][m.mood - 1];
-    h += sec(T ? "อารมณ์" : "Mood", row(em, MOODS[LANG][m.mood], m.note || (T ? "อารมณ์ประจำวัน" : "daily mood")));
+    h += sec(L("อารมณ์", "Mood", "Humeur"), row(em, MOODS[LANG][m.mood], m.note || L("อารมณ์ประจำวัน", "daily mood", "humeur du jour")));
   }
   /* Repas (vraie donnée) */
   if (mealsDay.length) {
-    h += sec(T ? "อาหาร" : "Meals", mealsDay.map(x =>
-      row(x.emoji || "🍽️", x.word || (T ? "อาหาร" : "meal"), (T ? "กิน" : "ate") + " · " + x.at)).join(""));
+    h += sec(L("อาหาร", "Meals", "Repas"), mealsDay.map(x =>
+      row(x.emoji || "🍽️", x.word || L("อาหาร", "meal", "repas"), L("กิน", "ate", "mangé") + " · " + x.at)).join(""));
   }
   /* Météo (vraie donnée) */
   if (w && w.tmax !== undefined && w.tmax !== null) {
     const rain = w.pop >= 40 ? "🌧️" : (w.pop >= 15 ? "⛅" : "☀️");
-    h += sec(T ? "อากาศ" : "Weather", row(rain, w.tmax + "° / " + w.tmin + "°", (T ? "สภาพอากาศกรุงเทพ" : "Bangkok weather") + " · ☔ " + w.pop + "%"));
+    h += sec(L("อากาศ", "Weather", "Météo"), row(rain, w.tmax + "° / " + w.tmin + "°", L("สภาพอากาศกรุงเทพ", "Bangkok weather", "Météo à Paris") + " · ☔ " + w.pop + "%"));
   }
-  /* Fête thaïlandaise (vraie donnée) */
+  /* Jour férié (vraie donnée) */
   if (hol) {
-    h += sec(T ? "วันสำคัญ" : "Thai holiday", row("🎉", hol[LANG], T ? "วันหยุดและเทศกาล" : "holiday & festival"));
+    h += sec(L("วันสำคัญ", "Public holiday", "Jour férié"), row("🎉", hol[LANG] || hol.fr, L("วันหยุดและเทศกาล", "holiday & festival", "férié & fête")));
   }
   /* Événements réels (Supabase) */
   if (evs.length) {
-    h += sec(T ? "กิจกรรม" : "Events", evs.map(e =>
+    h += sec(L("กิจกรรม", "Events", "Événements"), evs.map(e =>
       row(catIcon(e.category), e.title + (e.created_via === "telegram" ? " ✈️" : ""),
         catName(e.category, LANG) + (e.start_time ? " · " + e.start_time + (e.end_time ? "–" + e.end_time : "") : ""))).join(""));
   }
-  body.innerHTML = h || "<div class='cal-ev-empty'>" + (T ? "ไม่มีข้อมูลวันนี้" : "no data this day") + "</div>";
+  body.innerHTML = h || "<div class='cal-ev-empty'>" + L("ไม่มีข้อมูลวันนี้", "no data this day", "aucune donnée ce jour") + "</div>";
   _calPanel.classList.add("open");
   _calOverlay.classList.add("open");
 }
@@ -1160,22 +1214,22 @@ function openDay(ds) {
   if (m && m.mood) {
     const em = ["😭","😟","😐","🙂","😍"][m.mood - 1];
     body += "<div class='mrow'><div class='ico'>" + em + "</div><div><div class='lb'>" +
-      (LANG === "th" ? "อารมณ์" : "MOOD") + "</div><div class='vl'>" + MOODS[LANG][m.mood] +
+      (LANG === "th" ? "อารมณ์" : (LANG === "en" ? "MOOD" : "HUMEUR")) + "</div><div class='vl'>" + MOODS[LANG][m.mood] +
       (m.note ? "<br><span style='font-size:12px;color:#8a8590;font-weight:400'>" + m.note + "</span>" : "") +
       "</div></div></div>";
   }
   /* Repas */
   if (mealsDay.length) {
     body += "<div class='mrow'><div class='ico'>🍜</div><div><div class='lb'>" +
-      (LANG === "th" ? "กิน" : "MEALS") + "</div><div class='vl'>" +
+      (LANG === "th" ? "กิน" : (LANG === "en" ? "MEALS" : "REPAS")) + "</div><div class='vl'>" +
       mealsDay.map(x => x.emoji + " " + (x.word || "") + " <span style='font-size:11px;color:#8a8590'>" + x.at + "</span>").join(" · ") +
       "</div></div></div>";
   }
   /* Météo */
   if (w && w.tmax !== undefined && w.tmax !== null) {
-    const rain = w.pop >= 40 ? "🌧️ " + (LANG === "th" ? "ฝน" : "rain") : (w.pop >= 15 ? "⛅" : "☀️");
+    const rain = w.pop >= 40 ? "🌧️ " + (LANG === "th" ? "ฝน" : (LANG === "en" ? "rain" : "pluie")) : (w.pop >= 15 ? "⛅" : "☀️");
     body += "<div class='mrow'><div class='ico'><span class='wico'>" + rain + "</span></div><div><div class='lb'>" +
-      (LANG === "th" ? "สภาพอากาศกรุงเทพ" : "BANGKOK WEATHER") + "</div><div class='vl'>" +
+      (LANG === "th" ? "สภาพอากาศกรุงเทพ" : (LANG === "en" ? "BANGKOK WEATHER" : "MÉTÉO PARIS")) + "</div><div class='vl'>" +
       w.tmax + "° / " + w.tmin + "° <span style='font-size:12px;color:#8a8590'>· ☔ " + w.pop + "%</span>" +
       "</div></div></div>";
   }
@@ -1183,12 +1237,12 @@ function openDay(ds) {
   const hol = (S.holidays || {})[ds];
   if (hol) {
     body += "<div class='mrow'><div class='ico'>🎉</div><div><div class='lb'>" +
-      (LANG === "th" ? "วันสำคัญ" : "THAI HOLIDAY") + "</div><div class='vl'>" + hol[LANG] +
+      (LANG === "th" ? "วันสำคัญ" : (LANG === "en" ? "PUBLIC HOLIDAY" : "JOUR FÉRIÉ")) + "</div><div class='vl'>" + (hol[LANG] || hol.fr) +
       "</div></div></div>";
   }
   /* Aucune donnée */
   if (!body) body = "<div class='mrow'><div class='ico'>🕳️</div><div><div class='vl'>" +
-    (LANG === "th" ? "ไม่มีข้อมูลวันนี้" : "no data for this day") + "</div></div></div>";
+    (LANG === "th" ? "ไม่มีข้อมูลวันนี้" : (LANG === "en" ? "no data for this day" : "aucune donnée pour ce jour")) + "</div></div></div>";
 
   document.getElementById("m-body").innerHTML = body;
   document.getElementById("modal").classList.add("open");

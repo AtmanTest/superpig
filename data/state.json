@@ -1,10 +1,23 @@
 {
-  "generated_at": "2026-08-08 09:30 Bangkok",
+  "generated_at": "2026-08-08 09:35 Paris",
   "joy": {
     "mood_today": null,
     "mood_note": "",
     "moods": [],
-    "meals": [],
+    "meals": [
+      {
+        "emoji": "🍽️",
+        "at": "11:23",
+        "date": "2026-08-08",
+        "word": "repas"
+      },
+      {
+        "emoji": "🍽️",
+        "at": "10:50",
+        "date": "2026-08-08",
+        "word": "manger"
+      }
+    ],
     "energy": 70,
     "goal": "",
     "streak": 0
@@ -12,284 +25,215 @@
   "papapig": {
     "persona": "papapig",
     "energy": 85,
-    "hunger": 40,
+    "hunger": 9,
     "sleep": 60,
     "xp": 120,
     "level": 2,
     "valence": 0.3,
     "activation": 0.5,
     "emotion": "joie",
-    "last_meal_emoji": null,
-    "last_meal_at": null,
+    "last_meal_emoji": "🍽️",
+    "last_meal_at": "11:23",
     "crons": [],
     "activity": []
   },
   "holidays": {
     "2026-01-01": {
-      "th": "วันขึ้นปีใหม่",
-      "en": "New Year's Day"
-    },
-    "2026-01-10": {
-      "th": "วันเด็กแห่งชาติ",
-      "en": "National Children's Day"
-    },
-    "2026-01-16": {
-      "th": "วันครู",
-      "en": "Teachers' Day"
-    },
-    "2026-02-14": {
-      "th": "วันวาเลนไทน์",
-      "en": "Valentine's Day"
-    },
-    "2026-02-17": {
-      "th": "วันตรุษจีน",
-      "en": "Chinese New Year"
-    },
-    "2026-03-03": {
-      "th": "วันมาฆบูชา",
-      "en": "Makha Bucha Day"
-    },
-    "2026-03-08": {
-      "th": "วันสตรีสากล",
-      "en": "International Women's Day"
+      "fr": "Jour de l'an",
+      "en": "New Year's Day",
+      "th": "วันขึ้นปีใหม่"
     },
     "2026-04-06": {
-      "th": "วันจักรี",
-      "en": "Chakri Day"
-    },
-    "2026-04-13": {
-      "th": "วันสงกรานต์",
-      "en": "Songkran Day 1"
-    },
-    "2026-04-14": {
-      "th": "วันสงกรานต์",
-      "en": "Songkran Day 2"
-    },
-    "2026-04-15": {
-      "th": "วันสงกรานต์",
-      "en": "Songkran Day 3"
+      "fr": "Lundi de Pâques",
+      "en": "Easter Monday",
+      "th": "วันจันทร์อีสเตอร์"
     },
     "2026-05-01": {
-      "th": "วันแรงงาน",
-      "en": "Labour Day"
+      "fr": "Fête du Travail",
+      "en": "Labour Day",
+      "th": "วันแรงงาน"
     },
-    "2026-05-04": {
-      "th": "วันฉัตรมงคล",
-      "en": "Coronation Day"
+    "2026-05-08": {
+      "fr": "Victoire 1945",
+      "en": "Victory Day 1945",
+      "th": "วันชัยชนะ 2488"
     },
-    "2026-05-31": {
-      "th": "วันวิสาขบูชา",
-      "en": "Visakha Bucha Day"
+    "2026-05-14": {
+      "fr": "Ascension",
+      "en": "Ascension Day",
+      "th": "วันเสด็จขึ้นสวรรค์"
     },
-    "2026-06-03": {
-      "th": "วันเฉลิมพระชนมพรรษาสมเด็จพระนางเจ้าสุทิดา",
-      "en": "Queen Suthida's Birthday"
+    "2026-05-25": {
+      "fr": "Lundi de Pentecôte",
+      "en": "Whit Monday",
+      "th": "วันจันทร์เพนเทคอสต์"
     },
-    "2026-07-28": {
-      "th": "วันเฉลิมพระชนมพรรษา ร.10",
-      "en": "King's Birthday"
+    "2026-07-14": {
+      "fr": "Fête nationale",
+      "en": "Bastille Day",
+      "th": "วันบาสตีย์"
     },
-    "2026-07-29": {
-      "th": "วันอาสาฬหบูชา",
-      "en": "Asalha Bucha Day"
+    "2026-08-15": {
+      "fr": "Assomption",
+      "en": "Assumption Day",
+      "th": "วันแม่พระรับเกียรติยกขึ้นสวรรค์"
     },
-    "2026-07-30": {
-      "th": "วันเข้าพรรษา",
-      "en": "Khao Phansa (Buddhist Lent)"
+    "2026-11-01": {
+      "fr": "Toussaint",
+      "en": "All Saints' Day",
+      "th": "วันนักบุญทั้งหลาย"
     },
-    "2026-08-07": {
-      "th": "🎂 วันเกิด Papapig AI",
-      "en": "🎂 Papapig AI's Birthday"
-    },
-    "2026-08-12": {
-      "th": "วันแม่",
-      "en": "Mother's Day"
-    },
-    "2026-10-13": {
-      "th": "วันคล้ายวันสวรรคต ร.9",
-      "en": "King Bhumibol Memorial Day"
-    },
-    "2026-10-16": {
-      "th": "วันหยุดพิเศษ IMF-World Bank",
-      "en": "Special Holiday (IMF-World Bank, BKK)"
-    },
-    "2026-10-23": {
-      "th": "วันปิยมหาราช",
-      "en": "Chulalongkorn Day"
-    },
-    "2026-10-27": {
-      "th": "วันออกพรรษา",
-      "en": "Ok Phansa (End of Buddhist Lent)"
-    },
-    "2026-11-24": {
-      "th": "วันลอยกระทง · ยี่เป็ง",
-      "en": "Loy Krathong · Yi Peng Festival"
-    },
-    "2026-12-05": {
-      "th": "วันพ่อ",
-      "en": "Father's Day"
-    },
-    "2026-12-07": {
-      "th": "วันพ่อ (วันหยุดชดเชย)",
-      "en": "Father's Day (substitute)"
-    },
-    "2026-12-10": {
-      "th": "วันรัฐธรรมนูญ",
-      "en": "Constitution Day"
-    },
-    "2026-12-24": {
-      "th": "วันคริสต์มาสอีฟ",
-      "en": "Christmas Eve"
+    "2026-11-11": {
+      "fr": "Armistice 1918",
+      "en": "Armistice Day",
+      "th": "วันสงบศึก 2461"
     },
     "2026-12-25": {
-      "th": "วันคริสต์มาส",
-      "en": "Christmas Day"
-    },
-    "2026-12-31": {
-      "th": "วันสิ้นปี",
-      "en": "New Year's Eve"
+      "fr": "Noël",
+      "en": "Christmas Day",
+      "th": "วันคริสต์มาส"
     }
   },
   "weather": {
     "2026-07-25": {
-      "tmax": 35.8,
-      "tmin": 26.3,
-      "pop": 99
+      "tmax": 29.6,
+      "tmin": 18.1,
+      "pop": 0
     },
     "2026-07-26": {
-      "tmax": 33.8,
-      "tmin": 26.0,
-      "pop": 80
+      "tmax": 25.9,
+      "tmin": 16.5,
+      "pop": 13
     },
     "2026-07-27": {
-      "tmax": 34.3,
-      "tmin": 25.4,
-      "pop": 100
+      "tmax": 27.0,
+      "tmin": 16.2,
+      "pop": 0
     },
     "2026-07-28": {
-      "tmax": 31.1,
-      "tmin": 25.8,
-      "pop": 75
+      "tmax": 32.0,
+      "tmin": 18.0,
+      "pop": 0
     },
     "2026-07-29": {
-      "tmax": 32.4,
-      "tmin": 25.6,
-      "pop": 98
+      "tmax": 38.1,
+      "tmin": 20.5,
+      "pop": 0
     },
     "2026-07-30": {
-      "tmax": 31.3,
-      "tmin": 25.2,
-      "pop": 100
+      "tmax": 31.0,
+      "tmin": 21.1,
+      "pop": 55
     },
     "2026-07-31": {
-      "tmax": 30.7,
-      "tmin": 24.2,
-      "pop": 100
+      "tmax": 29.1,
+      "tmin": 19.4,
+      "pop": 3
     },
     "2026-08-01": {
-      "tmax": 32.8,
-      "tmin": 25.0,
-      "pop": 99
+      "tmax": 28.6,
+      "tmin": 18.1,
+      "pop": 0
     },
     "2026-08-02": {
-      "tmax": 33.3,
-      "tmin": 25.8,
-      "pop": 97
+      "tmax": 32.4,
+      "tmin": 17.3,
+      "pop": 0
     },
     "2026-08-03": {
-      "tmax": 33.0,
-      "tmin": 25.7,
-      "pop": 79
+      "tmax": 35.7,
+      "tmin": 22.4,
+      "pop": 43
     },
     "2026-08-04": {
-      "tmax": 32.7,
-      "tmin": 26.4,
-      "pop": 100
+      "tmax": 32.4,
+      "tmin": 23.4,
+      "pop": 15
     },
     "2026-08-05": {
-      "tmax": 32.1,
-      "tmin": 25.7,
-      "pop": 98
+      "tmax": 28.3,
+      "tmin": 20.3,
+      "pop": 0
     },
     "2026-08-06": {
-      "tmax": 31.4,
-      "tmin": 26.7,
-      "pop": 92
+      "tmax": 25.9,
+      "tmin": 17.9,
+      "pop": 3
     },
     "2026-08-07": {
-      "tmax": 30.8,
-      "tmin": 26.9,
-      "pop": 100
+      "tmax": 26.8,
+      "tmin": 14.6,
+      "pop": 0
     },
     "2026-08-08": {
-      "tmax": 30.9,
-      "tmin": 27.1,
-      "pop": 100
+      "tmax": 31.0,
+      "tmin": 16.7,
+      "pop": 0
     },
     "2026-08-09": {
-      "tmax": 30.8,
-      "tmin": 26.7,
-      "pop": 96
+      "tmax": 34.5,
+      "tmin": 21.1,
+      "pop": 5
     },
     "2026-08-10": {
-      "tmax": 30.2,
-      "tmin": 26.2,
-      "pop": 83
+      "tmax": 32.8,
+      "tmin": 19.8,
+      "pop": 0
     },
     "2026-08-11": {
-      "tmax": 31.7,
-      "tmin": 26.6,
-      "pop": 71
+      "tmax": 33.7,
+      "tmin": 18.5,
+      "pop": 3
     },
     "2026-08-12": {
-      "tmax": 29.1,
-      "tmin": 25.6,
-      "pop": 84
+      "tmax": 37.0,
+      "tmin": 20.9,
+      "pop": 1
     },
     "2026-08-13": {
-      "tmax": 31.3,
-      "tmin": 25.1,
-      "pop": 94
+      "tmax": 37.5,
+      "tmin": 24.0,
+      "pop": 0
     },
     "2026-08-14": {
-      "tmax": 29.0,
-      "tmin": 25.8,
-      "pop": 86
+      "tmax": 38.5,
+      "tmin": 23.1,
+      "pop": 11
     },
     "2026-08-15": {
-      "tmax": 29.2,
+      "tmax": 36.4,
       "tmin": 26.1,
-      "pop": 87
+      "pop": 20
     },
     "2026-08-16": {
-      "tmax": 30.3,
-      "tmin": 26.3,
-      "pop": 87
+      "tmax": 26.7,
+      "tmin": 21.5,
+      "pop": 22
     },
     "2026-08-17": {
-      "tmax": 31.8,
-      "tmin": 26.1,
-      "pop": 80
+      "tmax": 24.1,
+      "tmin": 17.7,
+      "pop": 22
     },
     "2026-08-18": {
-      "tmax": 31.2,
-      "tmin": 26.1,
-      "pop": 67
+      "tmax": 24.9,
+      "tmin": 15.6,
+      "pop": 12
     },
     "2026-08-19": {
-      "tmax": 28.6,
-      "tmin": 26.1,
-      "pop": 69
+      "tmax": 23.6,
+      "tmin": 19.7,
+      "pop": 20
     },
     "2026-08-20": {
-      "tmax": 28.5,
-      "tmin": 25.8,
-      "pop": 88
+      "tmax": 24.6,
+      "tmin": 18.1,
+      "pop": 17
     },
     "2026-08-21": {
-      "tmax": 31.6,
-      "tmin": 25.4,
-      "pop": 90
+      "tmax": 24.5,
+      "tmin": 17.0,
+      "pop": 10
     }
   }
 }
