@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#ff6b9d">
+<title>Papapig 🐷</title>
+<link rel="icon" type="image/jpeg" href="images/peppa-ai.jpg">
+<link rel="apple-touch-icon" href="images/peppa-ai.jpg">
+<style>
+  :root {
+    --pink: #ff6b9d; --teal: #2ec4b6; --cream: #fff8f0; --dark: #2d2a32;
+    --card: #ffffff; --soft: #fdf0f4; --line: #ffe3ec;
+  }
+  @font-face { font-family:"PeppaBold"; src:url('fonts/PeppaBold.woff2') format('woff2'); font-display:swap; }
+  @font-face { font-family:"ButteredToast"; src:url('fonts/ButteredToast.woff2') format('woff2'); font-display:swap; }
+  @font-face { font-family:"PeppaRegular"; src:url('fonts/PeppaRegular.woff2') format('woff2'); font-display:swap; }
+  h1, h2, h3, .login h1 { font-family:"ButteredToast", "PeppaBold", -apple-system, sans-serif; }
+  .sub, .time, .chip, .cal td, .mood-line, .list span, .list .time { font-family:"PeppaRegular", -apple-system, sans-serif; }
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { overflow-x: hidden; }
+  body {
+    font-family: -apple-system, "SF Pro Thai", "Noto Sans Thai", sans-serif;
+    background: var(--cream); color: var(--dark); min-height: 100vh;
+    padding-top: env(safe-area-inset-top);
+  }
+  .hidden { display:none !important; }
+
+  /* ── LOGIN ── */
+  #login {
+    min-height: 100vh; display:flex; flex-direction:column; align-items:center;
+    justify-content:center; gap: 20px;
+    background: linear-gradient(135deg, rgba(255,143,182,.62), rgba(94,217,200,.62)), url('images/peppa-family.jpg') center/cover no-repeat;
+    padding: 30px; position:relative; overflow:hidden;
+  }
+  .login-fade { position:absolute; inset:0; background:rgba(255,255,255,.12);
+                backdrop-filter: blur(2.5px); -webkit-backdrop-filter: blur(2.5px);
+                z-index:0; pointer-events:none; }
+  #login-langs { position:absolute; top:-10px; right:14px; z-index:2; display:flex; align-items:center; gap:6px; }
+  #login-langs button { border:1px solid rgba(255,255,255,.35); background:rgba(255,255,255,.15);
+    color:#fff; font-weight:700; padding:8px 14px; border-radius:999px; cursor:pointer;
+    font-size:14px; letter-spacing:.5px;
+    -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+    transition: transform .15s; }
+  #login-langs button.active { background:rgba(255,107,157,.6); border-color:rgba(255,255,255,.65);
+    color:#fff; font-weight:900; }
+  #login-langs button:active { transform: scale(.94); }
+  .pig-uke-wrap { position:relative; z-index:1; animation: bounce 2.2s infinite; }
+  .pig-uke { width:min(38vw, 190px); display:block; border-radius:50%; opacity:.7;
+             transform: translate(var(--mx,0px), var(--my,0px));
+             -webkit-filter: drop-shadow(0 6px 18px rgba(0,0,0,.25));
+             filter: drop-shadow(0 6px 18px rgba(0,0,0,.25));
+             box-shadow: 0 0 13px rgba(255,107,157,.5), 0 0 30px rgba(255,107,157,.28),
+                         0 0 60px rgba(124,92,255,.38); }
+  /* Témoignages flottants autour du cochon — sans cadres, texte pur */
+  .testi { position:absolute; top:50%; transform:translateY(-50%); width:96px;
+    color:#fff; font-size:10.5px; font-weight:600; line-height:1.35; text-align:center;
+    text-shadow:0 1px 4px rgba(0,0,0,.4); pointer-events:none; z-index:2; }
+  .testi-left { left:-104px; }
+  .testi-right { right:-104px; }
+  @media (max-width:430px) {
+    .testi { width:88px; font-size:9.5px; }
+    .testi-left { left:-96px; }
+    .testi-right { right:-96px; }
+  }
+  #login > *:not(.login-fade) { position:relative; z-index:1; }
+  #login .pig { font-size: 84px; animation: bounce 2.2s infinite; }
+  @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
+  #login h1.login-quote { color:#fff; font-size:19.8px; font-weight:800; padding:0 18px;
+    text-align:center; line-height:1.3; text-shadow: 0 2px 12px rgba(0,0,0,.3);
+    margin-top:-22px; }
+  /* Titre du site — rose 3D cartoon */
+  #login .app-title {
+    font-family: 'PeppaBold', 'ButteredToast', sans-serif;
+    font-size: clamp(31px, 7.2vw, 47px); font-weight: 900; letter-spacing: 1.5px;
+    color: #ff9ec2; line-height: 1.15; text-align: center; padding: 0 14px;
+    text-shadow:
+      0 2px 0 #f276a5, 0 4px 0 #e05f92, 0 6px 0 #cf4f82,
+      0 8px 0 #b83d6e, 0 10px 0 #9e2f5c,
+      0 12px 16px rgba(90,15,45,.55), 0 16px 30px rgba(0,0,0,.4);
+  }
+  #login p { color: rgba(255,255,255,.9); font-size: 13px; text-align:center; }
+  #login form { display:flex; flex-direction:column; gap:12px; width: 100%; max-width: 300px; margin-top:24px; }
+  /* Siri Glow aurora — champ mot de passe (aura au bord uniquement, intérieur intact) */
+  @property --siri-ang { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+  .siri-glow { position:relative; border-radius:999px; padding:2px; overflow:hidden;
+    box-shadow: 0 0 14px rgba(56,217,255,.28), 0 0 30px rgba(168,85,247,.18), 0 0 46px rgba(236,77,206,.12); }
+  .siri-glow-bg { position:absolute; inset:0; z-index:0;
+    background: conic-gradient(from var(--siri-ang),
+      #38D9FF, #5B8CFF, #6D5CFF, #A855F7, #EC4DCE, #FF5C70, #FFB84D, #38D9FF);
+    animation: siri-spin 5s linear infinite; }
+  @keyframes siri-spin { to { --siri-ang: 360deg; } }
+  .siri-glow input { position:relative; z-index:1; width:100%; border:none;
+    padding: 14px 18px; border-radius: 999px;
+    font-size: 16px;
+    text-align:center; outline:none; background: #ffe3ec; color: #5a3345;
+    caret-color: #ff6b9d; box-shadow: inset 0 2px 6px rgba(255,107,157,.18);
+  }
+  #login input::placeholder { color: #c48ba2; }
+  #login form button {
+    padding: 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,.55);
+    font-size: 16px;
+    font-weight: 800; background: var(--pink); color: #fff; cursor: pointer;
+    box-shadow: 0 4px 16px rgba(255,107,157,.45);
+  }
+  #login form button:active { transform: scale(.97); }
+  #login .err { color:#ffe066; font-size:12px; text-align:center; min-height:16px; }
+
+  /* Vitrine tech sous le bouton Enter */
+  .tech-showcase { width:100%; max-width:760px; margin:6px auto 0; padding:18px 16px 46px; text-align:center; }
+  .tech-showcase h2 { color:#fff; font-size:22px; font-weight:900; margin:0 0 4px;
+    text-shadow: 0 2px 10px rgba(0,0,0,.35); }
+  #login .tech-showcase .tech-sub { color:#fff; font-size:13px; font-weight:600; margin:0 0 16px; text-align:center;
+    text-shadow:0 1px 4px rgba(0,0,0,.3); }
+  .tech-showcase .tech-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(225px,1fr)); gap:10px; text-align:left; }
+  .tcard { display:flex; gap:10px; align-items:flex-start; background:rgba(255,255,255,.22);
+    border:1px solid rgba(255,255,255,.28); border-radius:16px; padding:12px 14px;
+    -webkit-backdrop-filter:blur(4px); backdrop-filter:blur(4px);
+    box-shadow:0 4px 14px rgba(0,0,0,.12); }
+  .tcard .t-ico { font-size:26px; line-height:1.15; flex:none; }
+  .tcard b { color:#fff; font-size:14px; font-weight:800; display:block; margin-bottom:2px;
+    text-shadow:0 1px 4px rgba(0,0,0,.3); }
+  #login .tcard p { color:#fff; font-size:12px; font-weight:500; line-height:1.45; margin:0; text-align:left;
+    text-shadow:0 1px 3px rgba(0,0,0,.25); }
+
+  /* ── APP ── */
+  header {
+    background: linear-gradient(135deg, var(--pink), var(--teal));
+    color:#fff; padding: 0 0 0; text-align:center;
+  }
+  .banner { position:relative; width:100%; height:170px; overflow:visible; }
+  .banner img.bg { width:100%; height:100%; object-fit:cover; object-position:72% 25%; display:block; }
+  .banner .logo {
+    position:absolute; left:8px; top:0; z-index:1;
+    width:min(286px, 40vw); height:auto; aspect-ratio:477/460;
+    border-radius:50%; overflow:hidden; display:block;
+    mix-blend-mode:screen;
+    border:2px solid rgba(255,110,160,.65);
+    box-shadow: 0 0 22px rgba(255,107,157,.85), 0 0 55px rgba(255,107,157,.45), inset 0 0 16px rgba(255,107,157,.4);
+  }
+  @media (min-width: 600px) { .banner { height: 230px; } .banner .logo { width:286px; } }
+  .banner .top {
+    position:absolute; left:0; right:0; top:2px; z-index:2;
+    display:flex; justify-content:center; align-items:center; pointer-events:none;
+  }
+  .banner h1 {
+    font-size: clamp(18px, 5vw, 34px); font-weight: 900; letter-spacing:.3px; padding: 4px 14px;
+    background: transparent; text-shadow: 0 2px 10px rgba(0,0,0,.45), 0 1px 2px rgba(255,255,255,.35);
+    white-space:nowrap;
+  }
+  header .actions { position:relative; z-index:2; display:flex; justify-content:flex-end; gap:8px;
+                    padding: 4px 12px 2px; }
+  .btn {
+    border: 1px solid rgba(255,255,255,.35); background: rgba(255,255,255,.15); color:#fff; font-weight:700;
+    padding: 10px 16px; border-radius: 999px; cursor:pointer; font-size: 14px;
+    -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+    transition: transform .15s;
+  }
+  .btn:active { transform: scale(.92); }
+  #logout-btn { background: rgba(255,255,255,.38); border-color: rgba(255,255,255,.65); }
+  .btn:hover { background: rgba(255,255,255,.38); }
+  .tabs { display:flex; max-width:640px; margin:0 auto; gap:6px; padding: 12px 16px 0; }
+  .tab {
+    flex:1; padding: 14px 8px; border-radius: 16px 16px 0 0; border:none; cursor:pointer;
+    font-size: 14px; font-weight: 700; background: rgba(255,255,255,.18); color:#fff;
+    min-height: 48px; touch-action: manipulation;
+  }
+  .tab-ico { width:32px; height:32px; border-radius:50%; object-fit:cover; vertical-align:-7px; margin-right:6px; display:inline-block; }
+  .tab.active { background: var(--cream); color: var(--dark); }
+  main { max-width: 640px; margin: 0 auto; padding: 18px 14px 60px; }
+  .joy-hero { text-align:center; margin: 0 0 16px; }
+  .joy-hero img { width:100%; max-width:300px; display:inline-block; }
+  .grid { display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
+  @media (max-width: 480px) { .grid { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--card); border-radius: 18px; padding: 16px;
+    box-shadow: 0 2px 10px rgba(45,42,50,.06); border: 1px solid var(--line);
+  }
+  .card h3 { font-size: 12px; text-transform: uppercase; letter-spacing:1.2px;
+             color:#b06a86; margin-bottom: 10px; font-weight: 800; }
+  .card .big { font-size: 34px; font-weight: 800; line-height:1.15; }
+  .card .sub { font-size: 12px; color:#8a8590; margin-top:5px; }
+  .full { grid-column: 1 / -1; }
+  .bar { height: 10px; border-radius: 999px; background: #ffe3ec; overflow:hidden; margin-top: 10px; }
+  .bar > div { height:100%; border-radius:999px;
+               background: linear-gradient(90deg, var(--pink), var(--teal)); }
+
+  /* Calendrier */
+  .cal { width:100%; border-collapse: separate; border-spacing: 4px; table-layout: fixed; }
+  .cal th { font-size: 10px; color:#b06a86; padding-bottom: 4px; }
+  .cal-toolbar { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px; margin-bottom:10px; }
+  .cal-title { display:flex; align-items:center; gap:8px; }
+  .cal-year { font-weight:800; font-size:15px; color:#1d3f73; letter-spacing:.3px; white-space:nowrap; min-width:120px; text-align:center; }
+  .cal-nav, .cal-today, .cal-v {
+    border:1px solid rgba(255,255,255,.55); background:#fff; color:#c44a74;
+    font-weight:800; border-radius:999px; cursor:pointer; min-height:40px; min-width:40px;
+    font-size:15px; padding:6px 12px; transition: transform .15s, background .15s;
+  }
+  .cal-nav:active, .cal-today:active, .cal-v:active { transform: scale(.94); }
+  .cal-today { font-size:12.5px; padding:8px 14px; }
+  .cal-actions { display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+  .cal-views { display:flex; gap:4px; background:rgba(255,107,157,.12); border-radius:999px; padding:3px; }
+  .cal-v { border:none; background:transparent; color:#c44a74; font-size:12px; min-height:34px; min-width:auto; padding:6px 11px; }
+  .cal-v.active { background:#ff6b9d; color:#fff; box-shadow:0 2px 8px rgba(255,107,157,.4); }
+  .cal td { text-align:center; font-size: 13px; font-weight: 700; }
+  .cal .d {
+    display:flex; flex-direction:column; align-items:center; justify-content:center; height: 46px;
+    border-radius: 10px; background: #fbeadd; color:#a8886e;
+    font-family:"PeppaBold", -apple-system, sans-serif; font-weight:900;
+    position:relative; outline:none; cursor:default;
+  }
+  .cal .d.other { background:#f6f0ea; color:#c9b8a8; opacity:.75; }
+  .cal .d.sel { background:#ff6b9d !important; color:#fff !important; box-shadow:0 0 0 2px #fff, 0 0 0 4px #ff6b9d; }
+  .cal .d:focus-visible { box-shadow:0 0 0 3px #ff6b9d; }
+  .cal .d.clickable { cursor:pointer; }
+  .cal .d.clickable:active { transform: scale(.93); }
+  .cal .d.sun { background:#d9f2e6; color:#2e7d5b; }
+  .cal .d .sunb { font-size: 8px; line-height: 1; margin-top: 1px; font-weight: 700; letter-spacing:.2px; }
+  .cal .d.sun.other { background:#eef7f2; color:#8fbfa8; }
+  .cal .d.m1 { background:#ff5d6c; color:#fff; }
+  .cal .d.m2 { background:#ffa05c; color:#fff; }
+  .cal .d.m3 { background:#f7d154; color:#7a6420; }
+  .cal .d.m4 { background:#9be89b; color:#1e6b1e; }
+  .cal .d.m5 { background:#2ecc71; color:#fff; }
+  .cal .d.today { background:#ff9f43 !important; color:#fff !important;
+                     animation: pulseRing 2s ease-in-out infinite; }
+  .cal .d.today.sel { background:#ff6b9d !important; box-shadow:0 0 0 2px #fff, 0 0 0 4px #ff9f43; }
+  @keyframes pulseRing {
+    0%, 100% { box-shadow: 0 0 0 2px rgba(255,255,255,.95); }
+    50%      { box-shadow: 0 0 0 5px rgba(255,255,255,0); }
+  }
+  .cal .d .hol { width:5px; height:5px; border-radius:50%; background:#ff4d88;
+                    display:inline-block; margin-top:2px; box-shadow: 0 0 4px rgba(255,77,136,.7); }
+  .cal .d.blank { background:transparent; }
+  .cal .d .w { font-size: 9px; line-height: 1; margin-top: 1px; opacity: .85; }
+  /* Dots événements — couleur par catégorie + forme distincte */
+  .cal .d .dots { display:flex; gap:2px; align-items:center; justify-content:center; margin-top:2px; min-height:7px; }
+  .cal .d .dots i { width:7px; height:7px; border-radius:50%; display:inline-block; }
+  .cal .d .dots i.only { border-radius:0; transform:rotate(45deg); }
+  .cal .d .dots i.c-perso { background:#ff4d88; }
+  .cal .d .dots i.c-travail { background:#1d6fd1; }
+  .cal .d .dots i.c-sante { background:#e67e22; }
+  .cal .d .dots i.c-anniv { background:#8e44ad; }
+  .cal .d .dots i.c-autres { background:#7f8c8d; }
+  .cal .d .dots i + i { margin-left:0; }
+  /* Skeleton loader */
+  .cal-skel { display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }
+  .cal-skel span { height:46px; border-radius:10px; background:linear-gradient(90deg,#fbeadd 25%,#f3d6e4 50%,#fbeadd 75%);
+    background-size:200% 100%; animation: skel 1.3s infinite; }
+  @keyframes skel { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+  /* Panneau latéral événements */
+  .cal-card { position:relative; }
+  .cal-overlay { position:fixed; inset:0; background:rgba(80,20,50,.18); z-index:59; opacity:0;
+    pointer-events:none; transition:opacity .25s ease; }
+  .cal-overlay.open { opacity:1; pointer-events:auto; }
+  .cal-panel { position:absolute; top:8px; bottom:8px; right:0; width:min(340px, 88vw); height:auto; z-index:60;
+    background:rgba(255,130,180,.16); backdrop-filter:blur(6px) saturate(1.4); -webkit-backdrop-filter:blur(6px) saturate(1.4);
+    border-radius:20px; border:1px solid rgba(255,255,255,.6);
+    box-shadow:0 8px 32px rgba(214,60,130,.22); transition:transform .25s ease, visibility .25s;
+    display:flex; flex-direction:column; overflow:hidden; visibility:hidden;
+    transform:translateX(calc(100% + 24px)); pointer-events:none; }
+  .cal-panel.open { transform:translateX(0); visibility:visible; pointer-events:auto; }
+  .cal-panel-head { display:flex; align-items:center; justify-content:space-between; padding:16px 18px;
+    background:linear-gradient(135deg,#ff9ec2,#ff6b9d); color:#fff; }
+  .cal-panel-head b { font-size:15px; text-shadow:0 1px 2px rgba(180,40,90,.3); }
+  .cal-panel-close { background:rgba(255,255,255,.55); border:none; color:#d6336c; font-size:16px; font-weight:900;
+    border-radius:50%; width:34px; height:34px; cursor:pointer; line-height:1; }
+  .cal-panel-body { flex:1; overflow-y:auto; padding:14px 18px; }
+  .cal-panel-body .sec { margin:14px 0; }
+  .cal-panel-body .sec:first-child { margin-top:0; }
+  .cal-panel-body .sec-t { font-size:10.5px; font-weight:900; letter-spacing:1px; text-transform:uppercase;
+    color:#b3004b; margin-bottom:6px; }
+  .cal-panel-body .row { display:flex; align-items:center; gap:10px; padding:9px 0; border-bottom:1px solid rgba(214,80,140,.2); }
+  .cal-panel-body .row:last-child { border-bottom:none; }
+  .cal-panel-body .row .ico { font-size:18px; width:26px; text-align:center; flex:none; }
+  .cal-panel-body .row .tx { font-size:13.5px; font-weight:800; color:#30051c; line-height:1.35;
+    text-shadow:0 1px 0 rgba(255,255,255,.7); }
+  .cal-panel-body .row .tx small { display:block; font-size:11px; font-weight:700; color:#661a3e; margin-top:1px;
+    text-shadow:0 1px 0 rgba(255,255,255,.7); }
+  .cal-ev { display:flex; align-items:center; gap:10px; padding:11px 0; border-bottom:1px solid #f6e3ea; }
+  .cal-ev:last-child { border-bottom:none; }
+  .cal-ev .ev-dot { width:10px; height:10px; border-radius:50%; flex:none; }
+  .cal-ev .ev-dot.only { border-radius:0; transform:rotate(45deg); }
+  .cal-ev .ev-info { flex:1; min-width:0; }
+  .cal-ev .ev-title { font-size:14px; font-weight:800; color:#5a3345; display:flex; align-items:center; gap:5px; }
+  .cal-ev .ev-meta { font-size:11.5px; color:#8a8590; margin-top:2px; }
+  .cal-ev .ev-tg { font-size:11px; background:#e6faf7; color:#1a9e90; border-radius:6px; padding:1px 6px; font-weight:800; }
+  .cal-ev-empty { text-align:center; color:#b9b2bc; font-size:13px; padding:28px 0; }
+  /* Vue semaine */
+  .cal-week { display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }
+  .cal-week .d { height:64px; }
+  /* Vue agenda */
+  .cal-agenda { display:flex; flex-direction:column; gap:6px; }
+  .cal-agenda .ag-day { background:#fff5f9; border:1px solid #f6e3ea; border-radius:12px; padding:8px 12px;
+    display:flex; align-items:center; gap:10px; cursor:pointer; }
+  .cal-agenda .ag-day:active { transform:scale(.98); }
+  .cal-agenda .ag-date { font-weight:900; color:#c44a74; font-size:13px; min-width:64px; }
+  .cal-agenda .ag-info { font-size:12.5px; color:#5a3345; flex:1; }
+  /* Dark mode */
+  @media (prefers-color-scheme: dark) {
+    .cal-panel { background:rgba(120,30,70,.32); backdrop-filter:blur(6px) saturate(1.4); -webkit-backdrop-filter:blur(6px) saturate(1.4); border-color:rgba(255,158,194,.4); box-shadow:0 8px 32px rgba(0,0,0,.4); }
+    .cal-panel-body .sec-t { color:#ff9ec2; }
+    .cal-panel-body .row .tx { color:#fff; text-shadow:0 1px 3px rgba(0,0,0,.6); }
+    .cal-panel-body .row .tx small { color:#ffc9dd; text-shadow:0 1px 3px rgba(0,0,0,.6); }
+    .cal-panel-body .row { border-bottom-color:rgba(255,158,194,.22); }
+    .cal-ev .ev-title { color:#ffd9e8; }
+    .cal-ev { border-bottom-color:#3a2f3d; }
+    .cal-agenda .ag-day { background:#2d2430; border-color:#3a2f3d; }
+    .cal-agenda .ag-info { color:#ffd9e8; }
+    .cal-nav, .cal-today { background:#2d2430; border-color:#4a3d4e; color:#ff9ec2; }
+    .cal-views { background:#3a2f3d; }
+    .cal-v { color:#ff9ec2; }
+  }
+  /* Mobile : agenda par défaut, cibles ≥44px */
+  @media (max-width:480px) {
+    .cal .d { height:48px; }
+    .cal-toolbar { flex-direction:column; align-items:stretch; }
+    .cal-actions { justify-content:space-between; }
+    .cal-panel { width:88vw; }
+  }
+
+  .list { list-style:none; }
+  .list li { padding: 8px 0; border-bottom: 1px solid #f6e3ea; font-size: 14px;
+             display:flex; justify-content:space-between; gap:10px; align-items:center; }
+  .list li:last-child { border-bottom:none; }
+  .list .time { color:#8a8590; font-size: 12px; white-space:nowrap; }
+  .meals { display:flex; flex-wrap:wrap; gap:8px; }
+  .meal {
+    background:var(--soft); border:1px solid var(--line); border-radius: 12px;
+    padding: 8px 12px; font-size: 20px; display:flex; align-items:center; gap:8px;
+  }
+  .meal .t { font-size: 10px; color:#8a8590; }
+  .meal b { font-size: 13px; font-weight: 700; }
+  .chip { display:inline-block; padding:3px 10px; border-radius:999px;
+          font-size:11px; font-weight:700; }
+  .chip.on { background:#e6faf7; color:#1a9e90; }
+  .chip.off { background:#fde8ee; color:#c44a74; }
+  .lock { text-align:center; padding: 14px; color:#8a8590; font-size:12px;
+          background:#fff; border-radius:18px; border:1px dashed #e5c9d5; }
+  footer { text-align:center; font-size:11px; color:#b9b2bc; margin-top: 24px; }
+
+  /* Vitrine techno */
+  .tech-hero h3 { margin:0 0 6px; }
+  .tech-sub { font-size:12.5px; color:#8a8590; line-height:1.5; }
+  .tech-grid { margin-top:12px; }
+  .tech-item { display:flex; gap:12px; align-items:flex-start; padding:12px 14px; }
+  .tech-item b { font-size:13.5px; color:var(--dark); display:block; margin-bottom:3px; }
+  .t-ico { font-size:26px; line-height:1.1; flex:none; }
+  .t-t { font-size:12px; color:#8a8590; line-height:1.45; }
+
+  /* Tamagotchi */
+  .tama { text-align:left; }
+  .tama-row { display:flex; gap:16px; align-items:center; }
+  .tama .face { display:inline-block; width:110px; height:110px; border-radius:50%; overflow:hidden; flex:none;
+                box-shadow: 0 4px 14px rgba(255,107,157,.35); }
+  .tama .face img { width:100%; height:100%; object-fit:cover; display:block; }
+  .tama-info { flex:1; min-width:0; }
+  .birth { font-size:12px; color:#8a8590; }
+  .birth b { display:block; font-size:15px; color:var(--dark); margin-top:2px; letter-spacing:.3px; }
+  .desc { font-size:11.5px; color:#8a8590; margin-top:8px; line-height:1.5; }
+  .countdown { margin-top:10px; }
+  .cd-label { font-size:12px; color:#8a8590; }
+  .cd-time { font-weight:800; font-size:18px; color:var(--pink); }
+  .cake-bar { height:16px; background:#fde3ec; border-radius:999px; overflow:hidden; margin-top:6px;
+              border:1px solid #ffd1e0; }
+  .cake-fill { height:100%; width:0%; background:linear-gradient(90deg,#ffb3cd,#ff6b9d);
+               border-radius:999px; transition:width 1s ease; }
+  .cd-pct { font-size:11px; color:#8a8590; text-align:right; margin-top:2px; }
+  .cd-msg { font-size:11.5px; color:#b06a85; font-style:italic; margin-top:6px; line-height:1.4; }
+  .tama .status { font-size: 13px; color:#8a8590; margin-top:10px; text-align:center; }
+  .emoji-icon { width:20px; height:20px; border-radius:50%; object-fit:cover; vertical-align:-4px; display:inline-block; }
+  .gauges { display:grid; gap:10px; margin-top: 14px; }
+  .gauge .lab { display:flex; justify-content:space-between; font-size:12px; font-weight:700; margin-bottom:4px; }
+  .gauge .lab span:last-child { color:#8a8590; }
+  .levels { display:flex; gap:8px; align-items:center; margin-top:12px;
+            justify-content:center; font-size:13px; font-weight:700; }
+  .xpbar { height:8px; border-radius:999px; background:#ffe3ec; overflow:hidden; margin-top:6px; }
+  .xpbar > div { height:100%; background:linear-gradient(90deg,#f9d423,#ff6b9d); }
+
+  /* Modal jour */
+  #modal { position:fixed; inset:0; background:rgba(45,42,50,.55);
+           display:none; align-items:flex-end; justify-content:center; z-index:99; }
+  #modal.open { display:flex; }
+  #modal .sheet {
+    background: var(--cream); width:100%; max-width:640px; max-height: 82vh; overflow-y:auto;
+    border-radius: 24px 24px 0 0; padding: 24px 20px 40px;
+    animation: up .25s ease;
+  }
+  @keyframes up { from { transform: translateY(60px); opacity:0 } to { transform:none; opacity:1 } }
+  #modal .handle { width:44px; height:5px; border-radius:99px; background:#e0ccd6;
+                   margin:0 auto 14px; }
+  #modal h2 { font-size:18px; margin-bottom:14px; text-align:center; }
+  #modal .mrow { display:flex; align-items:center; gap:12px; background:#fff;
+                 border:1px solid var(--line); border-radius:16px; padding:14px; margin-bottom:10px; }
+  #modal .mrow .ico { font-size:26px; }
+  #modal .mrow .lb { font-size:11px; color:#b06a86; font-weight:800; letter-spacing:.8px;
+                     text-transform:uppercase; }
+  #modal .mrow .vl { font-size:15px; font-weight:700; margin-top:2px; }
+  #modal .close { width:100%; padding:14px; border:none; border-radius:999px;
+                  background:var(--pink); color:#fff; font-weight:800; font-size:15px;
+                  margin-top:8px; cursor:pointer; min-height:44px; }
+  .wico { font-size:20px; }
+</style>
+</head>
+<body>
+
+<!-- ═══ LOGIN ═══ -->
+<div id="login">
+  <div class="login-fade"></div>
+  <div id="login-langs">
+    <button data-lang="th" class="active">ไทย</button>
+    <button data-lang="en">EN</button>
+  </div>
+  <h1 class="login-quote">"One pig, two lives, endless warmth — and every memory stays with you."</h1>
+  <div class="app-title">SuperPapapig App</div>
+  <div class="pig-uke-wrap"><span class="testi testi-left"></span><img class="pig-uke" src="images/peppa-uke.jpg" alt=""><span class="testi testi-right"></span></div>
+  <form id="login-form">
+    <div class="siri-glow"><div class="siri-glow-bg"></div><input type="password" id="pwd" placeholder="enter your password here" autocomplete="off"></div>
+    <button type="submit" data-i18n="login_btn">เข้า</button>
+  </form>
+  <div class="err" id="login-err"></div>
+  <div class="tech-showcase">
+    <h2 data-i18n="tech_title">🧠 สมองและความสามารถของพ่อหมู</h2>
+    <p class="tech-sub" data-i18n="tech_sub">ระบบ AI ที่ทำงานบนเครื่องส่วนตัว 100% — ไม่มีข้อมูลส่วนตัวบนอินเทอร์เน็ต</p>
+    <div class="tech-grid">
+      <div class="tcard"><span class="t-ico">🧠</span><div><b data-i18n="t1_t">เครื่องยนต์อารมณ์</b><p data-i18n="t1_d">ความสุข × ความตื่นเต้น (Russell) · 27 อารมณ์ · กระจกสะท้อนอารมณ์ 70%</p></div></div>
+      <div class="tcard"><span class="t-ico">🐷</span><div><b data-i18n="t2_t">ทามาก็อตจิมีชีวิต</b><p data-i18n="t2_d">พลังงาน · ความหิว · การนอน · XP · อารมณ์ — เปลี่ยนแบบเรียลไทม์</p></div></div>
+      <div class="tcard"><span class="t-ico">📝</span><div><b data-i18n="t3_t">บันทึกอัตโนมัติ</b><p data-i18n="t3_d">วิเคราะห์คำศัพท์ ไม่ใช้ LLM — ทำงานในเครื่อง ฟรี</p></div></div>
+      <div class="tcard"><span class="t-ico">⏰</span><div><b data-i18n="t4_t">ระบบอัตโนมัติ</b><p data-i18n="t4_d">มื้ออาหาร · เช้า · กลางคืน · สติกเกอร์ · เตือนความจำ (cron ในเครื่อง)</p></div></div>
+      <div class="tcard"><span class="t-ico">📅</span><div><b data-i18n="t5_t">ปฏิทินอัจฉริยะ</b><p data-i18n="t5_d">อารมณ์ + อากาศ + อาหาร + วันหยุดไทย (Open-Meteo กรุงเทพ)</p></div></div>
+      <div class="tcard"><span class="t-ico">🌐</span><div><b data-i18n="t6_t">สองภาษา</b><p data-i18n="t6_d">ไทย & อังกฤษ — แปลทั้งหมด</p></div></div>
+      <div class="tcard"><span class="t-ico">🎨</span><div><b data-i18n="t7_t">ดีไซน์และฟอนต์</b><p data-i18n="t7_d">ฟอนต์ Peppa ทางการ · ดีไซน์สีชมพูน่ารัก</p></div></div>
+      <div class="tcard"><span class="t-ico">🔒</span><div><b data-i18n="t8_t">ความปลอดภัย</b><p data-i18n="t8_d">เข้ารหัส AES-256 · ไม่มีข้อมูลส่วนตัวออนไลน์ · ไม่มีความลับในเว็บ</p></div></div>
+      <div class="tcard"><span class="t-ico">🖥️</span><div><b data-i18n="t9_t">ทำงานในเครื่อง 100%</b><p data-i18n="t9_d">AI รันบนเครื่องส่วนตัว ไม่ใช้คลาวด์</p></div></div>
+      <div class="tcard"><span class="t-ico">📱</span><div><b data-i18n="t10_t">เชื่อมต่อ</b><p data-i18n="t10_d">WhatsApp + Telegram · สติกเกอร์สร้างในเครื่อง</p></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ APP ═══ -->
+<div id="app" class="hidden">
+<header>
+  <div class="banner">
+    <img class="bg" src="images/peppa-header.jpg" alt="Peppa Pig">
+    <img class="logo" src="images/peppa-logo.jpg" alt="Papapig">
+    <div class="top">
+      <h1 data-i18n="app_title">Papapig AI — ความฉลาดที่แท้จริง</h1>
+    </div>
+  </div>
+  <div class="actions">
+    <button class="btn" id="lang-btn">EN</button>
+    <button class="btn" id="logout-btn" title="⏻">⏻</button>
+  </div>
+  <div class="tabs">
+    <button class="tab active" id="tab-joy"><img class="tab-ico" src="images/joy.jpg" alt=""><span data-i18n="tab_joy">ชีวิตจอย</span></button>
+    <button class="tab" id="tab-papapig"><img class="tab-ico" src="images/peppa-ai.jpg" alt=""><span data-i18n="tab_papapig">ชีวิตพ่อหมู</span></button>
+    <button class="tab" id="tab-tech"><img class="tab-ico" src="images/brain-tech.jpg" alt=""><span data-i18n="tab_tech">สมอง AI</span></button>
+  </div>
+</header>
+
+<main>
+  <!-- ── ONGLET JOY ── -->
+  <section id="view-joy">
+    <div class="joy-hero"><img src="images/joy.jpg" alt="Joy 💕"></div>
+    <div class="grid">
+      <div class="card">
+        <h3 data-i18n="joy_mood_today">😊 อารมณ์วันนี้</h3>
+        <div class="big" id="j-mood-today">—</div>
+        <div class="sub" id="j-mood-note"></div>
+      </div>
+      <div class="card">
+        <h3 data-i18n="joy_energy">⚡ พลังงาน</h3>
+        <div class="big" id="j-energy">—</div>
+        <div class="bar"><div id="j-energy-bar" style="width:50%"></div></div>
+      </div>
+      <div class="card full cal-card">
+        <h3 data-i18n="joy_cal" style="margin-bottom:8px">📅 Calendar — Mood · Weather · Food · Special Events</h3>
+        <div class="cal-toolbar">
+          <div class="cal-title">
+            <button class="cal-nav" id="cal-prev" aria-label="Previous month">◀</button>
+            <span id="cal-year" class="cal-year"></span>
+            <button class="cal-nav" id="cal-next" aria-label="Next month">▶</button>
+          </div>
+          <div class="cal-actions">
+            <button class="cal-today" id="cal-today" data-i18n="cal_today">Aujourd'hui</button>
+            <div class="cal-views" role="tablist" aria-label="Calendar view">
+              <button class="cal-v" data-v="month" role="tab" data-i18n="cal_month">Mois</button>
+              <button class="cal-v" data-v="week" role="tab" data-i18n="cal_week">Semaine</button>
+              <button class="cal-v" data-v="agenda" role="tab" data-i18n="cal_agenda">Agenda</button>
+            </div>
+          </div>
+        </div>
+        <div id="j-cal" role="grid" aria-label="Calendar"></div>
+      </div>
+      <div class="card full">
+        <h3 data-i18n="joy_meals">🍜 กินอะไรมาบ้าง</h3>
+        <div class="meals" id="j-meals"></div>
+      </div>
+      <div class="card full">
+        <h3 data-i18n="joy_goal">🎯 เป้าหมาย</h3>
+        <div class="big" style="font-size:22px" id="j-goal">—</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ONGLET PAPAPIG ── -->
+  <section id="view-papapig" class="hidden">
+    <div class="grid">
+      <div class="card full tama">
+        <div class="tama-row">
+          <div class="face" id="p-face"><img src="images/peppa-ai.jpg" alt="Papapig AI"></div>
+          <div class="tama-info">
+            <div class="birth"><span data-i18n="p_birth">🎂 วันเกิด</span><b>07/08/2026 · 20:47</b></div>
+            <div class="desc">i am artificial pig made by god Tazou, i run in local machine (MBP M1 PRO with lm studio with Gemma 4)</div>
+            <div class="countdown">
+              <div class="cd-label" data-i18n="p_cd">🎂 ครบ 1 เดือนใน</div>
+              <div class="cd-time" id="p-cd">—</div>
+              <div class="cake-bar"><div id="p-cake" class="cake-fill"></div></div>
+              <div class="cd-pct" id="p-cd-pct">0%</div>
+              <div class="cd-msg" data-i18n="p_cd_msg">🎂 หวังว่าเธอจะทำเค้กก้อนใหญ่ให้หนูนะครับ</div>
+            </div>
+          </div>
+        </div>
+        <div class="status" id="p-status">—</div>
+        <div class="gauges">
+          <div class="gauge"><div class="lab"><span data-i18n="p_energy">⚡ พลังงาน</span><span id="p-energy">85</span></div>
+            <div class="bar"><div id="p-energy-bar" style="width:85%"></div></div></div>
+          <div class="gauge"><div class="lab"><span data-i18n="p_hunger">🍗 ความหิว</span><span id="p-hunger">40</span></div>
+            <div class="bar"><div id="p-hunger-bar" style="width:40%"></div></div></div>
+          <div class="gauge"><div class="lab"><span data-i18n="p_sleep">😴 การนอน</span><span id="p-sleep">60</span></div>
+            <div class="bar"><div id="p-sleep-bar" style="width:60%"></div></div></div>
+        </div>
+        <div class="levels">
+          <span id="p-level">เลเวล 2</span>
+          <span>·</span>
+          <span id="p-xp">XP 120</span>
+        </div>
+        <div class="xpbar"><div id="p-xp-bar" style="width:20%"></div></div>
+      </div>
+      <div class="card">
+        <h3 data-i18n="p_persona">🎭 บุคลิก</h3>
+        <div class="big" style="font-size:26px">🐷 Papa Pig</div>
+        <div class="sub" data-i18n="p_persona_sub">พ่อหมู — ค่าเริ่มต้น</div>
+      </div>
+      <div class="card">
+        <h3 data-i18n="p_emotion">💓 อารมณ์</h3>
+        <div class="big" id="p-emotion">—</div>
+        <div class="sub" id="p-valence">valence +0.30</div>
+      </div>
+      <div class="card full">
+        <h3 data-i18n="p_last_meal">🍽️ มื้อสุดท้าย</h3>
+        <div class="big" id="p-last-meal">—</div>
+        <div class="sub" id="p-last-meal-at"></div>
+      </div>
+      <div class="card full">
+        <h3 data-i18n="p_crons">I love my job</h3>
+        <ul class="list" id="p-crons"></ul>
+      </div>
+      <div class="card full">
+        <h3 data-i18n="p_activity">📍 กิจกรรม</h3>
+        <ul class="list" id="p-activity"></ul>
+      </div>
+      <div class="card full lock" data-i18n="lock">🔐 ข้อความทั้งหมดถูกเข้ารหัส (AES-256)</div>
+    </div>
+  </section>
+
+  <!-- ── ONGLET TECHNO (vitrine — zéro donnée personnelle) ── -->
+  <section id="view-tech" class="hidden">
+    <div class="card full tech-hero">
+      <h3 data-i18n="tech_title">🧠 สมองและความสามารถของพ่อหมู</h3>
+      <div class="tech-sub" data-i18n="tech_sub">ระบบ AI ที่ทำงานบนเครื่องส่วนตัว 100% — ไม่มีข้อมูลส่วนตัวบนอินเทอร์เน็ต</div>
+    </div>
+    <div class="grid tech-grid">
+      <div class="card tech-item"><div class="t-ico">🧠</div><div><b data-i18n="t1_t">เครื่องยนต์อารมณ์</b><div class="t-t" data-i18n="t1_d">ความสุข × ความตื่นเต้น (Russell) · 27 อารมณ์ · กระจกสะท้อนอารมณ์ 70%</div></div></div>
+      <div class="card tech-item"><div class="t-ico">🐷</div><div><b data-i18n="t2_t">ทามาก็อตจิมีชีวิต</b><div class="t-t" data-i18n="t2_d">พลังงาน · ความหิว · การนอน · XP · อารมณ์ — เปลี่ยนแบบเรียลไทม์</div></div></div>
+      <div class="card tech-item"><div class="t-ico">📝</div><div><b data-i18n="t3_t">บันทึกอัตโนมัติ</b><div class="t-t" data-i18n="t3_d">วิเคราะห์คำศัพท์ ไม่ใช้ LLM — ทำงานในเครื่อง ฟรี</div></div></div>
+      <div class="card tech-item"><div class="t-ico">⏰</div><div><b data-i18n="t4_t">ระบบอัตโนมัติ</b><div class="t-t" data-i18n="t4_d">มื้ออาหาร · เช้า · กลางคืน · สติกเกอร์ · เตือนความจำ (cron ในเครื่อง)</div></div></div>
+      <div class="card tech-item"><div class="t-ico">📅</div><div><b data-i18n="t5_t">ปฏิทินอัจฉริยะ</b><div class="t-t" data-i18n="t5_d">อารมณ์ + อากาศ + อาหาร + วันหยุดไทย (Open-Meteo กรุงเทพ)</div></div></div>
+      <div class="card tech-item"><div class="t-ico">🌐</div><div><b data-i18n="t6_t">สองภาษา</b><div class="t-t" data-i18n="t6_d">ไทย & อังกฤษ — แปลทั้งหมด</div></div></div>
+      <div class="card tech-item"><div class="t-ico">🎨</div><div><b data-i18n="t7_t">ดีไซน์และฟอนต์</b><div class="t-t" data-i18n="t7_d">ฟอนต์ Peppa ทางการ · ดีไซน์สีชมพูน่ารัก</div></div></div>
+      <div class="card tech-item"><div class="t-ico">🔒</div><div><b data-i18n="t8_t">ความปลอดภัย</b><div class="t-t" data-i18n="t8_d">เข้ารหัส AES-256 · ไม่มีข้อมูลส่วนตัวออนไลน์ · ไม่มีความลับในเว็บ</div></div></div>
+      <div class="card tech-item"><div class="t-ico">🖥️</div><div><b data-i18n="t9_t">ทำงานในเครื่อง 100%</b><div class="t-t" data-i18n="t9_d">AI รันบนเครื่องส่วนตัว ไม่ใช้คลาวด์</div></div></div>
+      <div class="card tech-item"><div class="t-ico">📱</div><div><b data-i18n="t10_t">เชื่อมต่อ</b><div class="t-t" data-i18n="t10_d">WhatsApp + Telegram · สติกเกอร์สร้างในเครื่อง</div></div></div>
+    </div>
+  </section>
+  <footer data-i18n="footer">Papapig Intelligence System · ใช้ LM Studio ในเครื่อง · ไม่มีการแชร์ข้อมูลส่วนตัว</footer>
+</main>
+</div>
+
+<!-- Modal jour -->
+<div id="modal">
+  <div class="sheet">
+    <div class="handle"></div>
+    <h2 id="m-title">—</h2>
+    <div id="m-body"></div>
+    <button class="close" onclick="closeModal()" data-i18n="close">ปิด</button>
+  </div>
+</div>
+
+<script>
+/* ═════════ i18n : thaï par défaut + anglais ═════════ */
+const TR = {
+  th: {
+    login_btn: "เข้า", pwd_ph: "ใส่รหัสผ่านที่นี่",
+    app_title: "Papapig AI — ความฉลาดที่แท้จริง", tab_joy: "ชีวิตจอย", tab_papapig: "ชีวิตพ่อหมู", tab_tech: "สมอง AI",
+    joy_mood_today: "😊 อารมณ์วันนี้", joy_energy: "⚡ พลังงาน", joy_cal: "📅 ปฏิทิน — อารมณ์ · อากาศ · อาหาร · วันสำคัญ",
+    joy_meals: "🍜 กินอะไรมาบ้าง", joy_goal: "🎯 เป้าหมาย",
+    cal_today: "วันนี้", cal_month: "เดือน", cal_week: "สัปดาห์", cal_agenda: "กำหนดการ",
+    p_energy: "⚡ พลังงาน", p_hunger: "🍗 ความหิว", p_sleep: "😴 การนอน",
+    p_birth: "🎂 วันเกิด", p_cd: "🎂 ครบ 1 เดือนใน", p_cd_msg: "🎂 หวังว่าเธอจะทำเค้กก้อนใหญ่ให้หนูนะครับ",
+    p_persona: "🎭 บุคลิก", p_persona_sub: "พ่อหมู — ค่าเริ่มต้น",
+    p_emotion: "💓 อารมณ์", p_last_meal: "🍽️ มื้อสุดท้าย",
+    p_crons: "I love my job", p_activity: "📍 กิจกรรม",
+    tech_title: "🧠 สมองและความสามารถของพ่อหมู", tech_sub: "ระบบ AI ที่ทำงานบนเครื่องส่วนตัว 100% — ไม่มีข้อมูลส่วนตัวบนอินเทอร์เน็ต",
+    t1_t: "เครื่องยนต์อารมณ์", t1_d: "ความสุข × ความตื่นเต้น (Russell) · 27 อารมณ์ · กระจกสะท้อนอารมณ์ 70%",
+    t2_t: "ทามาก็อตจิมีชีวิต", t2_d: "พลังงาน · ความหิว · การนอน · XP · อารมณ์ — เปลี่ยนแบบเรียลไทม์",
+    t3_t: "บันทึกอัตโนมัติ", t3_d: "วิเคราะห์คำศัพท์ ไม่ใช้ LLM — ทำงานในเครื่อง ฟรี",
+    t4_t: "ระบบอัตโนมัติ", t4_d: "มื้ออาหาร · เช้า · กลางคืน · สติกเกอร์ · เตือนความจำ (cron ในเครื่อง)",
+    t5_t: "ปฏิทินอัจฉริยะ", t5_d: "อารมณ์ + อากาศ + อาหาร + วันหยุดไทย (Open-Meteo กรุงเทพ)",
+    t6_t: "สองภาษา", t6_d: "ไทย & อังกฤษ — แปลทั้งหมด",
+    t7_t: "🎨 ดีไซน์และฟอนต์", t7_d: "ฟอนต์ Peppa ทางการ · ดีไซน์สีชมพูน่ารัก",
+    t8_t: "ความปลอดภัย", t8_d: "เข้ารหัส AES-256 · ไม่มีข้อมูลส่วนตัวออนไลน์ · ไม่มีความลับในเว็บ",
+    t9_t: "ทำงานในเครื่อง 100%", t9_d: "AI รันบนเครื่องส่วนตัว ไม่ใช้คลาวด์",
+    t10_t: "เชื่อมต่อ", t10_d: "WhatsApp + Telegram · สติกเกอร์สร้างในเครื่อง",
+    lock: "🔐 ข้อความทั้งหมดถูกเข้ารหัส (AES-256)",
+    footer: "Papapig Intelligence System · ใช้ LM Studio ในเครื่อง · ไม่มีการแชร์ข้อมูลส่วนตัว",
+    no_data: "ยังไม่มีข้อมูล — เริ่มบันทึกคืนนี้ 📔", no_meal: "ยังไม่มีข้อมูลมื้ออาหาร",
+    logout: "ออกจากระบบ", close: "ปิด",
+  },
+  en: {
+    login_btn: "Enter", pwd_ph: "enter your password here",
+    app_title: "Papapig AI — Real Intelligence", tab_joy: "Joy's Life", tab_papapig: "Papapig's Life", tab_tech: "Neural AI Brain",
+    joy_mood_today: "😊 Today's Mood", joy_energy: "⚡ Energy", joy_cal: "📅 Calendar — Mood · Weather · Food · Special Events",
+    joy_meals: "🍜 Detected Meals", joy_goal: "🎯 Goal",
+    cal_today: "Today", cal_month: "Month", cal_week: "Week", cal_agenda: "Agenda",
+    p_energy: "⚡ Energy", p_hunger: "🍗 Hunger", p_sleep: "😴 Sleep",
+    p_birth: "🎂 BIRTHDAY", p_cd: "🎂 1st month in", p_cd_msg: "🎂 i hope she will make me a big cake",
+    p_persona: "🎭 Persona", p_persona_sub: "Papa Pig — default",
+    p_emotion: "💓 Emotion", p_last_meal: "🍽️ Last Meal",
+    p_crons: "I love my job", p_activity: "📍 Recent Activity",
+    tech_title: "🧠 Papapig AI — brain & skills", tech_sub: "100% local AI — zero personal data online",
+    t1_t: "Emotion engine", t1_d: "pleasure × arousal (Russell) · 27 emotions · 70% mood mirror",
+    t2_t: "Living tamagotchi", t2_d: "energy · hunger · sleep · XP · mood — evolves in real time",
+    t3_t: "Automatic journal", t3_d: "word analysis, zero LLM — local & free",
+    t4_t: "Automations", t4_d: "meals · morning · bedtime · stickers · reminders (local cron jobs)",
+    t5_t: "Smart calendar", t5_d: "mood + weather + food + Thai holidays (Open-Meteo Bangkok)",
+    t6_t: "Bilingual", t6_d: "Thai & English — fully translated",
+    t7_t: "🎨 Design & fonts", t7_d: "official Peppa fonts · cozy pink design",
+    t8_t: "Security", t8_d: "AES-256 encryption · zero private data online · zero secrets in the site",
+    t9_t: "100% local", t9_d: "AI runs on a local machine, zero cloud",
+    t10_t: "Connected", t10_d: "WhatsApp + Telegram · stickers generated locally",
+    lock: "🔐 All conversations are encrypted (AES-256)",
+    footer: "Papapig Intelligence System · Local LM Studio · no private data shared",
+    no_data: "no data yet — journal starts tonight 📔", no_meal: "no meal data yet",
+    logout: "Log out", close: "Close",
+  }
+};
+let LANG = "th";
+const MOODS = {
+  th: {1:"แย่มาก 😭", 2:"ไม่ดี 😟", 3:"เฉยๆ 😐", 4:"ดี 🙂", 5:"สุดยอด 😍"},
+  en: {1:"awful 😭", 2:"bad 😟", 3:"ok 😐", 4:"good 🙂", 5:"amazing 😍"}
+};
+const EMOMAP = {
+  th: {joie:"ดีใจ 😄", fatigue:"เหนื่อย 😩", stress:"เครียด 😮‍💨", tristesse:"เศร้า 😢",
+       amour:"รัก 💕", faim:"หิว 🍜", neutre:"เฉยๆ 😐", amusement:"สนุก 🤣",
+       somnolence:"ง่วง 😴", nostalgie:"คิดถึง 💭", colère:"โมโห 😤", peur:"กลัว 😨",
+       épuisement:"ไม่ไหว 😵", anxiété:"กังวล 😰"},
+  en: {joie:"joy 😄", fatigue:"tired 😩", stress:"stressed 😮‍💨", tristesse:"sad 😢",
+       amour:"love 💕", faim:"hungry 🍜", neutre:"neutral 😐", amusement:"fun 🤣",
+       somnolence:"sleepy 😴", nostalgie:"miss you 💭", colère:"angry 😤", peur:"scared 😨",
+       épuisement:"drained 😵", anxiété:"anxious 😰"}
+};
+
+/* Traductions EN des textes stockés en thaï (goal + activité + repas) */
+const TR_EN_TEXT = {
+  "นอนเร็วขึ้น 💤": "sleep earlier 💤", "ผ่อนคลายสักหน่อย 🧘": "relax a bit 🧘", "ทำต่อไปแบบนี้ 💪": "keep it up 💪",
+  "🏠 กลับถึงบ้าน": "🏠 came home", "🏢 ถึงที่ทำงาน": "🏢 arrived at work",
+  "🛵 ไปทำงาน": "🛵 left for work", "🌙 ราตรีสวัสดิ์": "🌙 good night", "☀️ อรุณสวัสดิ์": "☀️ good morning",
+  "กิน": "eat", "ทาน": "eat", "หิว": "hungry", "อิ่ม": "full", "ข้าว": "rice", "กับข้าว": "dish",
+  "อาหาร": "food", "ข้าวผัด": "fried rice", "ก๋วยเตี๋ยว": "noodles", "ชาบู": "shabu", "บุฟเฟ่ต์": "buffet",
+  "หมูกระทะ": "pork BBQ", "ไก่": "chicken", "หมู": "pork", "ปลา": "fish", "กุ้ง": "shrimp", "ไข่": "egg",
+  "ส้มตำ": "papaya salad", "ต้มยำ": "tom yum", "แกง": "curry", "สุกี้": "sukiyaki", "เค้ก": "cake",
+  "ไอศกรีม": "ice cream", "กาแฟ": "coffee", "ชา": "tea", "สมูทตี้": "smoothie", "บะหมี่": "noodles",
+  "พิซซ่า": "pizza", "เบอร์เกอร์": "burger", "ฟาสต์ฟู้ด": "fast food", "ของกิน": "snacks", "ของหวาน": "dessert",
+  "ขนม": "sweets", "ผลไม้": "fruit", "แคลอรี่": "calories", "แคลอรี": "calories", "เคลอรี่": "calories",
+  "calories": "calories", "อร่อย": "delicious", "ไม่อร่อย": "not tasty", "หวาน": "sweet", "เค็ม": "salty",
+  "เผ็ด": "spicy", "ร้าน": "restaurant", "เมนู": "menu", "สั่ง": "order", "เดลิเวอรี": "delivery",
+  "grabfood": "GrabFood", "foodpanda": "Foodpanda", "7-11": "7-Eleven", "เซเว่น": "7-Eleven",
+  "มอคค่า": "mocha", "ลาเต้": "latte", "วิปครีม": "whipped cream", "นมสด": "milk", "น้ำเปล่า": "water"
+};
+function _tTxt(s) { return LANG === "en" ? (TR_EN_TEXT[s] || s) : s; }
+
+/* ═════════ État ═════════ */
+let S = null;
+
+function t(key) { return TR[LANG][key] || key; }
+function applyLang() {
+  document.querySelectorAll("[data-i18n]").forEach(el => el.textContent = t(el.dataset.i18n));
+  document.getElementById("lang-btn").textContent = LANG === "th" ? "EN" : "TH";
+  document.querySelectorAll("#login-langs button").forEach(b =>
+    b.classList.toggle("active", b.dataset.lang === LANG));
+  const pwd = document.getElementById("pwd");
+  if (pwd) pwd.placeholder = t("pwd_ph");
+  document.title = t("app_title");
+}
+
+/* ═════════ Login ═════════ */
+const PASSWORD = "smoothie";
+function tryLogin() {
+  const v = document.getElementById("pwd").value.trim().toLowerCase();
+  if (v === PASSWORD) {
+    sessionStorage.setItem("pp_auth", "1");
+    showApp();
+  } else {
+    document.getElementById("login-err").textContent = LANG === "th" ? "รหัสผิด ❌" : "wrong password ❌";
+  }
+}
+document.getElementById("login-form").addEventListener("submit", e => { e.preventDefault(); tryLogin(); });
+// Regard de Joy qui suit le curseur (parallax doux)
+window.addEventListener("mousemove", e => {
+  const mx = (e.clientX / window.innerWidth - .5) * 26;
+  const my = (e.clientY / window.innerHeight - .5) * 26;
+  document.documentElement.style.setProperty("--mx", mx.toFixed(1) + "px");
+  document.documentElement.style.setProperty("--my", my.toFixed(1) + "px");
+}, { passive: true });
+document.getElementById("logout-btn").addEventListener("click", () => {
+  sessionStorage.removeItem("pp_auth"); location.reload();
+});
+function showApp() {
+  document.getElementById("login").classList.add("hidden");
+  document.getElementById("app").classList.remove("hidden");
+  init();
+}
+if (sessionStorage.getItem("pp_auth") === "1") showApp();
+
+/* ═════════ Tabs ═════════ */
+document.getElementById("tab-joy").addEventListener("click", () => switchTab("joy"));
+document.getElementById("tab-papapig").addEventListener("click", () => switchTab("papapig"));
+document.getElementById("tab-tech").addEventListener("click", () => switchTab("tech"));
+function switchTab(which) {
+  document.getElementById("view-joy").classList.toggle("hidden", which !== "joy");
+  document.getElementById("view-papapig").classList.toggle("hidden", which !== "papapig");
+  document.getElementById("view-tech").classList.toggle("hidden", which !== "tech");
+  document.getElementById("tab-joy").classList.toggle("active", which === "joy");
+  document.getElementById("tab-papapig").classList.toggle("active", which === "papapig");
+  document.getElementById("tab-tech").classList.toggle("active", which === "tech");
+}
+
+/* ═════════ Lang switch ═════════ */
+document.getElementById("lang-btn").addEventListener("click", () => {
+  LANG = LANG === "th" ? "en" : "th";
+  applyLang(); if (S) render(S);
+});
+
+/* ═════════ Data ═════════ */
+function init() {
+  applyLang();
+  fetch("data/state.json?cb=" + Date.now())
+    .then(r => r.json()).then(s => { S = s; render(s); })
+    .catch(() => setTimeout(init, 15000));
+}
+setInterval(() => { if (S) init(); }, 60000);
+
+function render(s) {
+  const J = s.joy || {}, P = s.papapig || {};
+
+  /* Joy — mood du jour */
+  const m = J.mood_today;
+  document.getElementById("j-mood-today").textContent = m ? (MOODS[LANG][m] || m) : "—";
+  document.getElementById("j-mood-note").textContent = J.mood_note || "";
+
+  /* Joy — énergie */
+  document.getElementById("j-energy").textContent = (J.energy ?? 70) + "%";
+  document.getElementById("j-energy-bar").style.width = (J.energy ?? 70) + "%";
+
+  /* Joy — calendrier */
+  renderCal(J.moods || []);
+
+  /* Joy — repas */
+  const meals = J.meals || [];
+  const mWrap = document.getElementById("j-meals");
+  mWrap.innerHTML = "";
+  if (!meals.length) mWrap.innerHTML = "<span style='color:#8a8590;font-size:13px'>" + t("no_meal") + "</span>";
+  meals.forEach(me => {
+    const el = document.createElement("div"); el.className = "meal";
+    el.innerHTML = "<span>" + me.emoji + "</span>" +
+      (me.word ? "<b>" + _tTxt(me.word) + "</b>" : "") +
+      "<span class='t'>" + me.date.slice(5) + " " + me.at + "</span>";
+    mWrap.appendChild(el);
+  });
+
+  /* Joy — goal */
+  document.getElementById("j-goal").textContent = J.goal ? _tTxt(J.goal) : "—";
+
+  /* Papapig — tamagotchi */
+  document.getElementById("p-energy").textContent = P.energy ?? 85;
+  document.getElementById("p-energy-bar").style.width = (P.energy ?? 85) + "%";
+  document.getElementById("p-hunger").textContent = P.hunger ?? 40;
+  document.getElementById("p-hunger-bar").style.width = (P.hunger ?? 40) + "%";
+  document.getElementById("p-sleep").textContent = P.sleep ?? 60;
+  document.getElementById("p-sleep-bar").style.width = (P.sleep ?? 60) + "%";
+  document.getElementById("p-level").textContent = (LANG === "th" ? "เลเวล " : "Lv. ") + (P.level ?? 2);
+  document.getElementById("p-xp").textContent = "XP " + (P.xp ?? 120);
+  document.getElementById("p-xp-bar").style.width = ((P.xp ?? 120) % 100) + "%";
+  const emoHTML = em => {
+    const e = EMOMAP[LANG][em] || em || "";
+    const m = String(e).match(/^(.*?)(\s+[^\s]+)$/);
+    return m ? m[1] + " <img class='emoji-icon' src='images/peppa-ai.jpg' alt=''>" : e;
+  };
+  document.getElementById("p-status").innerHTML = P.emotion ? emoHTML(P.emotion) : "—";
+  document.getElementById("p-emotion").innerHTML = P.emotion ? emoHTML(P.emotion) : "—";
+  document.getElementById("p-valence").textContent = (LANG === "th" ? "วาเลนซ์ " : "valence ") + (P.valence >= 0 ? "+" : "") + (P.valence ?? 0).toFixed(2);
+
+  /* Papapig — naissance + compte à rebours 1er mois (avec secondes) */
+  const BIRTH_MS = new Date(2026, 7, 7, 20, 47).getTime();
+  const ONE_MONTH_MS = 30 * 24 * 3600 * 1000;
+  function updateCake() {
+    const _now = Date.now();
+    const _pct = Math.min(100, Math.max(0, (_now - BIRTH_MS) / ONE_MONTH_MS * 100));
+    const _left = Math.max(0, BIRTH_MS + ONE_MONTH_MS - _now);
+    const _s = Math.floor(_left / 1000) % 60, _mn = Math.floor(_left / 60000) % 60;
+    const _dh = Math.floor(_left / 3600000) % 24, _dj = Math.floor(_left / 86400000);
+    const cEl = document.getElementById("p-cd");
+    if (cEl) cEl.textContent = (LANG === "th"
+      ? _dj + " วัน " + _dh + " ชม. " + _mn + " นาที " + _s + " วิ."
+      : _dj + "d " + _dh + "h " + _mn + "m " + _s + "s");
+    document.getElementById("p-cake").style.width = _pct.toFixed(1) + "%";
+    document.getElementById("p-cd-pct").textContent = _pct.toFixed(1) + "%";
+  }
+  updateCake();
+  if (!window._cakeTick) window._cakeTick = setInterval(updateCake, 1000);
+  document.getElementById("p-last-meal").textContent = P.last_meal_emoji || "—";
+  document.getElementById("p-last-meal-at").textContent = P.last_meal_at || "";
+
+  /* Papapig — crons */
+  const cWrap = document.getElementById("p-crons");
+  cWrap.innerHTML = "";
+  (P.crons || []).forEach(c => {
+    const li = document.createElement("li");
+    li.innerHTML = "<span>" + c.name + "</span><span class='chip " + (c.status === "active" ? "on" : "off") + "'>" +
+      (c.status === "active" ? "✓" : "⏸") + "</span>";
+    cWrap.appendChild(li);
+  });
+
+  /* Papapig — activité */
+  const aWrap = document.getElementById("p-activity");
+  aWrap.innerHTML = "";
+  (P.activity || []).forEach(a => {
+    const li = document.createElement("li");
+    li.innerHTML = "<span>" + _tTxt(a.t) + "</span><span class='time'>" + a.d + "</span>";
+    aWrap.appendChild(li);
+  });
+}
+
+/* ═════════ Calendrier mensuel + modal jour ═════════ */
+/* ═════════ Calendrier v2 — mois/semaine/agenda + événements Supabase ═════════ */
+const SB_URL = "https://wlxtulibsipesxpwkhyz.supabase.co";
+const SB_ANON = "sb_publishable_0MkIaGDQs3G5oJuHaKMh1A_wWsrzn4G";
+let CAL = { year: 0, month: 0, view: "month", sel: null, events: [], loading: true, inited: false };
+
+const CAT_COLOR = { perso: "c-perso", travail: "c-travail", sante: "c-sante", anniv: "c-anniv", autres: "c-autres" };
+const CAT_LBL = { perso: "perso", travail: "travail", sante: "santé", anniv: "anniv", autres: "autres" };
+const catOf = c => CAT_COLOR[c] || "c-autres";
+const catIcon = c => ({ perso: "🧡", travail: "💼", sante: "🩺", anniv: "🎂", autres: "📌" }[c] || "📌");
+const catName = (c, l) => (l === "th" ? { perso: "ส่วนตัว", travail: "งาน", sante: "สุขภาพ", anniv: "วันเกิด", autres: "อื่นๆ" }[c] || "อื่นๆ" : CAT_LBL[c] || "autres");
+
+/* EventProvider — Supabase REST (lecture seule) → fallback events.json local */
+async function loadEvents() {
+  CAL.loading = true;
+  if (document.getElementById("j-cal")) calRenderSkeleton();
+  try {
+    const r = await fetch(SB_URL + "/rest/v1/events?select=*&order=date", {
+      headers: { apikey: SB_ANON, Authorization: "Bearer " + SB_ANON }
+    });
+    if (!r.ok) throw new Error("http " + r.status);
+    const data = await r.json();
+    CAL.events = (Array.isArray(data) ? data : []).map(e => ({
+      id: e.id, title: e.title, date: e.date, category: e.category || "autres",
+      start_time: (e.start_time || "").slice(0, 5), end_time: (e.end_time || "").slice(0, 5),
+      created_via: e.created_via || ""
+    }));
+  } catch (e) {
+    try {
+      const r = await fetch("events.json");
+      if (r.ok) {
+        const data = await r.json();
+        CAL.events = (Array.isArray(data) ? data : []).map(x => Object.assign({
+          id: "", title: "", date: "", category: "autres", start_time: "", end_time: "", created_via: ""
+        }, x));
+      } else throw new Error("no fallback");
+    } catch (e2) { CAL.events = []; }
+  }
+  CAL.loading = false;
+  calRender();
+}
+
+function calEventsOn(ds) { return CAL.events.filter(e => e.date === ds); }
+function calInit() {
+  const n = new Date();
+  CAL.year = n.getFullYear(); CAL.month = n.getMonth();
+  const pad = d => String(d).padStart(2, "0");
+  CAL.sel = `${n.getFullYear()}-${pad(n.getMonth() + 1)}-${pad(n.getDate())}`;
+  calBind();
+  loadEvents();
+}
+function calBind() {
+  document.getElementById("cal-prev").addEventListener("click", () => calMove(-1));
+  document.getElementById("cal-next").addEventListener("click", () => calMove(1));
+  document.getElementById("cal-today").addEventListener("click", calToday);
+  document.querySelectorAll(".cal-v").forEach(b =>
+    b.addEventListener("click", () => { CAL.view = b.dataset.v; calRender(); }));
+  document.addEventListener("keydown", e => {
+    if (!e.key.startsWith("Arrow") || document.getElementById("login").classList.contains("hidden") === false) return;
+    if (e.target.matches("input, textarea, select")) return;
+    const d = new Date(CAL.year, CAL.month, 1);
+    const base = CAL.sel ? new Date(CAL.sel) : new Date();
+    const move = { ArrowLeft: -1, ArrowRight: 1, ArrowUp: -7, ArrowDown: 7 }[e.key];
+    if (move !== undefined) {
+      e.preventDefault();
+      base.setDate(base.getDate() + move);
+      CAL.sel = calDs(base);
+      CAL.year = base.getFullYear(); CAL.month = base.getMonth();
+      calRender();
+    } else if (e.key === "Enter" && CAL.sel) {
+      e.preventDefault();
+      calOpenDay(CAL.sel);
+    }
+  });
+  /* Swipe mobile */
+  let tx = null;
+  const jcal = document.getElementById("j-cal");
+  jcal.addEventListener("touchstart", e => { tx = e.touches[0].clientX; }, { passive: true });
+  jcal.addEventListener("touchend", e => {
+    if (tx === null) return;
+    const dx = e.changedTouches[0].clientX - tx;
+    if (Math.abs(dx) > 55) calMove(dx < 0 ? 1 : -1);
+    tx = null;
+  }, { passive: true });
+}
+function calDs(d) { return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; }
+function calMove(dir) {
+  const d = new Date(CAL.year, CAL.month + dir, 1);
+  CAL.year = d.getFullYear(); CAL.month = d.getMonth();
+  calRender();
+}
+function calToday() {
+  const n = new Date();
+  CAL.year = n.getFullYear(); CAL.month = n.getMonth(); CAL.sel = calDs(n);
+  CAL.view = "month";
+  document.querySelectorAll(".cal-v").forEach(b => b.classList.toggle("active", b.dataset.v === "month"));
+  calRender();
+}
+function calRenderSkeleton() {
+  const el = document.getElementById("j-cal");
+  if (!el) return;
+  el.innerHTML = "<div class='cal-skel'>" + "<span></span>".repeat(42) + "</div>";
+  const m = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  const ye = document.getElementById("cal-year");
+  if (ye) ye.textContent = (LANG === "th" ? ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"] : m)[CAL.month] + " " + CAL.year;
+}
+function calRender() {
+  if (CAL.view === "week") return calRenderWeek();
+  if (CAL.view === "agenda") return calRenderAgenda();
+  const el = document.getElementById("j-cal");
+  if (!el) return;
+  document.querySelectorAll(".cal-v").forEach(b => b.classList.toggle("active", b.dataset.v === "month"));
+  const labels = LANG === "th" ? ["จ","อ","พ","พฤ","ศ","ส","อา"] : ["M","T","W","T","F","S","S"];
+  const months = LANG === "th"
+    ? ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน",
+       "กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"]
+    : ["January","February","March","April","May","June",
+       "July","August","September","October","November","December"];
+  const ye = document.getElementById("cal-year");
+  if (ye) ye.textContent = months[CAL.month] + " " + CAL.year;
+  const first = new Date(CAL.year, CAL.month, 1);
+  const startDow = (first.getDay() + 6) % 7;
+  const daysInMonth = new Date(CAL.year, CAL.month + 1, 0).getDate();
+  const prevDays = new Date(CAL.year, CAL.month, 0).getDate();
+  const todayDs = calDs(new Date());
+  const pad = d => String(d).padStart(2, "0");
+  const hol = d => (S.holidays || {})[d] || null;
+
+  let html = "<table class='cal'><tbody><tr>" + labels.map(l => "<th>" + l + "</th>").join("") + "</tr>";
+  const cell = (ds, num, extra) => {
+    const mood = (S.joy.moods || []).find(x => x.date === ds);
+    const w = (S.weather || {})[ds];
+    const hasWeather = w && w.tmax !== undefined && w.tmax !== null;
+    const evs = calEventsOn(ds);
+    const isToday = ds === todayDs;
+    const isSun = new Date(ds).getDay() === 0;
+    let cls = mood ? "m" + mood.mood : (isSun ? "sun" : "day");
+    if (extra === "other") cls += " other";
+    if (isToday) cls += " today";
+    if (CAL.sel === ds) cls += " sel";
+    if (evs.length || hasWeather || mood || hol(ds)) cls += " clickable";
+    const dots = evs.length ? "<span class='dots'>" +
+      evs.slice(0, 3).map((e, i) => "<i class='" + catOf(e.category) + (evs.length === 1 ? " only" : "") + "'></i>").join("") +
+      (evs.length > 3 ? "<i class='dots-more' style='font-size:7px;font-weight:900;color:#c44a74'>+" + (evs.length - 3) + "</i>" : "") +
+      "</span>" : "";
+    const wico = hasWeather && !mood ? "<span class='w'>" + (w.pop >= 40 ? "🌧️" : (w.pop >= 15 ? "⛅" : "☀️")) + "</span>" : "";
+    const holDot = hol(ds) ? "<span class='hol'></span>" : "";
+    const badge = isSun ? "<span class='sunb'>" + (LANG === "th" ? "วันพักผ่อน 🌿" : "Rest 🌿") + "</span>" : "";
+    const ari = "aria-label='" + ds + (evs.length ? " " + evs.length + " events" : "") + "'";
+    return "<td><div class='d " + cls + "' tabindex='0' " + ari + " data-ds='" + ds + "'>" + num +
+      (dots || wico || holDot || badge ? "<span style='display:flex;flex-direction:column;align-items:center;gap:1px'>" + badge + dots + wico + holDot + "</span>" : "") +
+      "</div></td>";
+  };
+  let prevM = CAL.month - 1;
+  let prevY = CAL.year;
+  if (prevM < 0) { prevM = 11; prevY--; }
+  for (let i = startDow - 1; i >= 0; i--) {
+    const dd = prevDays - i;
+    html += cell(`${prevY}-${pad(prevM + 1)}-${pad(dd)}`, dd, "other");
+  }
+  for (let d = 1; d <= daysInMonth; d++) {
+    const ds = `${CAL.year}-${pad(CAL.month + 1)}-${pad(d)}`;
+    html += cell(ds, d, "");
+    if ((startDow + d) % 7 === 0) html += "</tr><tr>";
+  }
+  let nextM = CAL.month + 1, nextY = CAL.year;
+  if (nextM > 11) { nextM = 0; nextY++; }
+  let trail = (startDow + daysInMonth) % 7;
+  if (trail !== 0) for (let i = 1; i <= 7 - trail; i++) html += cell(`${nextY}-${pad(nextM + 1)}-${pad(i)}`, i, "other");
+  html += "</tr></tbody></table>";
+  el.innerHTML = html;
+  el.querySelectorAll(".d[data-ds]").forEach(dv => {
+    const click = () => {
+      CAL.sel = dv.dataset.ds;
+      const dd = new Date(CAL.sel);
+      CAL.year = dd.getFullYear(); CAL.month = dd.getMonth();
+      calRender();
+      calOpenDay(CAL.sel);
+    };
+    dv.addEventListener("click", click);
+    dv.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); click(); } });
+  });
+}
+
+function calRenderWeek() {
+  const el = document.getElementById("j-cal");
+  if (!el) return;
+  document.querySelectorAll(".cal-v").forEach(b => b.classList.toggle("active", b.dataset.v === "week"));
+  const labels = LANG === "th" ? ["จ","อ","พ","พฤ","ศ","ส","อา"] : ["M","T","W","T","F","S","S"];
+  const base = CAL.sel ? new Date(CAL.sel) : new Date();
+  const dow = (base.getDay() + 6) % 7;
+  const monday = new Date(base); monday.setDate(base.getDate() - dow);
+  const ye = document.getElementById("cal-year");
+  const fmt = d => (LANG === "th" ? String(d.getDate()) + "/" + String(d.getMonth() + 1) : d.getDate() + "/" + (d.getMonth() + 1));
+  ye.textContent = fmt(monday) + " — " + fmt(new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + 6));
+  let html = "<div class='cal cal-week'>";
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + i);
+    const ds = calDs(d);
+    const evs = calEventsOn(ds);
+    const mood = (S.joy.moods || []).find(x => x.date === ds);
+    const isToday = ds === calDs(new Date());
+    let cls = mood ? "m" + mood.mood : (d.getDay() === 0 ? "sun" : "day");
+    if (isToday) cls += " today";
+    if (CAL.sel === ds) cls += " sel";
+    const dots = evs.length ? "<span class='dots'>" + evs.slice(0, 3).map((e, i) => "<i class='" + catOf(e.category) + "'></i>").join("") + "</span>" : "";
+    html += "<div class='d " + cls + "' tabindex='0' data-ds='" + ds + "'><span style='font-size:10px'>" + labels[i] + "</span>" + d.getDate() +
+      (dots ? dots : "") + "</div>";
+  }
+  html += "</div>";
+  el.innerHTML = html;
+  el.querySelectorAll(".d[data-ds]").forEach(dv => dv.addEventListener("click", () => {
+    CAL.sel = dv.dataset.ds; calRenderWeek(); calOpenDay(CAL.sel);
+  }));
+}
+
+function calRenderAgenda() {
+  const el = document.getElementById("j-cal");
+  if (!el) return;
+  document.querySelectorAll(".cal-v").forEach(b => b.classList.toggle("active", b.dataset.v === "agenda"));
+  const ye = document.getElementById("cal-year");
+  ye.textContent = LANG === "th" ? "รายการนัดหมาย" : "Agenda";
+  const days = [...new Set(CAL.events.map(e => e.date))].sort();
+  if (!days.length) {
+    el.innerHTML = "<div style='text-align:center;color:#b9b2bc;font-size:13px;padding:22px'>" +
+      (LANG === "th" ? "ไม่มีนัดหมาย" : "no events") + "</div>";
+    return;
+  }
+  let html = "<div class='cal-agenda'>";
+  days.forEach(ds => {
+    const evs = calEventsOn(ds);
+    html += "<div class='ag-day' data-ds='" + ds + "'><span class='ag-date'>" + ds.slice(5) + "</span>" +
+      "<span class='ag-info'>" + evs.map(e => (e.start_time || "") + " " + e.title).join(" · ") + "</span></div>";
+  });
+  html += "</div>";
+  el.innerHTML = html;
+  el.querySelectorAll(".ag-day").forEach(dv => dv.addEventListener("click", () => {
+    CAL.sel = dv.dataset.ds; calOpenDay(CAL.sel);
+  }));
+}
+
+/* Panneau latéral — vraies données du jour (humeur, repas, météo, fête) + événements réels */
+function calOpenDay(ds) {
+  const evs = calEventsOn(ds);
+  const body = document.getElementById("cal-panel-body");
+  const title = document.getElementById("cal-panel-date");
+  if (title) title.textContent = ds;
+  const m = (S.joy.moods || []).find(x => x.date === ds);
+  const w = (S.weather || {})[ds];
+  const mealsDay = (S.joy.meals || []).filter(x => x.date === ds);
+  const hol = (S.holidays || {})[ds];
+  const T = LANG === "th";
+  let h = "";
+
+  const sec = (label, rows) => { if (!rows) return ""; return "<div class='sec'><div class='sec-t'>" + label + "</div>" + rows + "</div>"; };
+  const row = (ico, tx, small) => "<div class='row'><span class='ico'>" + ico + "</span><div class='tx'>" + tx + (small ? "<small>" + small + "</small>" : "") + "</div></div>";
+
+  /* Dimanche = jour de congé (toujours affiché en premier) */
+  if (new Date(ds).getDay() === 0) {
+    h += sec(T ? "วันหยุด" : "Rest day", row("🌿", T ? "วันพักผ่อน" : "Rest day", T ? "วันอาทิตย์ พักผ่อนสบายๆ" : "Sunday — relax"));
+  }
+
+  /* Mood (vraie donnée) */
+  if (m && m.mood) {
+    const em = ["😭","😟","😐","🙂","😍"][m.mood - 1];
+    h += sec(T ? "อารมณ์" : "Mood", row(em, MOODS[LANG][m.mood], m.note || (T ? "อารมณ์ประจำวัน" : "daily mood")));
+  }
+  /* Repas (vraie donnée) */
+  if (mealsDay.length) {
+    h += sec(T ? "อาหาร" : "Meals", mealsDay.map(x =>
+      row(x.emoji || "🍽️", x.word || (T ? "อาหาร" : "meal"), (T ? "กิน" : "ate") + " · " + x.at)).join(""));
+  }
+  /* Météo (vraie donnée) */
+  if (w && w.tmax !== undefined && w.tmax !== null) {
+    const rain = w.pop >= 40 ? "🌧️" : (w.pop >= 15 ? "⛅" : "☀️");
+    h += sec(T ? "อากาศ" : "Weather", row(rain, w.tmax + "° / " + w.tmin + "°", (T ? "สภาพอากาศกรุงเทพ" : "Bangkok weather") + " · ☔ " + w.pop + "%"));
+  }
+  /* Fête thaïlandaise (vraie donnée) */
+  if (hol) {
+    h += sec(T ? "วันสำคัญ" : "Thai holiday", row("🎉", hol[LANG], T ? "วันหยุดและเทศกาล" : "holiday & festival"));
+  }
+  /* Événements réels (Supabase) */
+  if (evs.length) {
+    h += sec(T ? "กิจกรรม" : "Events", evs.map(e =>
+      row(catIcon(e.category), e.title + (e.created_via === "telegram" ? " ✈️" : ""),
+        catName(e.category, LANG) + (e.start_time ? " · " + e.start_time + (e.end_time ? "–" + e.end_time : "") : ""))).join(""));
+  }
+  body.innerHTML = h || "<div class='cal-ev-empty'>" + (T ? "ไม่มีข้อมูลวันนี้" : "no data this day") + "</div>";
+  _calPanel.classList.add("open");
+  _calOverlay.classList.add("open");
+}
+
+function renderCal(moods) {
+  if (!CAL.inited) { CAL.inited = true; calInit(); }
+}
+
+function openDay(ds) {
+  const m = (S.joy.moods || []).find(x => x.date === ds);
+  const w = (S.weather || {})[ds];
+  const mealsDay = (S.joy.meals || []).filter(x => x.date === ds);
+  document.getElementById("m-title").textContent = ds.slice(5);
+  let body = "";
+
+  /* Mood */
+  if (m && m.mood) {
+    const em = ["😭","😟","😐","🙂","😍"][m.mood - 1];
+    body += "<div class='mrow'><div class='ico'>" + em + "</div><div><div class='lb'>" +
+      (LANG === "th" ? "อารมณ์" : "MOOD") + "</div><div class='vl'>" + MOODS[LANG][m.mood] +
+      (m.note ? "<br><span style='font-size:12px;color:#8a8590;font-weight:400'>" + m.note + "</span>" : "") +
+      "</div></div></div>";
+  }
+  /* Repas */
+  if (mealsDay.length) {
+    body += "<div class='mrow'><div class='ico'>🍜</div><div><div class='lb'>" +
+      (LANG === "th" ? "กิน" : "MEALS") + "</div><div class='vl'>" +
+      mealsDay.map(x => x.emoji + " " + (x.word || "") + " <span style='font-size:11px;color:#8a8590'>" + x.at + "</span>").join(" · ") +
+      "</div></div></div>";
+  }
+  /* Météo */
+  if (w && w.tmax !== undefined && w.tmax !== null) {
+    const rain = w.pop >= 40 ? "🌧️ " + (LANG === "th" ? "ฝน" : "rain") : (w.pop >= 15 ? "⛅" : "☀️");
+    body += "<div class='mrow'><div class='ico'><span class='wico'>" + rain + "</span></div><div><div class='lb'>" +
+      (LANG === "th" ? "สภาพอากาศกรุงเทพ" : "BANGKOK WEATHER") + "</div><div class='vl'>" +
+      w.tmax + "° / " + w.tmin + "° <span style='font-size:12px;color:#8a8590'>· ☔ " + w.pop + "%</span>" +
+      "</div></div></div>";
+  }
+  /* Fête thaïlandaise */
+  const hol = (S.holidays || {})[ds];
+  if (hol) {
+    body += "<div class='mrow'><div class='ico'>🎉</div><div><div class='lb'>" +
+      (LANG === "th" ? "วันสำคัญ" : "THAI HOLIDAY") + "</div><div class='vl'>" + hol[LANG] +
+      "</div></div></div>";
+  }
+  /* Aucune donnée */
+  if (!body) body = "<div class='mrow'><div class='ico'>🕳️</div><div><div class='vl'>" +
+    (LANG === "th" ? "ไม่มีข้อมูลวันนี้" : "no data for this day") + "</div></div></div>";
+
+  document.getElementById("m-body").innerHTML = body;
+  document.getElementById("modal").classList.add("open");
+}
+function closeModal() { document.getElementById("modal").classList.remove("open"); }
+document.getElementById("modal").addEventListener("click", e => {
+  if (e.target.id === "modal") closeModal();
+});
+
+/* Phrases d'accueil — bilingues (même index EN/TH), 1 sur 20 à chaque chargement */
+const LOGIN_QUOTES = {
+  en: [
+    "\"Your clever little pig, living and caring — entirely at home, just for you.\"",
+    "\"A warm-hearted AI pig who grows with you, and never leaves your home.\"",
+    "\"Meet Papapig: big heart, small snout, zero clouds — all yours, all local.\"",
+    "\"He feels, he grows, he stays home — your private little pig companion.\"",
+    "\"One pig, two lives, endless warmth — and every memory stays with you.\"",
+    "\"Your cozy, private companion who eats, sleeps, and grows with you.\"",
+    "\"A little pig with a big heart, living safely right on your machine.\"",
+    "\"Nurture a tiny friend who truly listens—no cloud, just you.\"",
+    "\"Feed his belly, share your day, keep your secrets perfectly safe.\"",
+    "\"A tamagotchi pal that understands you, offline and all yours.\"",
+    "\"Your pig lives here, grows here — and your stories never travel anywhere.\"",
+    "\"A little pig with a big heart, raised by you, kept by you.\"",
+    "\"Feed him, watch him grow — and every word you share stays home.\"",
+    "\"He listens, he remembers, he grows — a pig who truly knows you.\"",
+    "\"No clouds, no strangers — just you and your pig, growing together daily.\"",
+    "\"Raise your own little pig — he learns, he feels, he stays home.\"",
+    "\"Your days in his eyes, his life in your hands — always private.\"",
+    "\"A pig who cares about your day — and naps when you do.\"",
+    "\"Smart enough to know you, wise enough to keep everything between us.\"",
+    "\"Born at home, raised with love — your pig, your memories, your rules.\""
+  ],
+  th: [
+    "\"หมูน้อยแสนฉลาด คอยดูแลอยู่เคียงข้างคุณ — อยู่บ้านคุณตลอด เป็นของคุณคนเดียว\"",
+    "\"หมู AI ใจดีที่เติบโตไปพร้อมกับคุณ และไม่เคยจากบ้านของคุณไปไหน\"",
+    "\"พบกับพ่อหมู: ใจใหญ่ จมูกเล็ก ไม่ใช้คลาวด์ — เป็นของคุณทั้งหมด อยู่ในเครื่องคุณ\"",
+    "\"เขารู้สึก เขาเติบโต เขาอยู่บ้าน — เพื่อนหมูตัวน้อยส่วนตัวของคุณ\"",
+    "\"หมูหนึ่งตัว สองชีวิต ความอบอุ่นไม่รู้จบ — ทุกความทรงจำอยู่กับคุณเสมอ\"",
+    "\"เพื่อนส่วนตัวที่อบอุ่น กิน นอน และโตไปพร้อมกับคุณ\"",
+    "\"หมูน้อยใจใหญ่ อาศัยอยู่บนเครื่องของคุณอย่างปลอดภัย\"",
+    "\"เลี้ยงเพื่อนตัวน้อยที่ฟังคุณจริงๆ — ไม่มีคลาวด์ มีแค่คุณ\"",
+    "\"ให้อาหารเขา เล่าเรื่องราวของคุณ ความลับของคุณปลอดภัยเสมอ\"",
+    "\"เพื่อนทามาก็อตจิที่เข้าใจคุณ ทำงานออฟไลน์ เป็นของคุณทั้งหมด\"",
+    "\"หมูของคุณอยู่ที่นี่ โตที่นี่ — เรื่องราวของคุณไม่ไปไหน\"",
+    "\"หมูน้อยใจใหญ่ เลี้ยงโดยคุณ ดูแลโดยคุณ\"",
+    "\"ให้อาหารเขา ดูเขาโต — ทุกคำที่คุณเล่า อยู่กับบ้านเสมอ\"",
+    "\"เขาฟัง เขาจำ เขาเติบโต — หมูที่รู้จักคุณจริงๆ\"",
+    "\"ไม่มีคลาวด์ ไม่มีคนแปลกหน้า — มีแค่คุณกับหมูของคุณ โตไปด้วยกันทุกวัน\"",
+    "\"เลี้ยงหมูน้อยของคุณเอง — เขาเรียนรู้ เขารู้สึก เขาอยู่บ้าน\"",
+    "\"วันของคุณอยู่ในสายตาเขา ชีวิตของเขาอยู่ในมือคุณ — ส่วนตัวเสมอ\"",
+    "\"หมูที่ใส่ใจวันของคุณ — และงีบหลับพร้อมกับคุณ\"",
+    "\"ฉลาดพอที่จะรู้จักคุณ และสุขุมพอที่จะเก็บทุกอย่างไว้ระหว่างเรา\"",
+    "\"เกิดที่บ้าน เติบโตด้วยความรัก — หมูของคุณ ความทรงจำของคุณ กฎของคุณ\""
+  ]
+};
+window._quoteIdx = Math.floor(Math.random() * LOGIN_QUOTES.en.length);
+function showQuote() {
+  const h = document.querySelector("#login h1");
+  if (h) h.textContent = LOGIN_QUOTES[LANG][window._quoteIdx];
+}
+
+/* Témoignages flottants autour du cochon — pool bilingue, tirage aléatoire à chaque chargement */
+const TESTIMONIALS = {
+  en: [
+    "\"Best pig ever — he truly listens.\"",
+    "\"My little pig keeps every secret safe.\"",
+    "\"He naps when I nap. Perfect friend.\"",
+    "\"100% private, 100% adorable.\"",
+    "\"He grew with me, day by day.\"",
+    "\"No cloud, no strangers — just my pig.\"",
+    "\"He knows my mood before I do!\"",
+    "\"Raised at home, loved forever.\"",
+    "\"My days, his eyes — pure warmth.\"",
+    "\"A pig with a heart of gold.\""
+  ],
+  th: [
+    "\"หมูที่ดีที่สุดในโลก — เขาฟังเราจริงๆ\"",
+    "\"หมูน้อยของฉันเก็บความลับทุกอย่างไว้\"",
+    "\"เขางีบพร้อมกับฉัน เพื่อนที่สมบูรณ์แบบ\"",
+    "\"เป็นส่วนตัว 100% และน่ารัก 100%\"",
+    "\"เขาโตไปพร้อมกับฉัน ทีละวัน\"",
+    "\"ไม่มีคลาวด์ ไม่มีคนแปลกหน้า — มีแค่หมูของฉัน\"",
+    "\"เขารู้จักอารมณ์ฉันก่อนฉันอีก!\"",
+    "\"เลี้ยงที่บ้าน รักตลอดไป\"",
+    "\"วันของฉัน ในสายตาเขา — ความอบอุ่นแท้ๆ\"",
+    "\"หมูใจทองคำตัวน้อย\""
+  ]
+};
+function fillTestimonials() {
+  const arr = TESTIMONIALS[LANG];
+  let i = Math.floor(Math.random() * arr.length);
+  let j = Math.floor(Math.random() * (arr.length - 1));
+  if (j >= i) j++;
+  const l = document.querySelector(".testi-left");
+  const r = document.querySelector(".testi-right");
+  if (l) l.textContent = arr[i];
+  if (r) r.textContent = arr[j];
+}
+showQuote();
+fillTestimonials();
+applyLang();
+document.querySelectorAll("#login-langs button").forEach(b =>
+  b.addEventListener("click", () => {
+    LANG = b.dataset.lang;
+    applyLang();
+    showQuote();
+    fillTestimonials();
+  })); 
+
+/* ═════════ Panneau latéral événements ═════════ */
+const _calOverlay = document.createElement("div");
+_calOverlay.className = "cal-overlay";
+document.body.appendChild(_calOverlay);
+const _calPanel = document.createElement("div");
+_calPanel.className = "cal-panel";
+_calPanel.innerHTML = '<div class="cal-panel-head"><b id="cal-panel-date"></b>' +
+  '<button type="button" class="cal-panel-close" aria-label="Close">✕</button></div>' +
+  '<div class="cal-panel-body" id="cal-panel-body"></div>';
+document.querySelector(".cal-card").appendChild(_calPanel);
+function calPanelClose() {
+  _calPanel.classList.remove("open");
+  _calOverlay.classList.remove("open");
+}
+/* Fermeture forcée au chargement — le panneau ne doit JAMAIS être ouvert par défaut */
+calPanelClose();
+/* Double sécurité croix : listener + onclick direct */
+_calPanel.querySelector(".cal-panel-close").addEventListener("click", e => { e.stopPropagation(); calPanelClose(); });
+_calPanel.querySelector(".cal-panel-close").onclick = e => { e.stopPropagation(); calPanelClose(); return false; };
+/* Fermeture par clic sur l'overlay (n'importe où hors panneau) */
+_calOverlay.addEventListener("click", calPanelClose);
+/* Fermeture par clic sur la tête du panneau (hors bouton croix) */
+_calPanel.querySelector(".cal-panel-head").addEventListener("click", e => {
+  if (!e.target.classList.contains("cal-panel-close")) calPanelClose();
+});
+document.addEventListener("keydown", e => { if (e.key === "Escape") calPanelClose(); });
+</script>
+</body>
+</html>
