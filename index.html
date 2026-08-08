@@ -1276,6 +1276,27 @@ const LOGIN_QUOTES = {
     "\"Smart enough to know you, wise enough to keep everything between us.\"",
     "\"Born at home, raised with love — your pig, your memories, your rules.\""
   ],
+  fr: [
+    "\"Ton petit cochon malin, vivant et attentionné — entièrement chez toi, rien que pour toi.\"",
+    "\"Un cochon IA au grand cœur qui grandit avec toi et ne quitte jamais ta maison.\"",
+    "\"Voici Papapig : grand cœur, petit groin, zéro cloud — tout à toi, tout local.\"",
+    "\"Il ressent, il grandit, il reste à la maison — ton compagnon cochon tout privé.\"",
+    "\"Un cochon, deux vies, une chaleur sans fin — et chaque souvenir reste avec toi.\"",
+    "\"Ton compagnon douillet et privé qui mange, dort et grandit avec toi.\"",
+    "\"Un petit cochon au grand cœur, qui vit en sécurité sur ta machine.\"",
+    "\"Élève un ami minuscule qui t'écoute vraiment — pas de cloud, juste toi.\"",
+    "\"Remplis son ventre, partage ta journée, garde tes secrets bien au chaud.\"",
+    "\"Un pote tamagotchi qui te comprend, hors ligne et rien qu'à toi.\"",
+    "\"Ton cochon vit ici, grandit ici — et tes histoires ne voyagent jamais.\"",
+    "\"Nourris-le, regarde-le grandir — et chaque mot partagé reste à la maison.\"",
+    "\"Il écoute, il se souvient, il grandit — un cochon qui te connaît vraiment.\"",
+    "\"Pas de cloud, pas d'inconnus — juste toi et ton cochon, qui grandissez ensemble.\"",
+    "\"Élève ton petit cochon — il apprend, il ressent, il reste à la maison.\"",
+    "\"Tes journées dans ses yeux, sa vie dans tes mains — toujours privé.\"",
+    "\"Un cochon qui se soucie de ta journée — et fait la sieste quand tu dors.\"",
+    "\"Assez malin pour te connaître, assez sage pour tout garder entre nous.\"",
+    "\"Né à la maison, élevé avec amour — ton cochon, tes souvenirs, tes règles.\""
+  ],
   th: [
     "\"หมูน้อยแสนฉลาด คอยดูแลอยู่เคียงข้างคุณ — อยู่บ้านคุณตลอด เป็นของคุณคนเดียว\"",
     "\"หมู AI ใจดีที่เติบโตไปพร้อมกับคุณ และไม่เคยจากบ้านของคุณไปไหน\"",
@@ -1302,7 +1323,8 @@ const LOGIN_QUOTES = {
 window._quoteIdx = Math.floor(Math.random() * LOGIN_QUOTES.en.length);
 function showQuote() {
   const h = document.querySelector("#login h1");
-  if (h) h.textContent = LOGIN_QUOTES[LANG][window._quoteIdx];
+  const q = LOGIN_QUOTES[LANG] || LOGIN_QUOTES.en;
+  if (h) h.textContent = q[window._quoteIdx];
 }
 
 /* Témoignages flottants autour du cochon — pool bilingue, tirage aléatoire à chaque chargement */
@@ -1333,7 +1355,7 @@ const TESTIMONIALS = {
   ]
 };
 function fillTestimonials() {
-  const arr = TESTIMONIALS[LANG];
+  const arr = TESTIMONIALS[LANG] || TESTIMONIALS.en;
   let i = Math.floor(Math.random() * arr.length);
   let j = Math.floor(Math.random() * (arr.length - 1));
   if (j >= i) j++;
