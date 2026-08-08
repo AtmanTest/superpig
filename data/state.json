@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-08 10:42 Paris",
+  "generated_at": "2026-08-08 10:49 Paris",
   "joy": {
     "mood_today": null,
     "mood_note": "",
@@ -25,7 +25,7 @@
   "papapig": {
     "persona": "papapig",
     "energy": 85,
-    "hunger": 15,
+    "hunger": 16,
     "sleep": 60,
     "xp": 120,
     "level": 2,
@@ -176,33 +176,33 @@
       "pop": 10
     },
     "2026-08-10": {
-      "tmax": 32.8,
-      "tmin": 19.8,
+      "tmax": 32.9,
+      "tmin": 20.5,
       "pop": 0
     },
     "2026-08-11": {
-      "tmax": 33.7,
+      "tmax": 33.6,
       "tmin": 18.5,
       "pop": 3
     },
     "2026-08-12": {
-      "tmax": 37.0,
-      "tmin": 20.9,
+      "tmax": 37.7,
+      "tmin": 20.8,
       "pop": 3
     },
     "2026-08-13": {
-      "tmax": 37.5,
-      "tmin": 24.0,
+      "tmax": 39.2,
+      "tmin": 24.2,
       "pop": 0
     },
     "2026-08-14": {
-      "tmax": 38.5,
-      "tmin": 23.1,
+      "tmax": 31.6,
+      "tmin": 20.8,
       "pop": 15
     },
     "2026-08-15": {
       "tmax": 36.4,
-      "tmin": 26.1,
+      "tmin": 18.0,
       "pop": 20
     },
     "2026-08-16": {
