@@ -1,19 +1,12 @@
 {
-  "generated_at": "2026-08-08 09:01 Bangkok",
+  "generated_at": "2026-08-08 09:24 Bangkok",
   "joy": {
-    "mood_today": 3,
+    "mood_today": null,
     "mood_note": "",
-    "moods": [
-      {
-        "date": "2026-08-08",
-        "mood": 3,
-        "note": "",
-        "axe": "นอนเร็วขึ้น 💤 / dormir plus tôt 💤"
-      }
-    ],
+    "moods": [],
     "meals": [],
     "energy": 70,
-    "goal": "นอนเร็วขึ้น 💤 / dormir plus tôt 💤",
+    "goal": "",
     "streak": 0
   },
   "papapig": {
