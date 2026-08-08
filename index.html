@@ -1041,7 +1041,7 @@ function calRender() {
     const hasWeather = w && w.tmax !== undefined && w.tmax !== null;
     const evs = calEventsOn(ds);
     const isToday = ds === todayDs;
-    const isSun = new Date(ds).getDay() === 0;
+    const isSun = (new Date(ds).getDay() === 0 || new Date(ds).getDay() === 6);
     let cls = mood ? "m" + mood.mood : (isSun ? "sun" : "day");
     if (extra === "other") cls += " other";
     if (isToday) cls += " today";
@@ -1108,7 +1108,7 @@ function calRenderWeek() {
     const evs = calEventsOn(ds);
     const mood = (S.joy.moods || []).find(x => x.date === ds);
     const isToday = ds === calDs(new Date());
-    let cls = mood ? "m" + mood.mood : (d.getDay() === 0 ? "sun" : "day");
+    let cls = mood ? "m" + mood.mood : ((d.getDay() === 0 || d.getDay() === 6) ? "sun" : "day");
     if (isToday) cls += " today";
     if (CAL.sel === ds) cls += " sel";
     const dots = evs.length ? "<span class='dots'>" + evs.slice(0, 3).map((e, i) => "<i class='" + catOf(e.category) + "'></i>").join("") + "</span>" : "";
@@ -1164,9 +1164,10 @@ function calOpenDay(ds) {
   const sec = (label, rows) => { if (!rows) return ""; return "<div class='sec'><div class='sec-t'>" + label + "</div>" + rows + "</div>"; };
   const row = (ico, tx, small) => "<div class='row'><span class='ico'>" + ico + "</span><div class='tx'>" + tx + (small ? "<small>" + small + "</small>" : "") + "</div></div>";
 
-  /* Dimanche = jour de congé (toujours affiché en premier) */
-  if (new Date(ds).getDay() === 0) {
-    h += sec(L("วันหยุด", "Rest day", "Jour de repos"), row("🌿", L("วันพักผ่อน", "Rest day", "Jour de repos"), L("วันอาทิตย์ พักผ่อนสบายๆ", "Sunday — relax", "Dimanche — détente")));
+  /* Samedi + dimanche = jours de repos (toujours affiché en premier) */
+  const dd = new Date(ds).getDay();
+  if (dd === 0 || dd === 6) {
+    h += sec(L("วันหยุด", "Rest day", "Jour de repos"), row("🌿", L("วันพักผ่อน", "Rest day", "Jour de repos"), L("วันหยุดสุดสัปดาห์ พักผ่อนสบายๆ", "Weekend — relax", "Week-end — détente")));
   }
 
   /* Mood (vraie donnée) */
