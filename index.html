@@ -920,7 +920,7 @@ async function loadEvents() {
   CAL.loading = true;
   if (document.getElementById("j-cal")) calRenderSkeleton();
   try {
-    const r = await fetch(SB_URL + "/rest/v1/events?select=*&order=date", {
+    const r = await fetch(SB_URL + "/rest/v1/events?select=*&order=date&profile=eq.mentorpig", {
       headers: { apikey: SB_ANON, Authorization: "Bearer " + SB_ANON }
     });
     if (!r.ok) throw new Error("http " + r.status);

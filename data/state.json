@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-08 09:42 Paris",
+  "generated_at": "2026-08-08 09:58 Paris",
   "joy": {
     "mood_today": null,
     "mood_note": "",
@@ -25,7 +25,7 @@
   "papapig": {
     "persona": "papapig",
     "energy": 85,
-    "hunger": 9,
+    "hunger": 11,
     "sleep": 60,
     "xp": 120,
     "level": 2,
