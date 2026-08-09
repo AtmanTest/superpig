@@ -5,13 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#ff6b9d">
-<title>Papapig 🐷</title>
+<title>MENTHORPIG AI</title>
 <link rel="icon" type="image/jpeg" href="images/peppa-ai.jpg">
 <link rel="apple-touch-icon" href="images/peppa-ai.jpg">
 <style>
   :root {
     --pink: #ff6b9d; --teal: #2ec4b6; --cream: #fff8f0; --dark: #2d2a32;
     --card: #ffffff; --soft: #fdf0f4; --line: #ffe3ec;
+    --bg-soft: #fff5f8; --line2: #f6e3ea; --rose: #5a3345; --accent: #c2185b;
+    --input-bg: #ffffff; --txt-1: #333333;
+  }
+  body.dark {
+    --cream: #17141a; --dark: #f2e8ee; --card: #221d26; --soft: #2a2230; --line: #3a2f3d;
+    --pink: #ff9ec2; --teal: #4fd6c9;
+    --bg-soft: #1f1a24; --line2: #3a2f3d; --rose: #ffd9e8; --accent: #ff9ec2;
+    --input-bg: #2a2230; --txt-1: #f2e8ee;
   }
   @font-face { font-family:"PeppaBold"; src:url('fonts/PeppaBold.woff2') format('woff2'); font-display:swap; }
   @font-face { font-family:"ButteredToast"; src:url('fonts/ButteredToast.woff2') format('woff2'); font-display:swap; }
@@ -94,7 +102,7 @@
   .siri-glow input { position:relative; z-index:1; width:100%; border:none;
     padding: 14px 18px; border-radius: 999px;
     font-size: 16px;
-    text-align:center; outline:none; background: #ffe3ec; color: #5a3345;
+    text-align:center; outline:none; background: var(--line); color: var(--rose);
     caret-color: #ff6b9d; box-shadow: inset 0 2px 6px rgba(255,107,157,.18);
   }
   #login input::placeholder { color: #c48ba2; }
@@ -170,62 +178,83 @@
   .tab.active { background: var(--cream); color: var(--dark); }
   main { max-width: 640px; margin: 0 auto; padding: 18px 14px 60px; }
   .joy-hero { text-align:center; margin: 0 0 16px; }
-  .joy-hero img { width:100%; max-width:300px; display:inline-block; }
+  .joy-hero img { width:90%; max-width:270px; display:inline-block;
+    filter: drop-shadow(0 0 16px rgba(96,165,250,.7))
+            drop-shadow(0 0 32px rgba(139,92,246,.6))
+            drop-shadow(0 0 56px rgba(59,130,246,.35)); }
   .grid { display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
   @media (max-width: 480px) { .grid { grid-template-columns: 1fr; } }
   .card {
-    background: var(--card); border-radius: 18px; padding: 16px;
+    position: relative; background: var(--card); border-radius: 18px; padding: 16px;
     box-shadow: 0 2px 10px rgba(45,42,50,.06); border: 1px solid var(--line);
   }
   .card h3 { font-size: 12px; text-transform: uppercase; letter-spacing:1.2px;
              color:#b06a86; margin-bottom: 10px; font-weight: 800; }
+  .rem-card { border: 1.5px solid #f3a8c4; box-shadow: 0 3px 14px rgba(255,107,157,.14); }
+  .rem-card .rem-title { font-size: 15px; font-weight: 900; letter-spacing: .6px;
+             color: #d6336c; margin-bottom: 4px;
+             background: linear-gradient(135deg, #d6336c, #ff6b9d); -webkit-background-clip: text;
+             background-clip: text; -webkit-text-fill-color: transparent; }
   .card .big { font-size: 34px; font-weight: 800; line-height:1.15; }
   .card .sub { font-size: 12px; color:#8a8590; margin-top:5px; }
+  .mood-nav { display:flex; align-items:center; gap:8px; }
+  .mood-nav .cal-nav { flex:none; }
+  .mood-main { flex:1; min-width:0; }
+  .mood-date { font-size:10.5px; opacity:.75; letter-spacing:.4px; }
   .full { grid-column: 1 / -1; }
-  .bar { height: 10px; border-radius: 999px; background: #ffe3ec; overflow:hidden; margin-top: 10px; }
+  .bar { height: 10px; border-radius: 999px; background: var(--line); overflow:hidden; margin-top: 10px; }
   .bar > div { height:100%; border-radius:999px;
                background: linear-gradient(90deg, var(--pink), var(--teal)); }
 
   /* Calendrier */
   .cal { width:100%; border-collapse: separate; border-spacing: 4px; table-layout: fixed; }
-  .cal th { font-size: 10px; color:#b06a86; padding-bottom: 4px; }
+  .cal th { font-size: 10px; color:#d4578a; padding-bottom: 4px; letter-spacing:.3px; }
   .cal-toolbar { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px; margin-bottom:10px; }
   .cal-title { display:flex; align-items:center; gap:8px; }
-  .cal-year { font-weight:800; font-size:15px; color:#1d3f73; letter-spacing:.3px; white-space:nowrap; min-width:120px; text-align:center; }
+  .cal-year { font-weight:800; font-size:15px; color:#c23a6e; letter-spacing:.3px; white-space:nowrap; min-width:120px; text-align:center; }
   .cal-nav, .cal-today, .cal-v {
-    border:1px solid rgba(255,255,255,.55); background:#fff; color:#c44a74;
+    border:1px solid rgba(255,255,255,.7); background:rgba(255,255,255,.72); color:#c44a74;
     font-weight:800; border-radius:999px; cursor:pointer; min-height:40px; min-width:40px;
     font-size:15px; padding:6px 12px; transition: transform .15s, background .15s;
+    backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+    box-shadow:0 2px 10px rgba(214,60,130,.14);
   }
   .cal-nav:active, .cal-today:active, .cal-v:active { transform: scale(.94); }
   .cal-today { font-size:12.5px; padding:8px 14px; }
   .cal-actions { display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
-  .cal-views { display:flex; gap:4px; background:rgba(255,107,157,.12); border-radius:999px; padding:3px; }
-  .cal-v { border:none; background:transparent; color:#c44a74; font-size:12px; min-height:34px; min-width:auto; padding:6px 11px; }
-  .cal-v.active { background:#ff6b9d; color:#fff; box-shadow:0 2px 8px rgba(255,107,157,.4); }
+  .cal-views { display:flex; gap:4px; background:rgba(255,107,157,.14); border-radius:999px; padding:3px; }
+  .cal-v { border:none; background:transparent; color:#c44a74; font-size:12px; min-height:34px; min-width:auto; padding:6px 11px; box-shadow:none; }
+  .cal-v.active { background:#ff6b9d; color:#fff; box-shadow:0 2px 10px rgba(255,107,157,.5); }
   .cal td { text-align:center; font-size: 13px; font-weight: 700; }
   .cal .d {
     display:flex; flex-direction:column; align-items:center; justify-content:center; height: 46px;
-    border-radius: 10px; background: #fbeadd; color:#a8886e;
+    border-radius: 14px; background:rgba(255,214,229,.65); color:#c2185b;
     font-family:"PeppaBold", -apple-system, sans-serif; font-weight:900;
     position:relative; outline:none; cursor:default;
+    backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+    border:1px solid rgba(255,255,255,.55);
+    box-shadow:0 1px 6px rgba(214,60,130,.08), inset 0 1px 0 rgba(255,255,255,.6);
+    transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
   }
-  .cal .d.other { background:#f6f0ea; color:#c9b8a8; opacity:.75; }
-  .cal .d.sel { background:#ff6b9d !important; color:#fff !important; box-shadow:0 0 0 2px #fff, 0 0 0 4px #ff6b9d; }
+  .cal .d.other { background:rgba(246,230,238,.45); color:#d8a8c0; opacity:.85; border-color:transparent; box-shadow:none; }
+  .cal .d.sel { background:linear-gradient(135deg,#ff8ab3,#ff4d8d) !important; color:#fff !important;
+    box-shadow:0 0 0 2px #fff, 0 4px 14px rgba(255,77,141,.5); border-color:transparent; }
   .cal .d:focus-visible { box-shadow:0 0 0 3px #ff6b9d; }
   .cal .d.clickable { cursor:pointer; }
+  .cal .d.clickable:hover { background:#ffc2d6 !important; color:#c2185b !important;
+    transform:translateY(-1px); box-shadow:0 4px 14px rgba(255,77,141,.35); }
   .cal .d.clickable:active { transform: scale(.93); }
-  .cal .d.sun { background:#d9f2e6; color:#2e7d5b; }
+  .cal .d.sun { background:rgba(228,247,238,.72); color:#1f8a5f; }
   .cal .d .sunb { font-size: 8px; line-height: 1; margin-top: 1px; font-weight: 700; letter-spacing:.2px; }
-  .cal .d.sun.other { background:#eef7f2; color:#8fbfa8; }
-  .cal .d.m1 { background:#ff5d6c; color:#fff; }
-  .cal .d.m2 { background:#ffa05c; color:#fff; }
+  .cal .d.sun.other { background:rgba(240,248,244,.5); color:#9fc9b2; }
+  .cal .d.m1 { background:#2ecc71; color:#fff; }
+  .cal .d.m2 { background:#9be89b; color:#1e6b1e; }
   .cal .d.m3 { background:#f7d154; color:#7a6420; }
-  .cal .d.m4 { background:#9be89b; color:#1e6b1e; }
-  .cal .d.m5 { background:#2ecc71; color:#fff; }
-  .cal .d.today { background:#ff9f43 !important; color:#fff !important;
+  .cal .d.m4 { background:#d63384; color:#fff; }
+  .cal .d.m5 { background:#ff5d6c; color:#fff; }
+  .cal .d.today { background:linear-gradient(135deg,#ff9f43,#ff6b9d) !important; color:#fff !important;
                      animation: pulseRing 2s ease-in-out infinite; }
-  .cal .d.today.sel { background:#ff6b9d !important; box-shadow:0 0 0 2px #fff, 0 0 0 4px #ff9f43; }
+  .cal .d.today.sel { background:linear-gradient(135deg,#ff8ab3,#ff4d8d) !important; box-shadow:0 0 0 2px #fff, 0 4px 14px rgba(255,77,141,.5); }
   @keyframes pulseRing {
     0%, 100% { box-shadow: 0 0 0 2px rgba(255,255,255,.95); }
     50%      { box-shadow: 0 0 0 5px rgba(255,255,255,0); }
@@ -266,9 +295,19 @@
   .cal-panel-head b { font-size:15px; text-shadow:0 1px 2px rgba(180,40,90,.3); }
   .cal-panel-close { background:rgba(255,255,255,.55); border:none; color:#d6336c; font-size:16px; font-weight:900;
     border-radius:50%; width:34px; height:34px; cursor:pointer; line-height:1; }
-  .cal-panel-body .cal-ev-del { background:rgba(214,60,120,.14); border:1px solid rgba(214,60,120,.35); color:#b3004b;
-    border-radius:50%; width:28px; height:28px; font-size:12px; font-weight:900; cursor:pointer; flex:none;
-    line-height:1; margin-left:auto; }
+  .cal-legend { display:flex; flex-wrap:wrap; gap:6px 8px; margin-top:12px; padding:10px 12px;
+    background:rgba(255,140,180,.08); border:1px solid rgba(255,158,194,.30); border-radius:14px;
+    font-size:11px; color:#7a4a60; align-items:center; }
+  .cal-legend .lg-title { width:100%; font-weight:700; font-size:10px; letter-spacing:.8px;
+    text-transform:uppercase; color:#d6336c; margin-bottom:2px; }
+  .cal-legend .lg { display:inline-flex; align-items:center; gap:5px; padding:4px 9px;
+    background:rgba(255,255,255,.55); border:1px solid rgba(255,158,194,.35); border-radius:20px;
+    backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px); }
+  .cal-legend .lg i { width:8px; height:8px; border-radius:50%; display:inline-block; flex:none; }
+  .cal-legend .lg .w { font-size:11px; }
+  .cal-panel-body .cal-ev-del { margin-left:auto; flex:none; width:28px; height:28px; border-radius:50%;
+    border:none; background:rgba(214,51,108,.12); color:#d6336c; font-size:12px; font-weight:900; cursor:pointer; line-height:1; }
+  .cal-panel-body .cal-ev-del:hover { background:#d6336c; color:#fff; }
   .cal-panel-body { flex:1; overflow-y:auto; padding:14px 18px; }
   .cal-panel-body .sec { margin:14px 0; }
   .cal-panel-body .sec:first-child { margin-top:0; }
@@ -286,7 +325,7 @@
   .cal-ev .ev-dot { width:10px; height:10px; border-radius:50%; flex:none; }
   .cal-ev .ev-dot.only { border-radius:0; transform:rotate(45deg); }
   .cal-ev .ev-info { flex:1; min-width:0; }
-  .cal-ev .ev-title { font-size:14px; font-weight:800; color:#5a3345; display:flex; align-items:center; gap:5px; }
+  .cal-ev .ev-title { font-size:14px; font-weight:800; color:var(--rose); display:flex; align-items:center; gap:5px; }
   .cal-ev .ev-meta { font-size:11.5px; color:#8a8590; margin-top:2px; }
   .cal-ev .ev-tg { font-size:11px; background:#e6faf7; color:#1a9e90; border-radius:6px; padding:1px 6px; font-weight:800; }
   .cal-ev-empty { text-align:center; color:#b9b2bc; font-size:13px; padding:28px 0; }
@@ -295,11 +334,11 @@
   .cal-week .d { height:64px; }
   /* Vue agenda */
   .cal-agenda { display:flex; flex-direction:column; gap:6px; }
-  .cal-agenda .ag-day { background:#fff5f9; border:1px solid #f6e3ea; border-radius:12px; padding:8px 12px;
+  .cal-agenda .ag-day { background:var(--bg-soft); border:1px solid var(--line2); border-radius:12px; padding:8px 12px;
     display:flex; align-items:center; gap:10px; cursor:pointer; }
   .cal-agenda .ag-day:active { transform:scale(.98); }
   .cal-agenda .ag-date { font-weight:900; color:#c44a74; font-size:13px; min-width:64px; }
-  .cal-agenda .ag-info { font-size:12.5px; color:#5a3345; flex:1; }
+  .cal-agenda .ag-info { font-size:12.5px; color:var(--rose); flex:1; }
   /* Dark mode */
   @media (prefers-color-scheme: dark) {
     .cal-panel { background:rgba(120,30,70,.32); backdrop-filter:blur(6px) saturate(1.4); -webkit-backdrop-filter:blur(6px) saturate(1.4); border-color:rgba(255,158,194,.4); box-shadow:0 8px 32px rgba(0,0,0,.4); }
@@ -335,12 +374,232 @@
   }
   .meal .t { font-size: 10px; color:#8a8590; }
   .meal b { font-size: 13px; font-weight: 700; }
+  .meal .meal-del { margin-left:auto; flex:none; width:24px; height:24px; border-radius:50%;
+    border:none; background:rgba(214,51,108,.12); color:#d6336c; font-size:11px; font-weight:900;
+    cursor:pointer; line-height:1; }
+  .meal .meal-del:hover { background:#d6336c; color:#fff; }
+  .meal .photo { width:52px; height:52px; object-fit:cover; border-radius:10px; border:2px solid rgba(255,158,194,.5); cursor:zoom-in; flex:none; }
+  .meal .photo-sm { width:52px; height:52px; object-fit:cover; border-radius:10px; border:2px solid rgba(255,158,194,.5); cursor:zoom-in; }
+  #meal-zoom { position:fixed; inset:0; z-index:999; background:rgba(20,10,20,.75); display:none; align-items:center; justify-content:center; cursor:zoom-out; }
+  #meal-zoom.open { display:flex; }
+  #meal-zoom img { max-width:92vw; max-height:88vh; border-radius:14px; box-shadow:0 12px 40px rgba(0,0,0,.5); }
+  .rem-sub { font-size: 12px; color:#8a8590; margin-top:-6px; margin-bottom: 10px; }
+  .rem-tags { display:flex; flex-wrap:wrap; gap:6px; min-height: 2px; margin-top: 8px; }
+  .rem-tag {
+    display:inline-flex; align-items:center; gap:5px; font-size: 12px;
+    padding: 4px 10px; border-radius: 999px; background: var(--pink); color:#fff;
+  }
+  .rem-tag button {
+    font: inherit; color:#fff; background: transparent; border: 0; cursor:pointer;
+    font-size: 12px; line-height: 1; padding: 0 2px; opacity:.85;
+  }
+  .rem-tag button:hover { opacity: 1; }
+  .rem-tag.urgent { background:var(--line); color:#d6336c; border-color:#ffb3cc; }
+  .rem-tag.urgent::before { content:"⚠️ "; }
+  .rem-quick { display:flex; flex-direction:column; gap:5px; margin-top: 8px; }
+  .rem-quick-row { display:flex; flex-wrap:wrap; gap:6px; }
+  .rem-quick-row button {
+    font: inherit; font-size: 12px; padding: 4px 11px; border-radius: 999px;
+    border: 1px solid var(--pink); background: var(--bg-soft); color: var(--accent); cursor: pointer; transition: all .15s ease;
+  }
+  .rem-quick-row button:hover { background: var(--line); }
+  .rem-datetime { display:flex; gap:8px; margin-top: 10px; align-items:center; }
+  .pick-wrap { position:relative; flex:1; min-width:0; }
+  .pick-wrap .rem-pick { width:100%; }
+  .pick-wrap .pick-pop { left:0; right:auto; }
+  .rem-datetime input[type="date"], .rem-datetime input[type="time"] {
+    flex:1; min-width:0; padding: 8px 10px; border-radius: 999px;
+    border: 1px solid var(--pink); background: var(--input-bg); color:var(--txt-1); font: inherit; font-size: 13px;
+  }
+  .rem-pick {
+    flex:1; min-width:0; display:flex; align-items:center; gap:6px;
+    padding: 8px 12px; border-radius: 999px;
+    border: 1px solid var(--pink); background: var(--input-bg); color:var(--accent);
+    font: inherit; font-size: 13px; font-weight: 700; cursor: pointer;
+    transition: transform .12s ease, background .15s ease, box-shadow .15s ease;
+  }
+  .rem-pick:active { transform: scale(.96); }
+  .rem-pick:hover { background:var(--bg-soft); }
+  .rem-pick-ic { font-size:14px; }
+  .rem-pick-lbl { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .rem-pick-ip { position:absolute; width:1px; height:1px; opacity:0; pointer-events:none; }
+  /* Popover date/heure — glass rose : on voit le fond à travers, flouté */
+  .pick-pop {
+    position:absolute; z-index:60; margin-top:6px; min-width: 260px;
+    background: linear-gradient(135deg, rgba(255,214,229,.22), rgba(255,240,246,.16));
+    backdrop-filter: blur(24px) saturate(1.6); -webkit-backdrop-filter: blur(24px) saturate(1.6);
+    border: 1.5px solid rgba(214,51,108,.5); border-radius: 18px;
+    box-shadow: 0 12px 32px rgba(214,51,108,.25), 0 2px 8px rgba(0,0,0,.1), inset 0 0 0 1px rgba(255,255,255,.45);
+    padding: 10px; display:none;
+  }
+  .pick-pop.open { display:block; }
+  .pick-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
+  .pick-title { font-size:13px; font-weight:800; color:var(--accent); letter-spacing:.2px; }
+  .pick-nav {
+    width:28px; height:28px; border-radius:50%; border:1px solid var(--pink);
+    background: color-mix(in srgb, var(--card) 60%, transparent); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    color:var(--accent); font-size:16px; font-weight:700; cursor:pointer; line-height:1;
+    display:flex; align-items:center; justify-content:center;
+  }
+  body.dark .pick-nav { background: rgba(255,255,255,.14); border-color: rgba(255,158,194,.5); }
+  .pick-nav:hover { background: var(--line); }
+  .pick-nav.pick-clear { font-size:11px; }
+  .pick-dow { display:grid; grid-template-columns: repeat(7, 1fr); gap:2px; margin-bottom:4px; }
+  .pick-dow span { text-align:center; font-size:10px; font-weight:800; color:var(--pink); padding:3px 0; }
+  .pick-grid { display:grid; grid-template-columns: repeat(7, 1fr); gap:2px; }
+  .pick-grid button {
+    border:none; border-radius:10px; padding:7px 0;
+    font: inherit; font-size:12.5px; font-weight:800; color:#fff; cursor:pointer; text-align:center;
+    background: rgba(214,51,108,.28); text-shadow: 0 1px 2px rgba(0,0,0,.35);
+  }
+  .pick-grid button:hover { background: rgba(214,51,108,.45); }
+  .pick-grid button.other { background: rgba(214,51,108,.10); color: rgba(255,255,255,.65); font-weight:600; text-shadow:none; }
+  .pick-grid button.today { background: rgba(255,107,157,.55); box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.55); }
+  .pick-grid button.sel { background:#14b8a6; color:#fff; box-shadow:0 0 0 2px rgba(20,184,166,.3), 0 3px 10px rgba(20,184,166,.4); }
+  .pick-time { display:grid; grid-template-columns: repeat(4, 1fr); gap:4px; max-height:180px; overflow-y:auto; }
+  .pick-time button {
+    border:1px solid rgba(214,51,108,.3); background: rgba(255,255,255,.5);
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    border-radius:999px; padding:7px 0;
+    font: inherit; font-size:12px; font-weight:700; color:#333; cursor:pointer;
+  }
+  .pick-time button:hover { background: rgba(255,227,236,.75); }
+  .pick-time button.sel { background:#14b8a6; border-color:#14b8a6; color:#fff; box-shadow:0 0 0 2px rgba(20,184,166,.3); }
+  /* Roue style alarme Apple : heures | minutes, sélection centrale */
+  .wheel-box { position:relative; display:flex; gap:8px; padding:6px 0; }
+  .wheel {
+    flex:1; height:150px; overflow-y:auto; scroll-snap-type:y mandatory;
+    -webkit-overflow-scrolling:touch; text-align:center;
+    scrollbar-width:none; -ms-overflow-style:none;
+    background: rgba(255,255,255,.14); border-radius:16px;
+    border: 1px solid rgba(255,255,255,.28);
+    mask-image: linear-gradient(to bottom, transparent 0, #000 22%, #000 78%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 22%, #000 78%, transparent 100%);
+  }
+  .wheel::-webkit-scrollbar { display:none; }
+  .wheel-opt {
+    height:38px; line-height:38px; scroll-snap-align:center;
+    font-size:17px; font-weight:600; color:var(--dark); cursor:pointer;
+    font-variant-numeric:tabular-nums; user-select:none; white-space:nowrap;
+  }
+  .wheel-opt.sel { color:#fff; font-weight:800; text-shadow: 0 1px 3px rgba(0,0,0,.45); }
+  .wheel-sel {
+    position:absolute; left:8px; right:8px; top:50%; height:38px; transform:translateY(-50%);
+    background: linear-gradient(135deg, rgba(214,51,108,.92), rgba(255,107,157,.85));
+    border-radius:12px; pointer-events:none;
+    box-shadow: 0 0 0 1px rgba(255,255,255,.45), 0 4px 14px rgba(214,51,108,.5);
+  }
+  .pick-nav.pick-ok { background:#14b8a6; border-color:#14b8a6; color:#fff; font-size:14px; }
+  /* ── Popup toujours centré plein écran (jamais coupé, tous viewports) ── */
+  #pick-time-pop, #pick-date-pop {
+    position: fixed; left:50%; top:50%; transform:translate(-50%,-50%);
+    width: min(320px, calc(100vw - 32px)); max-width:none; margin:0;
+    box-shadow: 0 24px 60px rgba(214,51,108,.35), 0 4px 16px rgba(0,0,0,.25);
+  }
+  #pick-time-pop .wheel { height: 140px; }
+  .rem-urgent {
+    width: 36px; height: 36px; border-radius: 50%; border: 1px solid #f1a9c0;
+    background: var(--bg-soft); font-size: 16px; cursor: pointer; transition: all .15s ease; flex:none;
+  }
+  .rem-urgent.on { background: #ff6b9d; border-color: #ff6b9d;
+    box-shadow: 0 0 0 4px rgba(255,107,157,.25), 0 3px 12px rgba(255,107,157,.5); transform: scale(1.05); }
+  .rem-urgent:focus-visible { outline: 3px solid rgba(255,107,157,.35); outline-offset: 1px; }
+  .rem-locinput { display:flex; gap:6px; margin-top: 8px; }
+  .rem-locinput.hidden { display:none; }
+  .rem-locinput input {
+    flex:1; min-width:0; padding: 8px 12px; border-radius: 999px;
+    border: 1px solid var(--pink); background: var(--input-bg); font-size: 13px; color:var(--txt-1); font: inherit;
+  }
+  .rem-loc-ok {
+    width: 34px; height: 34px; border-radius: 50%; border: 0; background: var(--pink);
+    color: #fff; font-size: 15px; cursor: pointer; flex:none;
+  }
+  .rem-offset { margin-top: 8px; }
+  .rem-offset-lbl { font-size: 11px; color:#8a8590; margin-bottom: 6px; }
+  .rem-offset-opts { display:flex; flex-wrap:wrap; gap:6px; }
+  .rem-offset-opts button {
+    font: inherit; font-size: 12px; padding: 5px 10px; border-radius: 999px;
+    border: 1px solid var(--pink); background: transparent; color: var(--pink);
+    cursor: pointer; transition: all .15s ease;
+  }
+  .rem-offset-opts button.on { background: var(--pink); color: #fff; font-weight: 600; }
+  .rem-offset-opts button:focus-visible { outline: 3px solid rgba(255,107,157,.35); outline-offset: 1px; }
+  .rem-add { display:flex; gap:8px; }
+  .rem-add input {
+    flex:1; min-width:0; padding: 11px 14px; border-radius: 999px;
+    border: 1px solid var(--line); background: var(--soft); font-size: 14px;
+    color: var(--dark); outline: none; transition: border-color .15s, box-shadow .15s;
+  }
+  .rem-add input:focus { border-color: var(--pink); box-shadow: 0 0 0 3px rgba(255,107,157,.15); }
+  .rem-add-btn {
+    flex:none; display:inline-flex; align-items:center; gap:6px;
+    padding: 3px 14px 3px 3px; border-radius: 999px; border: 1.5px solid rgba(144,217,250,.85);
+    background: linear-gradient(135deg, rgba(144,217,250,.92), rgba(104,196,244,.88));
+    -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+    color: #fff; font-size: 13px; font-weight: 800; letter-spacing: .3px; text-transform: uppercase;
+    cursor: pointer; transition: transform .12s, box-shadow .15s, background .15s;
+    box-shadow: 0 0 0 4px rgba(144,217,250,.25), 0 3px 12px rgba(104,196,244,.5);
+  }
+  .rem-add-btn .rem-add-ic {
+    width: 28px; height: 28px; border-radius: 50%; flex: none;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: radial-gradient(circle at 32% 28%, #b9ecff 0%, #7ecdf7 45%, #4db3ec 100%);
+    color: #fff; font-size: 16px; font-weight: 900; line-height: 1;
+    border: 1.5px solid rgba(255,255,255,.9);
+    box-shadow: 0 1px 4px rgba(31,120,180,.45), inset 0 -2px 4px rgba(20,100,160,.35);
+  }
+  .rem-add-btn .rem-add-txt { white-space: nowrap; padding-right: 2px; text-shadow: 0 1px 2px rgba(20,100,160,.4); }
+  .rem-add-btn:hover { transform: scale(1.04); box-shadow: 0 0 0 5px rgba(144,217,250,.35), 0 4px 16px rgba(104,196,244,.65); }
+  .rem-add-btn:active { transform: scale(.95); }
+  .rem-add-btn:focus-visible { outline: 3px solid rgba(144,217,250,.5); outline-offset: 2px; }
+  .rem-list { margin-top: 12px; display:flex; flex-direction:column; gap:8px; }
+  .rem-sec { font-size: 13px; font-weight: 700; color: var(--pink); margin: 6px 0 0; text-transform: uppercase; letter-spacing: .4px; }
+  .rem-sec-sub { font-size: 11px; font-weight: 600; color: #8a8590; margin: 4px 0 2px; }
+  .rem-sec-sub::before { content: "· "; }
+  .rem-item {
+    display:flex; align-items:center; gap:10px; padding: 10px 12px;
+    background: var(--soft); border: 1px solid var(--line); border-radius: 14px;
+    transition: opacity .2s, transform .2s;
+  }
+  .rem-item.done { opacity: .55; }
+  .rem-item .rem-chk {
+    flex:none; width: 26px; height: 26px; border-radius: 50%;
+    border: 2px solid var(--pink); background: transparent; color: transparent;
+    font-size: 14px; line-height: 1; cursor: pointer; display:flex; align-items:center; justify-content:center;
+    transition: background .15s, color .15s;
+  }
+  .rem-item.done .rem-chk { background: #1f8a5f; color: #fff;
+    border-color: #1f8a5f; box-shadow: 0 0 0 3px rgba(31,138,95,.25); }
+  .rem-item .rem-body { flex:1; min-width:0; }
+  .rem-item .rem-txt { font-size: 14px; font-weight: 700; word-break: break-word; }
+  .rem-item.done .rem-txt { text-decoration: line-through; }
+  .rem-item .rem-meta { font-size: 10.5px; color:#8a8590; margin-top: 2px; display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
+  .rem-badge { display:inline-block; padding:2px 8px; border-radius:999px; font-size:9.5px; font-weight:800; letter-spacing:.3px; }
+  .rem-badge.wa { background:#e6faf7; color:#1a9e90; }
+  .rem-badge.priv { background:#f3e8ff; color:#7a4fb8; }
+  .rem-badge.prio { background:var(--line); color:#d6336c; box-shadow:0 0 0 3px rgba(255,107,157,.25), 0 2px 8px rgba(255,107,157,.35); }
+  .rem-badge.loc { background:#e6f2ff; color:#1a73e8; text-decoration:none; }
+  .rem-hint { font-size: 11px; color:#e07020; margin: -4px 0 8px; line-height: 1.45; }
+  .rem-hint-val { font-weight: 800; color:#e07020; }
+  .rem-sync { font-size:10px; font-weight:800; color:#1a9e90; }
+  .rem-sync.pending { color:#8a8590; font-weight:600; }
+  .rem-sync.failed { color:#d6455d; font-weight:700; }
+  .rem-undo {
+    flex:none; border:1px solid var(--line); background: var(--card); color: var(--pink);
+    border-radius: 999px; padding: 6px 12px; font-size: 12px; font-weight: 700; cursor: pointer;
+  }
+  .rem-empty { text-align:center; padding: 22px 10px; color:#8a8590; font-size:13px; }
+  .rem-empty button {
+    margin-top: 10px; border: none; background: var(--pink); color:#fff;
+    border-radius: 999px; padding: 9px 18px; font-size: 13px; font-weight: 700; cursor: pointer;
+  }
+  .rem-actions { margin-top: 12px; text-align:center; }
   .chip { display:inline-block; padding:3px 10px; border-radius:999px;
           font-size:11px; font-weight:700; }
   .chip.on { background:#e6faf7; color:#1a9e90; }
   .chip.off { background:#fde8ee; color:#c44a74; }
   .lock { text-align:center; padding: 14px; color:#8a8590; font-size:12px;
-          background:#fff; border-radius:18px; border:1px dashed #e5c9d5; }
+          background:var(--card); border-radius:18px; border:1px dashed var(--line2); }
   footer { text-align:center; font-size:11px; color:#b9b2bc; margin-top: 24px; }
 
   /* Vitrine techno */
@@ -378,7 +637,7 @@
   .gauge .lab span:last-child { color:#8a8590; }
   .levels { display:flex; gap:8px; align-items:center; margin-top:12px;
             justify-content:center; font-size:13px; font-weight:700; }
-  .xpbar { height:8px; border-radius:999px; background:#ffe3ec; overflow:hidden; margin-top:6px; }
+  .xpbar { height:8px; border-radius:999px; background:var(--line); overflow:hidden; margin-top:6px; }
   .xpbar > div { height:100%; background:linear-gradient(90deg,#f9d423,#ff6b9d); }
 
   /* Modal jour */
@@ -394,7 +653,7 @@
   #modal .handle { width:44px; height:5px; border-radius:99px; background:#e0ccd6;
                    margin:0 auto 14px; }
   #modal h2 { font-size:18px; margin-bottom:14px; text-align:center; }
-  #modal .mrow { display:flex; align-items:center; gap:12px; background:#fff;
+  #modal .mrow { display:flex; align-items:center; gap:12px; background:var(--card);
                  border:1px solid var(--line); border-radius:16px; padding:14px; margin-bottom:10px; }
   #modal .mrow .ico { font-size:26px; }
   #modal .mrow .lb { font-size:11px; color:#b06a86; font-weight:800; letter-spacing:.8px;
@@ -412,12 +671,11 @@
 <div id="login">
   <div class="login-fade"></div>
   <div id="login-langs">
-    <button data-lang="fr" class="active">FR</button>
+    <button data-lang="th" class="active">ไทย</button>
     <button data-lang="en">EN</button>
-    <button data-lang="th">ไทย</button>
   </div>
   <h1 class="login-quote">"One pig, two lives, endless warmth — and every memory stays with you."</h1>
-  <div class="app-title">SuperPapapig App</div>
+  <div class="app-title">MENTHORPIG AI</div>
   <div class="pig-uke-wrap"><span class="testi testi-left"></span><img class="pig-uke" src="images/peppa-uke.jpg" alt=""><span class="testi testi-right"></span></div>
   <form id="login-form">
     <div class="siri-glow"><div class="siri-glow-bg"></div><input type="password" id="pwd" placeholder="enter your password here" autocomplete="off"></div>
@@ -447,13 +705,14 @@
 <header>
   <div class="banner">
     <img class="bg" src="images/peppa-header.jpg" alt="Peppa Pig">
-    <img class="logo" src="images/peppa-logo.jpg" alt="Papapig">
+    <img class="logo" src="images/peppa-logo.jpg" alt="MenThorPig">
     <div class="top">
-      <h1 data-i18n="app_title">Papapig AI — ความฉลาดที่แท้จริง</h1>
+      <h1 data-i18n="app_title">MenThorPig AI — ความฉลาดที่แท้จริง</h1>
     </div>
   </div>
   <div class="actions">
     <button class="btn" id="lang-btn">EN</button>
+    <button class="btn" id="theme-btn" title="🌙/☀️">🌙</button>
     <button class="btn" id="logout-btn" title="⏻">⏻</button>
   </div>
   <div class="tabs">
@@ -466,12 +725,19 @@
 <main>
   <!-- ── ONGLET JOY ── -->
   <section id="view-joy">
-    <div class="joy-hero"><img src="images/joy-oval.png" alt="Tazou 💕"></div>
+    <div class="joy-hero"><img src="images/joy-oval.png" alt="SuperBossTazou 💕"></div>
     <div class="grid">
       <div class="card">
         <h3 data-i18n="joy_mood_today">😊 อารมณ์วันนี้</h3>
-        <div class="big" id="j-mood-today">—</div>
-        <div class="sub" id="j-mood-note"></div>
+        <div class="mood-nav">
+          <button class="cal-nav" id="mood-prev" aria-label="Previous mood">◀</button>
+          <div class="mood-main">
+            <div class="big" id="j-mood-today">—</div>
+            <div class="sub" id="j-mood-note"></div>
+            <div class="sub mood-date" id="j-mood-date"></div>
+          </div>
+          <button class="cal-nav" id="mood-next" aria-label="Next mood">▶</button>
+        </div>
       </div>
       <div class="card">
         <h3 data-i18n="joy_energy">⚡ พลังงาน</h3>
@@ -496,10 +762,75 @@
           </div>
         </div>
         <div id="j-cal" role="grid" aria-label="Calendar"></div>
+        <div class="cal-legend" id="j-cal-legend"></div>
       </div>
       <div class="card full">
         <h3 data-i18n="joy_meals">🍜 กินอะไรมาบ้าง</h3>
         <div class="meals" id="j-meals"></div>
+      </div>
+      <div class="card full rem-card">
+        <h3 class="rem-title" data-i18n="rem_title">🔔 เตือนความจำ</h3>
+        <div class="rem-sub" data-i18n="rem_sub">ฉันช่วยจดให้เอง</div>
+        <div class="rem-hint" data-i18n="rem_hint">เขียนสิ่งที่อยากให้เตือน เลือกวัน เวลา แล้วกด + เพื่อส่งไปที่ WhatsApp ของพ่อหมู 💕</div>
+        <div class="rem-add">
+          <input type="text" id="rem-input" data-i18n-ph="rem_ph" placeholder="เตือนฉันเรื่อง…" aria-label="Nouveau rappel" />
+          <button class="rem-add-btn" id="rem-add-btn" aria-label="Validate">
+            <span class="rem-add-ic">✓</span><span class="rem-add-txt" data-i18n="rem_validate">ยืนยัน</span>
+          </button>
+        </div>
+        <div class="rem-tags" id="rem-tags" aria-live="polite"></div>
+        <div class="rem-quick">
+          <div class="rem-quick-row" id="rem-qdate"></div>
+          <div class="rem-quick-row" id="rem-qtime"></div>
+        </div>
+        <div class="rem-datetime">
+          <div class="pick-wrap">
+            <button type="button" class="rem-pick" id="rem-date-btn" aria-haspopup="dialog">
+              <span class="rem-pick-ic">📅</span><span class="rem-pick-lbl" id="rem-date-lbl"></span>
+            </button>
+            <input type="date" id="rem-date" class="rem-pick-ip" aria-label="Date" tabindex="-1" />
+            <div class="pick-pop" id="pick-date-pop" role="dialog" aria-label="Date picker">
+              <div class="pick-head">
+                <button type="button" class="pick-nav" id="pd-prev" aria-label="Previous month">‹</button>
+                <span class="pick-title" id="pd-title"></span>
+                <button type="button" class="pick-nav" id="pd-next" aria-label="Next month">›</button>
+              </div>
+              <div class="pick-dow" id="pd-dow"></div>
+              <div class="pick-grid" id="pd-grid"></div>
+            </div>
+          </div>
+          <div class="pick-wrap">
+            <button type="button" class="rem-pick" id="rem-time-btn" aria-haspopup="dialog">
+              <span class="rem-pick-ic">🕐</span><span class="rem-pick-lbl" id="rem-time-lbl"></span>
+            </button>
+            <input type="time" id="rem-time" class="rem-pick-ip" aria-label="Heure" tabindex="-1" />
+            <div class="pick-pop" id="pick-time-pop" role="dialog" aria-label="Time picker">
+              <div class="pick-head">
+                <span class="pick-title" id="pt-title"></span>
+                <span style="display:flex;gap:6px;align-items:center">
+                  <button type="button" class="pick-nav pick-ok" id="pt-ok" aria-label="OK time" title="OK">✓</button>
+                  <button type="button" class="pick-nav pick-clear" id="pt-clear" aria-label="Clear time">✕</button>
+                </span>
+              </div>
+              <div class="wheel-box">
+                <div class="wheel" id="pt-hours" aria-label="Hours"></div>
+                <div class="wheel" id="pt-mins" aria-label="Minutes"></div>
+                <div class="wheel-sel" aria-hidden="true"></div>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="rem-urgent" id="rem-loc" aria-pressed="false" title="Location">📍</button>
+          <button type="button" class="rem-urgent" id="rem-urgent" aria-pressed="false" title="Important">⚠️</button>
+        </div>
+        <div class="rem-locinput hidden" id="rem-locinput">
+          <input type="text" id="rem-locfield" data-i18n-ph="rem_loc_ph" placeholder="ลิงก์แผนที่หรือที่อยู่ (ไม่บังคับ)…" aria-label="Lieu" />
+          <button type="button" class="rem-loc-ok" id="rem-loc-ok">✓</button>
+        </div>
+        <div class="rem-offset">
+          <div class="rem-offset-lbl" data-i18n="rem_off_lbl">🔔 เตือนล่วงหน้า</div>
+          <div class="rem-offset-opts" id="rem-offset-opts"></div>
+        </div>
+        <div class="rem-list" id="rem-list" aria-live="polite"></div>
       </div>
       <div class="card full">
         <h3 data-i18n="joy_goal">🎯 เป้าหมาย</h3>
@@ -513,7 +844,7 @@
     <div class="grid">
       <div class="card full tama">
         <div class="tama-row">
-          <div class="face" id="p-face"><img src="images/peppa-ai.jpg" alt="Papapig AI"></div>
+          <div class="face" id="p-face"><img src="images/peppa-ai.jpg" alt="MenThorPig AI"></div>
           <div class="tama-info">
             <div class="birth"><span data-i18n="p_birth">🎂 วันเกิด</span><b>07/08/2026 · 20:47</b></div>
             <div class="desc">i am artificial pig made by god Tazou, i run in local machine (MBP M1 PRO with lm studio with Gemma 4)</div>
@@ -588,7 +919,7 @@
       <div class="card tech-item"><div class="t-ico">📱</div><div><b data-i18n="t10_t">เชื่อมต่อ</b><div class="t-t" data-i18n="t10_d">WhatsApp + Telegram · สติกเกอร์สร้างในเครื่อง</div></div></div>
     </div>
   </section>
-  <footer data-i18n="footer">Papapig Intelligence System · ใช้ LM Studio ในเครื่อง · ไม่มีการแชร์ข้อมูลส่วนตัว</footer>
+  <footer data-i18n="footer">MenThorPig Intelligence System · ใช้ LM Studio ในเครื่อง · ไม่มีการแชร์ข้อมูลส่วนตัว</footer>
 </main>
 </div>
 
@@ -607,9 +938,23 @@
 const TR = {
   th: {
     login_btn: "เข้า", pwd_ph: "ใส่รหัสผ่านที่นี่",
-    app_title: "Papapig AI — ความฉลาดที่แท้จริง", tab_joy: "ชีวิตจอย", tab_papapig: "ชีวิตพ่อหมู", tab_tech: "สมอง AI",
+    app_title: "MENTHORPIG AI", tab_joy: "ชีวิตจอย", tab_papapig: "ชีวิตเมนทอร์พิก", tab_tech: "สมอง AI",
     joy_mood_today: "😊 อารมณ์วันนี้", joy_energy: "⚡ พลังงาน", joy_cal: "📅 ปฏิทิน — อารมณ์ · อากาศ · อาหาร · วันสำคัญ",
     joy_meals: "🍜 กินอะไรมาบ้าง", joy_goal: "🎯 เป้าหมาย",
+    rem_title: "🔔 เตือนความจำ", rem_sub: "ฉันช่วยจดให้เอง",
+    rem_hint: "เขียนสิ่งที่อยากให้เตือน เลือกวัน เวลา แล้วกด + เพื่อส่งไปที่ WhatsApp ของพ่อหมู 💕",
+    rem_loc_add: "📍 เพิ่มสถานที่", rem_loc_ok: "📍 เปิดแผนที่เพื่อเลือกสถานที่", rem_loc_err: "ไม่สามารถหาตำแหน่งได้ — เปิดลิงก์แผนที่เองได้",
+    rem_loc_ph: "ลิงก์แผนที่หรือที่อยู่ (ไม่บังคับ)…",
+    rem_pick_date: "เพิ่มวันที่", rem_pick_time: "เลือกเวลา",
+    rem_validate: "ยืนยัน",
+    rem_ph: "เตือนฉันเรื่อง…", rem_recap: "📲 ส่งสรุปวันนี้ทาง WhatsApp", rem_off_lbl: "🔔 เตือนล่วงหน้า",
+    rem_empty: "ยังไม่มีรายการที่ต้องจำ ✨", rem_empty_add: "เพิ่มรายการแรก",
+    rem_sec_today: "วันนี้", rem_sec_upcoming: "เร็วๆ นี้",
+    rem_per_morning: "เช้า", rem_per_noon: "เที่ยง", rem_per_afternoon: "บ่าย", rem_per_evening: "เย็น", rem_per_night: "กลางคืน",
+    rem_done: "เสร็จแล้ว", rem_undo: "ยกเลิก", rem_wa: "นำเข้าจาก WhatsApp",
+    rem_pending: "รอ", rem_todo: "ยังไม่ทำ", rem_progress: "กำลังทำ",
+    rem_priv: "🔒 ส่วนตัว", rem_prio_high: "สำคัญมาก", rem_prio_normal: "ปกติ",
+    rem_synced: "✓ sync", rem_syncing: "…ส่ง", rem_failed: "✗ ล้มเหลว",
     cal_today: "วันนี้", cal_month: "เดือน", cal_week: "สัปดาห์", cal_agenda: "กำหนดการ",
     p_energy: "⚡ พลังงาน", p_hunger: "🍗 ความหิว", p_sleep: "😴 การนอน",
     p_birth: "🎂 วันเกิด", p_cd: "🎂 ครบ 1 เดือนใน", p_cd_msg: "🎂 หวังว่าเธอจะทำเค้กก้อนใหญ่ให้หนูนะครับ",
@@ -628,22 +973,36 @@ const TR = {
     t9_t: "ทำงานในเครื่อง 100%", t9_d: "AI รันบนเครื่องส่วนตัว ไม่ใช้คลาวด์",
     t10_t: "เชื่อมต่อ", t10_d: "WhatsApp + Telegram · สติกเกอร์สร้างในเครื่อง",
     lock: "🔐 ข้อความทั้งหมดถูกเข้ารหัส (AES-256)",
-    footer: "Papapig Intelligence System · ใช้ LM Studio ในเครื่อง · ไม่มีการแชร์ข้อมูลส่วนตัว",
+    footer: "MenThorPig Intelligence System · ใช้ LM Studio ในเครื่อง · ไม่มีการแชร์ข้อมูลส่วนตัว",
     no_data: "ยังไม่มีข้อมูล — เริ่มบันทึกคืนนี้ 📔", no_meal: "ยังไม่มีข้อมูลมื้ออาหาร",
     logout: "ออกจากระบบ", close: "ปิด",
   },
   en: {
     login_btn: "Enter", pwd_ph: "enter your password here",
-    app_title: "Papapig AI — Real Intelligence", tab_joy: "Joy's Life", tab_papapig: "Papapig's Life", tab_tech: "Neural AI Brain",
+    app_title: "MENTHORPIG AI", tab_joy: "SuperBossTazou's Life", tab_papapig: "MenThorPig's Life", tab_tech: "Neural AI Brain",
     joy_mood_today: "😊 Today's Mood", joy_energy: "⚡ Energy", joy_cal: "📅 Calendar — Mood · Weather · Food · Special Events",
     joy_meals: "🍜 Detected Meals", joy_goal: "🎯 Goal",
+    rem_title: "🔔 Reminder", rem_sub: "I keep the thread for you.",
+    rem_hint: "Write what you want to be reminded of, pick a date & time, then click + to send it to MenThorPig's WhatsApp 💕",
+    rem_loc_add: "📍 Add a place", rem_loc_ok: "📍 Opening maps to pick a place", rem_loc_err: "Location unavailable — open the map link yourself",
+    rem_loc_ph: "Map link or address (optional)…",
+    rem_pick_date: "Add a date", rem_pick_time: "Choose a time",
+    rem_validate: "Validate",
+    rem_ph: "Remind me to…", rem_recap: "📲 Send today's summary on WhatsApp", rem_off_lbl: "🔔 Remind me before",
+    rem_empty: "Nothing to remember yet ✨", rem_empty_add: "Add your first",
+    rem_sec_today: "Today", rem_sec_upcoming: "Upcoming",
+    rem_per_morning: "Morning", rem_per_noon: "Noon", rem_per_afternoon: "Afternoon", rem_per_evening: "Evening", rem_per_night: "Night",
+    rem_done: "Done", rem_undo: "Undo", rem_wa: "Imported from WhatsApp",
+    rem_pending: "Pending", rem_todo: "To do", rem_progress: "In progress",
+    rem_priv: "🔒 Private", rem_prio_high: "High priority", rem_prio_normal: "Normal",
+    rem_synced: "✓ synced", rem_syncing: "…sending", rem_failed: "✗ failed",
     cal_today: "Today", cal_month: "Month", cal_week: "Week", cal_agenda: "Agenda",
     p_energy: "⚡ Energy", p_hunger: "🍗 Hunger", p_sleep: "😴 Sleep",
     p_birth: "🎂 BIRTHDAY", p_cd: "🎂 1st month in", p_cd_msg: "🎂 i hope she will make me a big cake",
     p_persona: "🎭 Persona", p_persona_sub: "Papa Pig — default",
     p_emotion: "💓 Emotion", p_last_meal: "🍽️ Last Meal",
     p_crons: "I love my job", p_activity: "📍 Recent Activity",
-    tech_title: "🧠 Papapig AI — brain & skills", tech_sub: "100% local AI — zero personal data online",
+    tech_title: "🧠 MenThorPig AI — brain & skills", tech_sub: "100% local AI — zero personal data online",
     t1_t: "Emotion engine", t1_d: "pleasure × arousal (Russell) · 27 emotions · 70% mood mirror",
     t2_t: "Living tamagotchi", t2_d: "energy · hunger · sleep · XP · mood — evolves in real time",
     t3_t: "Automatic journal", t3_d: "word analysis, zero LLM — local & free",
@@ -655,49 +1014,22 @@ const TR = {
     t9_t: "100% local", t9_d: "AI runs on a local machine, zero cloud",
     t10_t: "Connected", t10_d: "WhatsApp + Telegram · stickers generated locally",
     lock: "🔐 All conversations are encrypted (AES-256)",
-    footer: "Papapig Intelligence System · Local LM Studio · no private data shared",
+    footer: "MenThorPig Intelligence System · Local LM Studio · no private data shared",
     no_data: "no data yet — journal starts tonight 📔", no_meal: "no meal data yet",
     logout: "Log out", close: "Close",
-  },
-  fr: {
-    login_btn: "Entrer", pwd_ph: "entre ton mot de passe ici",
-    app_title: "Papapig AI — La vraie intelligence", tab_joy: "La vie de Tazou", tab_papapig: "La vie de Papapig", tab_tech: "Neural AI Brain",
-    joy_mood_today: "😊 Humeur du jour", joy_energy: "⚡ Énergie", joy_cal: "📅 Calendrier — Humeur · Météo · Repas · Jours fériés",
-    joy_meals: "🍜 Repas détectés", joy_goal: "🎯 Objectif",
-    cal_today: "Aujourd'hui", cal_month: "Mois", cal_week: "Semaine", cal_agenda: "Agenda",
-    p_energy: "⚡ Énergie", p_hunger: "🍗 Faim", p_sleep: "😴 Sommeil",
-    p_birth: "🎂 ANNIVERSAIRE", p_cd: "🎂 1er mois dans", p_cd_msg: "🎂 j'espère qu'elle me fera un gros gâteau",
-    p_persona: "🎭 Personnalité", p_persona_sub: "Papa Pig — par défaut",
-    p_emotion: "💓 Émotion", p_last_meal: "🍽️ Dernier repas",
-    p_crons: "I love my job", p_activity: "📍 Activité récente",
-    tech_title: "🧠 Papapig AI — cerveau & compétences", tech_sub: "IA 100% locale — zéro donnée personnelle en ligne",
-    t1_t: "Moteur d'émotions", t1_d: "plaisir × excitation (Russell) · 27 émotions · miroir d'humeur 70%",
-    t2_t: "Tamagotchi vivant", t2_d: "énergie · faim · sommeil · XP · humeur — évolue en temps réel",
-    t3_t: "Journal automatique", t3_d: "analyse de mots, zéro LLM — local & gratuit",
-    t4_t: "Automatisations", t4_d: "repas · matin · soir · stickers · rappels (cron locaux)",
-    t5_t: "Calendrier intelligent", t5_d: "humeur + météo + repas + jours fériés français (Open-Meteo Paris)",
-    t6_t: "Trilingue", t6_d: "Français · English · ไทย — entièrement traduit",
-    t7_t: "🎨 Design & polices", t7_d: "polices officielles Peppa · design rose cosy",
-    t8_t: "Sécurité", t8_d: "chiffrement AES-256 · zéro donnée privée en ligne · zéro secret dans le site",
-    t9_t: "100% local", t9_d: "l'IA tourne sur une machine locale, zéro cloud",
-    t10_t: "Connecté", t10_d: "WhatsApp + Telegram · stickers générés localement",
-    lock: "🔐 Toutes les conversations sont chiffrées (AES-256)",
-    footer: "Papapig Intelligence System · LM Studio local · aucune donnée privée partagée",
-    no_data: "pas encore de données — le journal commence ce soir 📔", no_meal: "pas encore de repas",
-    logout: "Se déconnecter", close: "Fermer",
   }
 };
-let LANG = "fr";
+let LANG = "en";
 const MOODS = {
-  fr: {1:"horrible 😭", 2:"pas top 😟", 3:"bof 😐", 4:"bien 🙂", 5:"super 😍"},
-  th: {1:"แย่มาก 😭", 2:"ไม่ดี 😟", 3:"เฉยๆ 😐", 4:"ดี 🙂", 5:"สุดยอด 😍"},
-  en: {1:"awful 😭", 2:"bad 😟", 3:"ok 😐", 4:"good 🙂", 5:"amazing 😍"}
+  th: {1:"สุดยอด 😍", 2:"ดี 🙂", 3:"เฉยๆ 😐", 4:"ไม่ดี 😟", 5:"แย่มาก 😭"},
+  en: {1:"amazing 😍", 2:"good 🙂", 3:"ok 😐", 4:"bad 😟", 5:"awful 😭"}
+};
+const MOOD_EMO = {1:"😍", 2:"🙂", 3:"😐", 4:"😟", 5:"😭"};
+const MOOD_FEEL = {
+  th: {1:"มีความสุขมาก", 2:"อารมณ์ดี", 3:"เฉยๆ", 4:"หงุดหงิด", 5:"เศร้า/เหนื่อยมาก"},
+  en: {1:"very happy", 2:"in a good mood", 3:"neutral", 4:"down", 5:"very sad/tired"}
 };
 const EMOMAP = {
-  fr: {joie:"joie 😄", fatigue:"fatigué 😩", stress:"stressé 😮‍💨", tristesse:"triste 😢",
-       amour:"amour 💕", faim:"faim 🍜", neutre:"neutre 😐", amusement:"amusé 🤣",
-       somnolence:"somnolent 😴", nostalgie:"nostalgie 💭", colère:"en colère 😤", peur:"peur 😨",
-       épuisement:"épuisé 😵", anxiété:"anxieux 😰"},
   th: {joie:"ดีใจ 😄", fatigue:"เหนื่อย 😩", stress:"เครียด 😮‍💨", tristesse:"เศร้า 😢",
        amour:"รัก 💕", faim:"หิว 🍜", neutre:"เฉยๆ 😐", amusement:"สนุก 🤣",
        somnolence:"ง่วง 😴", nostalgie:"คิดถึง 💭", colère:"โมโห 😤", peur:"กลัว 😨",
@@ -725,51 +1057,47 @@ const TR_EN_TEXT = {
   "grabfood": "GrabFood", "foodpanda": "Foodpanda", "7-11": "7-Eleven", "เซเว่น": "7-Eleven",
   "มอคค่า": "mocha", "ลาเต้": "latte", "วิปครีม": "whipped cream", "นมสด": "milk", "น้ำเปล่า": "water"
 };
-/* Traductions FR des textes stockés en thaï (goal + activité + repas) */
-const TR_FR_TEXT = {
-  "นอนเร็วขึ้น 💤": "dormir plus tôt 💤", "ผ่อนคลายสักหน่อย 🧘": "décompresser un peu 🧘", "ทำต่อไปแบบนี้ 💪": "continue comme ça 💪",
-  "🏠 กลับถึงบ้าน": "🏠 rentré à la maison", "🏢 ถึงที่ทำงาน": "🏢 arrivé au travail",
-  "🛵 ไปทำงาน": "🛵 parti au travail", "🌙 ราตรีสวัสดิ์": "🌙 bonne nuit", "☀️ อรุณสวัสดิ์": "☀️ bonjour",
-  "กิน": "manger", "ทาน": "manger", "หิว": "faim", "อิ่ม": "rassasié", "ข้าว": "riz", "กับข้าว": "plat",
-  "อาหาร": "nourriture", "ข้าวผัด": "riz sauté", "ก๋วยเตี๋ยว": "nouilles", "ชาบู": "shabu", "บุฟเฟ่ต์": "buffet",
-  "หมูกระทะ": "BBQ de porc", "ไก่": "poulet", "หมู": "porc", "ปลา": "poisson", "กุ้ง": "crevettes", "ไข่": "œuf",
-  "ส้มตำ": "salade de papaye", "ต้มยำ": "tom yum", "แกง": "curry", "สุกี้": "sukiyaki", "เค้ก": "gâteau",
-  "ไอศกรีม": "glace", "กาแฟ": "café", "ชา": "thé", "สมูทตี้": "smoothie", "บะหมี่": "nouilles",
-  "พิซซ่า": "pizza", "เบอร์เกอร์": "burger", "ฟาสต์ฟู้ด": "fast food", "ของกิน": "snacks", "ของหวาน": "dessert",
-  "ขนม": "bonbons", "ผลไม้": "fruits", "แคลอรี่": "calories", "แคลอรี": "calories", "เคลอรี่": "calories",
-  "calories": "calories", "อร่อย": "délicieux", "ไม่อร่อย": "pas bon", "หวาน": "sucré", "เค็ม": "salé",
-  "เผ็ด": "épicé", "ร้าน": "restaurant", "เมนู": "menu", "สั่ง": "commander", "เดลิเวอรี": "livraison",
-  "grabfood": "GrabFood", "foodpanda": "Foodpanda", "7-11": "7-Eleven", "เซเว่น": "7-Eleven",
-  "มอคค่า": "mocha", "ลาเต้": "latte", "วิปครีม": "crème fouettée", "นมสด": "lait", "น้ำเปล่า": "eau"
-};
-function _tTxt(s) { return LANG === "en" ? (TR_EN_TEXT[s] || s) : (LANG === "fr" ? (TR_FR_TEXT[s] || s) : s); }
+function _tTxt(s) { return LANG === "en" ? (TR_EN_TEXT[s] || s) : s; }
 
 /* ═════════ État ═════════ */
 let S = null;
+let MEAL_PHOTOS = {};
 
 function t(key) { return TR[LANG][key] || key; }
+function fmtMealPhotoTime(ts) {
+  if (!ts) return "";
+  const d = new Date(ts * 1000);
+  const opts = { hour: "2-digit", minute: "2-digit", hour12: false };
+  const hh = d.toLocaleTimeString(LANG === "th" ? "th-TH" : "fr-FR",
+    { ...opts, timeZone: LANG === "th" ? "Asia/Bangkok" : "Europe/Paris" });
+  return LANG === "th" ? hh + " น." : hh;
+}
 function applyLang() {
   document.querySelectorAll("[data-i18n]").forEach(el => el.textContent = t(el.dataset.i18n));
-  document.getElementById("lang-btn").textContent = LANG === "fr" ? "EN" : (LANG === "en" ? "ไทย" : "FR");
+  document.querySelectorAll("[data-i18n-ph]").forEach(el => el.placeholder = t(el.dataset.i18nPh));
+  document.getElementById("lang-btn").textContent = LANG === "th" ? "EN" : "TH";
   document.querySelectorAll("#login-langs button").forEach(b =>
     b.classList.toggle("active", b.dataset.lang === LANG));
   const pwd = document.getElementById("pwd");
   if (pwd) pwd.placeholder = t("pwd_ph");
   document.title = t("app_title");
-}
-
-/* ═════════ Login ═════════ */
-const PASSWORD = "smoothie";
-function tryLogin() {
-  const v = document.getElementById("pwd").value.trim().toLowerCase();
-  if (v === PASSWORD) {
-    sessionStorage.setItem("pp_auth", "1");
-    showApp();
-  } else {
-    document.getElementById("login-err").textContent = LANG === "th" ? "รหัสผิด ❌" : (LANG === "en" ? "wrong password ❌" : "mot de passe incorrect ❌");
+  /* mot valider en orange gras dans le hint rappels */
+  const rh = document.querySelector(".rem-hint");
+  if (rh) {
+    const v = t("rem_validate");
+    rh.innerHTML = t("rem_hint").replace("+",
+      "<span class='rem-hint-val'>" + v + "</span>");
   }
 }
+
+/* ═════════ Login (recette : mot de passe temporairement désactivé — Enter suffit) ═════════ */
+const PASSWORD = "smoothie";
+function tryLogin() {
+  sessionStorage.setItem("pp_auth", "1");
+  showApp();
+}
 document.getElementById("login-form").addEventListener("submit", e => { e.preventDefault(); tryLogin(); });
+
 // Regard de Joy qui suit le curseur (parallax doux)
 window.addEventListener("mousemove", e => {
   const mx = (e.clientX / window.innerWidth - .5) * 26;
@@ -802,26 +1130,71 @@ function switchTab(which) {
 
 /* ═════════ Lang switch ═════════ */
 document.getElementById("lang-btn").addEventListener("click", () => {
-  LANG = LANG === "fr" ? "en" : (LANG === "en" ? "th" : "fr");
+  LANG = LANG === "th" ? "en" : "th";
   applyLang(); if (S) render(S);
+  if (typeof remRender === "function") remRender();
+  if (typeof window.__fillLabels === "function") { window.__fillLabels(); window.renderQuickRem(); window.renderTagsRem(); }
 });
+
+/* ═════════ Theme dark/light ═════════ */
+(function () {
+  const btn = document.getElementById("theme-btn");
+  const KEY = "superpig-theme";
+  function apply(theme) {
+    document.body.classList.toggle("dark", theme === "dark");
+    btn.textContent = theme === "dark" ? "☀️" : "🌙";
+    try { localStorage.setItem(KEY, theme); } catch (e) {}
+  }
+  let saved = null;
+  try { saved = localStorage.getItem(KEY); } catch (e) {}
+  const darkAuto = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+  apply(saved || (darkAuto ? "dark" : "light"));
+  btn.addEventListener("click", () => {
+    apply(document.body.classList.contains("dark") ? "light" : "dark");
+  });
+})();
 
 /* ═════════ Data ═════════ */
 function init() {
   applyLang();
   fetch("data/state.json?cb=" + Date.now())
-    .then(r => r.json()).then(s => { S = s; render(s); })
+    .then(r => r.json()).then(s => { S = s; MEAL_PHOTOS = (s.joy && s.joy.meal_photos) || {}; render(s); })
     .catch(() => setTimeout(init, 15000));
 }
 setInterval(() => { if (S) init(); }, 60000);
 
+/* ═════════ Mood du jour — historique navigable ← → ═════════ */
+let moodIdx = 0;
+function renderMood(J) {
+  const list = [...(J.moods || [])].sort((a, b) => a.date < b.date ? 1 : -1);
+  if (!list.length) {
+    document.getElementById("j-mood-today").textContent = "—";
+    document.getElementById("j-mood-note").textContent = "";
+    document.getElementById("j-mood-date").textContent = "";
+    return;
+  }
+  const i = Math.min(Math.max(moodIdx, 0), list.length - 1);
+  const e = list[i];
+  const v = e.mood;
+  const emo = MOOD_EMO[v] || "😐";
+  const feel = (MOOD_FEEL[LANG] || MOOD_FEEL.en)[v] || "";
+  document.getElementById("j-mood-today").textContent = emo + " " + feel;
+  document.getElementById("j-mood-note").textContent = (LANG === "en" ? (e.summary_en || e.summary) : (e.summary || e.summary_en)) || e.note || "";
+  document.getElementById("j-mood-date").textContent = (i === 0 ? (LANG === "th" ? "วันนี้" : "today") + " · " : "") + e.date;
+}
+function bindMoodNav() {
+  const prev = document.getElementById("mood-prev");
+  const next = document.getElementById("mood-next");
+  if (prev) prev.addEventListener("click", () => { moodIdx++; renderMood(S.joy); });
+  if (next) next.addEventListener("click", () => { moodIdx = Math.max(0, moodIdx - 1); renderMood(S.joy); });
+}
+document.addEventListener("DOMContentLoaded", bindMoodNav);
+
 function render(s) {
   const J = s.joy || {}, P = s.papapig || {};
 
-  /* Joy — mood du jour */
-  const m = J.mood_today;
-  document.getElementById("j-mood-today").textContent = m ? (MOODS[LANG][m] || m) : "—";
-  document.getElementById("j-mood-note").textContent = J.mood_note || "";
+  /* Joy — mood du jour (historique navigable ← →) */
+  renderMood(J);
 
   /* Joy — énergie */
   document.getElementById("j-energy").textContent = (J.energy ?? 70) + "%";
@@ -839,8 +1212,25 @@ function render(s) {
     const el = document.createElement("div"); el.className = "meal";
     el.innerHTML = "<span>" + me.emoji + "</span>" +
       (me.word ? "<b>" + _tTxt(me.word) + "</b>" : "") +
-      "<span class='t'>" + me.date.slice(5) + " " + me.at + "</span>";
+      "<span class='t'>" + me.date.slice(5) + " " + (me.ts ? fmtMealPhotoTime(me.ts) : me.at) + "</span>" +
+      (me.ts ? "<button type='button' class='cal-ev-del meal-del' data-ts='" + me.ts + "' title='" +
+        (LANG === "th" ? "ลบรายการนี้" : "remove this item") + "'>✕</button>" : "");
     mWrap.appendChild(el);
+  });
+  /* photo miniature du repas (si la journée en a une) — même ligne que les autres cards */
+  Object.keys(MEAL_PHOTOS).sort().reverse().slice(0, 3).forEach(ds => {
+    const _mp = MEAL_PHOTOS[ds];
+    const _mpUrl = typeof _mp === "string" ? _mp : (_mp && _mp.url);
+    if (!_mpUrl) return;
+    const _mpTime = _mp && typeof _mp === "object" && _mp.ts ? fmtMealPhotoTime(_mp.ts) : "";
+    const div = document.createElement("div");
+    div.className = "meal";
+    div.innerHTML = "<span>📸</span><span style='font-size:13px'>" + ds.slice(5).replace("-", "/") + "</span>" +
+      "<img class='photo' src='" + _mpUrl + "' alt='meal photo' style='margin-left:auto'>" +
+      "<span class='t'>📸 " + _mpTime + (LANG === "th" ? " เวลากรุงเทพ" : " · Paris") + "</span>" +
+      "<button type='button' class='cal-ev-del meal-del' data-date='" + ds + "' title='" +
+      (LANG === "th" ? "ลบรูปนี้" : "remove this photo") + "'>✕</button>";
+    mWrap.appendChild(div);
   });
 
   /* Joy — goal */
@@ -853,7 +1243,7 @@ function render(s) {
   document.getElementById("p-hunger-bar").style.width = (P.hunger ?? 40) + "%";
   document.getElementById("p-sleep").textContent = P.sleep ?? 60;
   document.getElementById("p-sleep-bar").style.width = (P.sleep ?? 60) + "%";
-  document.getElementById("p-level").textContent = (LANG === "th" ? "เลเวล " : (LANG === "en" ? "Lv. " : "Niv. ")) + (P.level ?? 2);
+  document.getElementById("p-level").textContent = (LANG === "th" ? "เลเวล " : "Lv. ") + (P.level ?? 2);
   document.getElementById("p-xp").textContent = "XP " + (P.xp ?? 120);
   document.getElementById("p-xp-bar").style.width = ((P.xp ?? 120) % 100) + "%";
   const emoHTML = em => {
@@ -863,7 +1253,7 @@ function render(s) {
   };
   document.getElementById("p-status").innerHTML = P.emotion ? emoHTML(P.emotion) : "—";
   document.getElementById("p-emotion").innerHTML = P.emotion ? emoHTML(P.emotion) : "—";
-  document.getElementById("p-valence").textContent = (LANG === "th" ? "วาเลนซ์ " : (LANG === "en" ? "valence " : "valence ")) + (P.valence >= 0 ? "+" : "") + (P.valence ?? 0).toFixed(2);
+  document.getElementById("p-valence").textContent = (LANG === "th" ? "วาเลนซ์ " : "valence ") + (P.valence >= 0 ? "+" : "") + (P.valence ?? 0).toFixed(2);
 
   /* Papapig — naissance + compte à rebours 1er mois (avec secondes) */
   const BIRTH_MS = new Date(2026, 7, 7, 20, 47).getTime();
@@ -884,7 +1274,7 @@ function render(s) {
   updateCake();
   if (!window._cakeTick) window._cakeTick = setInterval(updateCake, 1000);
   document.getElementById("p-last-meal").textContent = P.last_meal_emoji || "—";
-  document.getElementById("p-last-meal-at").textContent = P.last_meal_at || "";
+  document.getElementById("p-last-meal-at").textContent = P.last_meal_ts ? fmtMealPhotoTime(P.last_meal_ts) : (P.last_meal_at || "");
 
   /* Papapig — crons */
   const cWrap = document.getElementById("p-crons");
@@ -910,6 +1300,532 @@ function render(s) {
 /* ═════════ Calendrier v2 — mois/semaine/agenda + événements Supabase ═════════ */
 const SB_URL = "https://wlxtulibsipesxpwkhyz.supabase.co";
 const SB_ANON = "sb_publishable_0MkIaGDQs3G5oJuHaKMh1A_wWsrzn4G";
+/* ═════════ Reminder — section (avant Goal) ═════════ */
+const ReminderSyncService = {
+  base: SB_URL + "/rest/v1/events",
+  hdr: { apikey: SB_ANON, Authorization: "Bearer " + SB_ANON, "Content-Type": "application/json", Prefer: "return=representation" },
+  async _req(method, path, body) {
+    const r = await fetch(this.base + path, { method, headers: this.hdr, body: body ? JSON.stringify(body) : undefined });
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    return r.status === 204 ? null : r.json();
+  },
+  async fetchAll() {
+    const d = await this._req("GET", "?select=id,title,date,start_time,category,status,priority,is_private,created_via,location&profile=eq.mentorpig&order=date.asc");
+    return Array.isArray(d) ? d : [];
+  },
+  createReminder(payload) {
+    return this._req("POST", "", Object.assign({
+      category: "perso", profile: "mentorpig", created_via: "site",
+      status: "todo", priority: "normal", is_private: false
+    }, payload));
+  },
+  completeReminder(id) { return this._req("PATCH", "?id=eq." + id, { status: "done" }); },
+  uncompleteReminder(id) { return this._req("PATCH", "?id=eq." + id, { status: "todo" }); }
+};
+let REMINDERS = [];
+const remSyncState = {}; // id → "synced" | "syncing" | "failed" | "pending"
+function remStatusText(id) {
+  const s = remSyncState[id];
+  if (s === "failed") return t("rem_failed");
+  if (s === "syncing") return t("rem_syncing");
+  if (s === "pending") return t("rem_pending");
+  return t("rem_synced");
+}
+function remFmtDate(d) {
+  if (!d) return "";
+  const dt = new Date(d + "T00:00:00");
+  if (isNaN(dt)) return d;
+  const today = new Date().toLocaleString("sv-SE", { timeZone: "Asia/Bangkok" }).slice(0, 10).replace(/\//g, "-");
+  if (d === today) return LANG === "th" ? "วันนี้" : "Today";
+  const tmrw = new Date(Date.UTC(+today.slice(0,4), +today.slice(5,7)-1, +today.slice(8,10)) + 86400000).toISOString().slice(0,10);
+  if (d === tmrw) return LANG === "th" ? "พรุ่งนี้" : "Tomorrow";
+  if (LANG === "th") return dt.toLocaleDateString("th-TH", { weekday: "short", day: "numeric", month: "short" });
+  return dt.toLocaleDateString("fr-FR", { weekday: "short", day: "numeric", month: "short" });
+}
+/* Heure stockée en BKK → affichage : TH = brut BKK, EN = converti Paris */
+function remFmtTimeBkk(dateStr, timeStr) {
+  const hm = String(timeStr).slice(0, 5);
+  if (LANG === "th") return hm;
+  try {
+    const dt = new Date(dateStr + "T" + hm + ":00+07:00"); /* interprété en BKK */
+    if (isNaN(dt)) return hm;
+    return dt.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit", timeZone: "Europe/Paris", hour12: false });
+  } catch (e) { return hm; }
+}
+function remRender() {
+  const list = document.getElementById("rem-list");
+  const T = LANG === "th";
+  const now = new Date();
+  const today = now.toLocaleString("sv-SE", { timeZone: "Asia/Bangkok" }).slice(0, 10).replace(/\//g, "-");
+  if (!REMINDERS.length) {
+    list.innerHTML = "<div class='rem-empty'>" + t("rem_empty") +
+      "<br><button id='rem-empty-add'>" + t("rem_empty_add") + "</button></div>";
+    const b = document.getElementById("rem-empty-add");
+    if (b) b.addEventListener("click", () => document.getElementById("rem-input").focus());
+    return;
+  }
+  function itemHtml(r) {
+    const isDone = r.status === "done";
+    const overdue = !isDone && r.date && r.date < today;
+    const chk = isDone ? "✓" : "";
+    const badges = [];
+    if (r.created_via === "whatsapp") badges.push("<span class='rem-badge wa'>" + t("rem_wa") + "</span>");
+    if (r.is_private) badges.push("<span class='rem-badge priv'>" + t("rem_priv") + "</span>");
+    if (r.priority === "high" || r.priority === "urgent") badges.push("<span class='rem-badge prio'>⚠️ " + (LANG === "th" ? "สำคัญ" : "Urgent") + "</span>");
+    if (r.location) badges.push("<a class='rem-badge loc' href='" + String(r.location).replace(/"/g, "&quot;") + "' target='_blank' rel='noopener'>📍 " + (LANG === "th" ? "แผนที่" : "Map") + "</a>");
+    const meta = [];
+    if (r.date) meta.push((overdue ? "⚠️ " : "") + remFmtDate(r.date) + (r.start_time ? " " + remFmtTimeBkk(r.date, r.start_time) : ""));
+    if (!isDone) meta.push("<span class='rem-sync " + (remSyncState[r.id] === "failed" ? "failed" : (remSyncState[r.id] === "pending" ? "pending" : "")) + "'>" + remStatusText(r.id) + "</span>");
+    const undo = isDone ? "<button class='rem-undo' data-undo='" + r.id + "'>" + t("rem_undo") + "</button>" : "";
+    return "<div class='rem-item" + (isDone ? " done" : "") + "' data-rid='" + r.id + "'>" +
+      "<button class='rem-chk' data-done='" + r.id + "' aria-label='" + t("rem_done") + "'>" + chk + "</button>" +
+      "<div class='rem-body'><div class='rem-txt'>" + (r.is_private ? "🔒 " : "") + _tTxt(r.title) + "</div>" +
+      "<div class='rem-meta'>" + badges.join("") + meta.join(" · ") + "</div></div>" + undo + "</div>";
+  }
+  function periodOf(hm) {
+    const h = parseInt(String(hm).slice(0, 2), 10);
+    if (h < 5) return "night";
+    if (h < 11) return "morning";
+    if (h < 13) return "noon";
+    if (h < 18) return "afternoon";
+    if (h < 22) return "evening";
+    return "night";
+  }
+  const PER_ORDER = ["morning", "noon", "afternoon", "evening", "night"];
+  const PER_LBL = { morning: "rem_per_morning", noon: "rem_per_noon", afternoon: "rem_per_afternoon", evening: "rem_per_evening", night: "rem_per_night" };
+  const doneList = REMINDERS.filter(r => r.status === "done");
+  const openList = REMINDERS.filter(r => r.status !== "done");
+  const todayItems = openList.filter(r => r.date === today);
+  const futureItems = openList.filter(r => r.date !== today);
+  const html = [];
+  if (todayItems.length) {
+    const grouped = {};
+    todayItems.forEach(r => {
+      const p = r.start_time ? periodOf(r.start_time) : "night";
+      (grouped[p] = grouped[p] || []).push(r);
+    });
+    html.push("<div class='rem-sec'>" + t("rem_sec_today") + "</div>");
+    PER_ORDER.forEach(p => {
+      if (!grouped[p] || !grouped[p].length) return;
+      html.push("<div class='rem-sec-sub'>" + t(PER_LBL[p]) + "</div>");
+      html.push(grouped[p].map(itemHtml).join(""));
+    });
+  }
+  if (futureItems.length) {
+    html.push("<div class='rem-sec'>" + t("rem_sec_upcoming") + "</div>");
+    futureItems.sort((a, b) => (a.date + " " + (a.start_time || "")).localeCompare(b.date + " " + (b.start_time || "")));
+    html.push(futureItems.map(itemHtml).join(""));
+  }
+  if (doneList.length) html.push("<div class='rem-sec'>" + t("rem_done") + " (" + doneList.length + ")</div>" + doneList.map(itemHtml).join(""));
+  list.innerHTML = html.join("");
+  list.querySelectorAll("[data-done]").forEach(b => b.addEventListener("click", async () => {
+    const id = b.dataset.done;
+    const it = REMINDERS.find(x => x.id === id);
+    remSyncState[id] = "syncing"; remRender();
+    try { await ReminderSyncService.completeReminder(id); remSyncState[id] = "synced"; }
+    catch (e) { remSyncState[id] = "failed"; }
+    if (it) it.status = "done"; remRender();
+    setTimeout(() => { // anti-oubli : annulation possible pendant 6 s
+      remRender();
+    }, 0);
+  }));
+  list.querySelectorAll("[data-undo]").forEach(b => b.addEventListener("click", async () => {
+    const id = b.dataset.undo;
+    const it = REMINDERS.find(x => x.id === id);
+    remSyncState[id] = "syncing"; remRender();
+    try { await ReminderSyncService.uncompleteReminder(id); remSyncState[id] = "synced"; }
+    catch (e) { remSyncState[id] = "failed"; }
+    if (it) it.status = "todo"; remRender();
+  }));
+}
+async function remLoad() {
+  try { REMINDERS = await ReminderSyncService.fetchAll(); }
+  catch (e) { REMINDERS = []; }
+  remRender();
+}
+function remSetup() {
+  const input = document.getElementById("rem-input");
+  const dateEl = document.getElementById("rem-date");
+  const timeEl = document.getElementById("rem-time");
+  const dateBtn = document.getElementById("rem-date-btn");
+  const timeBtn = document.getElementById("rem-time-btn");
+  const dateLbl = document.getElementById("rem-date-lbl");
+  const timeLbl = document.getElementById("rem-time-lbl");
+  function openPicker(el) {
+    try { el.showPicker(); }
+    catch (e) { el.focus(); if (typeof el.click === "function") el.click(); }
+  }
+  /* ── Picker custom (style Apple) : calendrier + heures ── */
+  const datePop = document.getElementById("pick-date-pop");
+  const timePop = document.getElementById("pick-time-pop");
+  const pdTitle = document.getElementById("pd-title");
+  const pdDow = document.getElementById("pd-dow");
+  const pdGrid = document.getElementById("pd-grid");
+  const ptTitle = document.getElementById("pt-title");
+  let calYm = null; /* mois affiché YYYY-MM */
+  const DOW_LBL = { th: ["อา","จ","อ","พ","พฤ","ศ","ส"], en: ["Su","Mo","Tu","We","Th","Fr","Sa"] };
+  function calStartOf() {
+    const base = dateEl.value || bkkToday();
+    return (calYm || base).slice(0, 7);
+  }
+  function renderDatePop() {
+    const [y, m] = calStartOf().split("-").map(Number);
+    const first = new Date(Date.UTC(y, m - 1, 1));
+    const daysIn = new Date(Date.UTC(y, m, 0)).getUTCDate();
+    const lead = first.getUTCDay(); /* 0 = dimanche */
+    const dow = DOW_LBL[LANG === "th" ? "th" : "en"];
+    pdDow.innerHTML = dow.map(d => "<span>" + d + "</span>").join("");
+    pdTitle.textContent = new Date(Date.UTC(y, m - 1, 1))
+      .toLocaleDateString(LANG === "th" ? "th-TH" : "fr-FR", { month: "long", year: "numeric" });
+    let h = "";
+    for (let i = 0; i < lead; i++) h += "<button type='button' class='other' tabindex='-1'>&nbsp;</button>";
+    for (let d = 1; d <= daysIn; d++) {
+      const ds = y + "-" + String(m).padStart(2, "0") + "-" + String(d).padStart(2, "0");
+      let c = "";
+      if (ds === dateEl.value) c = " sel";
+      else if (ds === bkkToday()) c = " today";
+      h += "<button type='button' data-ds='" + ds + "' class='" + c + "'>" + d + "</button>";
+    }
+    pdGrid.innerHTML = h;
+    pdGrid.querySelectorAll("button[data-ds]").forEach(b => b.addEventListener("click", () => {
+      dateEl.value = b.dataset.ds;
+      dateEl.dispatchEvent(new Event("change"));
+      datePop.classList.remove("open");
+      fillLabels();
+    }));
+  }
+  const ptHours = document.getElementById("pt-hours");
+  const ptMins = document.getElementById("pt-mins");
+  let tSelH = null, tSelM = null;
+  const WHEEL_H = 38;
+  function wheelScrollTo(w, val) {
+    w.scrollTop = Math.max(0, val * WHEEL_H);
+  }
+  function wheelCurrent(w) {
+    return Math.min(Math.max(Math.round(w.scrollTop / WHEEL_H), 0), w.children.length - 1);
+  }
+  function wheelSel(w, idx) {
+    [...w.children].forEach((c, i) => c.classList.toggle("sel", i === idx));
+  }
+  function commitTime() {
+    timeEl.value = tSelH + ":" + tSelM;
+    timeEl.dispatchEvent(new Event("change"));
+    timePop.classList.remove("open");
+    fillLabels();
+  }
+  function renderTimePop() {
+    ptTitle.textContent = LANG === "th" ? "เลือกเวลา" : "Choose a time";
+    const [curH, curM] = (timeEl.value || "--:--").split(":");
+    tSelH = curH !== "--" ? curH : null;
+    tSelM = curM !== undefined && curM !== "--" ? curM : null;
+    ptHours.innerHTML = "";
+    ptMins.innerHTML = "";
+    for (let h = 0; h < 24; h++) {
+      const b = document.createElement("div");
+      b.className = "wheel-opt"; b.textContent = String(h).padStart(2, "0");
+      ptHours.appendChild(b);
+    }
+    for (let m = 0; m < 60; m++) {
+      const b = document.createElement("div");
+      b.className = "wheel-opt"; b.textContent = String(m).padStart(2, "0");
+      ptMins.appendChild(b);
+    }
+    // padding haut/bas pour que la 1re et la dernière valeur puissent se centrer
+    ptHours.style.paddingTop = ptHours.style.paddingBottom = (140 - WHEEL_H) / 2 + "px";
+    ptMins.style.paddingTop = ptMins.style.paddingBottom = (140 - WHEEL_H) / 2 + "px";
+    const hi = tSelH !== null ? parseInt(tSelH, 10) : 12;
+    const mi = tSelM !== null ? parseInt(tSelM, 10) : 0;
+    // scroll APRÈS ouverture (display:block) sinon scrollTop reste à 0
+    setTimeout(() => {
+      wheelScrollTo(ptHours, hi);
+      wheelScrollTo(ptMins, mi);
+      requestAnimationFrame(() => {
+        const h0 = wheelCurrent(ptHours), m0 = wheelCurrent(ptMins);
+        tSelH = String(h0).padStart(2, "0"); tSelM = String(m0).padStart(2, "0");
+        wheelSel(ptHours, h0); wheelSel(ptMins, m0);
+      });
+    }, 30);
+  }
+  function wireWheel(w, kind) {
+    // au scroll : on met à jour la sélection, on NE ferme PAS (validation par ✓)
+    w.addEventListener("scroll", () => {
+      const i = wheelCurrent(w);
+      wheelSel(w, i);
+      if (kind === "h") tSelH = String(i).padStart(2, "0");
+      else tSelM = String(i).padStart(2, "0");
+    }, { passive: true });
+    // clic sur une valeur : scroll doux vers elle, on ne ferme pas
+    w.addEventListener("click", e => {
+      const c = e.target.closest(".wheel-opt");
+      if (!c) return;
+      const i = [...w.children].indexOf(c);
+      wheelScrollTo(w, i);
+      if (kind === "h") tSelH = String(i).padStart(2, "0");
+      else tSelM = String(i).padStart(2, "0");
+      wheelSel(w, i);
+    });
+  }
+  wireWheel(ptHours, "h");
+  wireWheel(ptMins, "m");
+  // ✓ OK : valide et ferme
+  document.getElementById("pt-ok").addEventListener("click", () => {
+    if (tSelH !== null && tSelM !== null) commitTime();
+  });
+  function closePops() { datePop.classList.remove("open"); timePop.classList.remove("open"); }
+  dateBtn.addEventListener("click", () => {
+    timePop.classList.remove("open");
+    const was = datePop.classList.contains("open");
+    closePops();
+    if (!was) { calYm = dateEl.value || bkkToday(); renderDatePop(); datePop.classList.add("open"); }
+  });
+  timeBtn.addEventListener("click", () => {
+    datePop.classList.remove("open");
+    const was = timePop.classList.contains("open");
+    closePops();
+    if (!was) { renderTimePop(); timePop.classList.add("open"); }
+  });
+  document.getElementById("pd-prev").addEventListener("click", () => {
+    const [y, m] = calStartOf().split("-").map(Number);
+    calYm = (m === 1 ? (y - 1) + "-12" : y + "-" + String(m - 1).padStart(2, "0"));
+    renderDatePop();
+  });
+  document.getElementById("pd-next").addEventListener("click", () => {
+    const [y, m] = calStartOf().split("-").map(Number);
+    calYm = (m === 12 ? (y + 1) + "-01" : y + "-" + String(m + 1).padStart(2, "0"));
+    renderDatePop();
+  });
+  document.getElementById("pt-clear").addEventListener("click", () => {
+    timeEl.value = "";
+    timeEl.dispatchEvent(new Event("change"));
+    timePop.classList.remove("open");
+    fillLabels();
+  });
+  document.addEventListener("click", ev => {
+    if (!datePop.contains(ev.target) && !timePop.contains(ev.target) &&
+        !dateBtn.contains(ev.target) && !timeBtn.contains(ev.target)) closePops();
+  });
+  const urgentBtn = document.getElementById("rem-urgent");
+  const locBtn = document.getElementById("rem-loc");
+  const tagBox = document.getElementById("rem-tags");
+  let urgent = false;
+  let loc = null; /* lien Google Maps facultatif */
+  /* date du jour en BKK (référence backend) */
+  function bkkToday() {
+    try { return new Date().toLocaleString("sv-SE", { timeZone: "Asia/Bangkok" }).slice(0, 10).replace(/\//g, "-"); }
+    catch (e) { return new Date().toISOString().slice(0, 10); }
+  }
+  /* dates civiles en UTC pur (les dates sont stockées en BKK sans fuseau) */
+  function addDays(s, n) {
+    const [y, m, d] = s.split("-").map(Number);
+    return new Date(Date.UTC(y, m - 1, d) + n * 86400000).toISOString().slice(0, 10);
+  }
+  function nextWeekend(s) {
+    const [y, m, d] = s.split("-").map(Number);
+    let dt = new Date(Date.UTC(y, m - 1, d));
+    while (dt.getUTCDay() !== 6) dt = new Date(dt.getTime() + 86400000);
+    return dt.toISOString().slice(0, 10);
+  }
+  function nextWeek(s) {
+    const [y, m, d] = s.split("-").map(Number);
+    let dt = new Date(Date.UTC(y, m - 1, d));
+    while (dt.getUTCDay() !== 1) dt = new Date(dt.getTime() + 86400000);
+    return new Date(dt.getTime() + 7 * 86400000).toISOString().slice(0, 10);
+  }
+  /* Options de rappel (minutes avant l'événement) */
+  const OFF_OPTS = [
+    { m: 30,  l: "30 min" }, { m: 60,  l: "1 h" }, { m: 120, l: "2 h" }, { m: 180, l: "3 h" },
+    { m: 360, l: "6 h" },    { m: 720, l: "12 h" }, { m: 1440, l: "1 j" }, { m: 2880, l: "2 j" }
+  ];
+  const offsetSel = new Set([1440, 180]); // défaut : 1j + 3h
+  function bkkFromInputs() {
+    const t = timeEl.value, d = dateEl.value;
+    if (!t) return null;
+    try {
+      const loc = new Date(d + "T" + t);
+      if (isNaN(loc.getTime())) return null;
+      const bkk = loc.toLocaleString("sv-SE", { timeZone: "Asia/Bangkok", hour12: false });
+      const [bd, bt] = bkk.split(" ");
+      return { ts: loc.getTime(), date: bd.replace(/\//g, "-"), time: bt.slice(0, 5) };
+    } catch (e) { return null; }
+  }
+  function renderOffsets() {
+    const box = document.getElementById("rem-offset-opts");
+    const b = bkkFromInputs();
+    let maxM = null;
+    if (b) { maxM = Math.floor((b.ts - Date.now()) / 60000); }
+    const visible = OFF_OPTS.filter(o => !maxM || o.m < maxM - 5);
+    [...offsetSel].forEach(m => { if (!visible.some(o => o.m === m)) offsetSel.delete(m); });
+    if (!offsetSel.size) offsetSel.add(180);
+    box.innerHTML = visible.map(o =>
+      "<button type='button' data-m='" + o.m + "' class='" + (offsetSel.has(o.m) ? "on" : "") + "'>" + o.l + "</button>"
+    ).join("");
+    box.querySelectorAll("button").forEach(btn => btn.addEventListener("click", () => {
+      const m = +btn.dataset.m;
+      offsetSel.has(m) ? offsetSel.delete(m) : offsetSel.add(m);
+      renderOffsets();
+    }));
+  }
+  /* Formatage Apple Reminders : Aujourd'hui / Demain / nom court du jour */
+  function appleDate(s) {
+    if (!s) return "";
+    const today = bkkToday();
+    if (s === today) return LANG === "th" ? "วันนี้" : "Today";
+    if (s === addDays(today, 1)) return LANG === "th" ? "พรุ่งนี้" : "Tomorrow";
+    const dt = new Date(s + "T00:00:00");
+    if (isNaN(dt)) return s;
+    if (LANG === "th") return dt.toLocaleDateString("th-TH", { weekday: "short", day: "numeric", month: "short" });
+    return dt.toLocaleDateString("fr-FR", { weekday: "short", day: "numeric", month: "short" });
+  }
+  function appleTime(t) {
+    const hm = String(t || "").slice(0, 5);
+    return hm || "";
+  }
+  /* ── Tags pills (comme l'app Reminders) ── */
+  function renderTags() {
+    const tags = [];
+    const d = dateEl.value;
+    const t = timeEl.value;
+    if (d) tags.push({ k: "date", label: "📅 " + appleDate(d), cls: "" });
+    if (t) tags.push({ k: "time", label: "🕐 " + appleTime(t), cls: "" });
+    if (loc) tags.push({ k: "loc", label: "📍 " + (LANG === "th" ? "สถานที่" : "Place"), cls: "" });
+    if (urgent) tags.push({ k: "urgent", label: LANG === "th" ? "สำคัญ" : "Urgent", cls: "urgent" });
+    tagBox.innerHTML = tags.map(tg =>
+      "<span class='rem-tag " + tg.cls + "'>" + tg.label +
+      "<button type='button' data-rm='" + tg.k + "' aria-label='Remove'>✕</button></span>"
+    ).join("");
+    tagBox.querySelectorAll("[data-rm]").forEach(b => b.addEventListener("click", () => {
+      const k = b.dataset.rm;
+      if (k === "date") dateEl.value = "";
+      if (k === "time") timeEl.value = "";
+      if (k === "loc") { loc = null; locBtn.classList.remove("on"); locBtn.setAttribute("aria-pressed", "false"); }
+      if (k === "urgent") { urgent = false; urgentBtn.classList.remove("on"); urgentBtn.setAttribute("aria-pressed", "false"); }
+      renderTags(); renderOffsets();
+    }));
+    if (typeof window.__fillLabels === "function") window.__fillLabels();
+  }
+  /* Libellés Apple des sélecteurs date/heure */
+  const fillLabels = () => {
+    if (dateEl.value) { dateLbl.textContent = appleDate(dateEl.value); dateBtn.classList.add("filled"); }
+    else { dateLbl.textContent = LANG === "th" ? "เพิ่มวันที่" : "Add a date"; dateBtn.classList.remove("filled"); }
+    if (timeEl.value) { timeLbl.textContent = appleTime(timeEl.value); timeBtn.classList.add("filled"); }
+    else { timeLbl.textContent = LANG === "th" ? "เลือกเวลา" : "Choose a time"; timeBtn.classList.remove("filled"); }
+  };
+  window.__fillLabels = fillLabels;
+  fillLabels();
+  function renderQuick() {
+    const qd = document.getElementById("rem-qdate");
+    const qt = document.getElementById("rem-qtime");
+    const today = bkkToday();
+    const qdDefs = [
+      { k: "today",   lbl: LANG === "th" ? "วันนี้" : "Today", v: today },
+      { k: "tomorrow",lbl: LANG === "th" ? "พรุ่งนี้" : "Tomorrow", v: addDays(today, 1) },
+      { k: "weekend", lbl: LANG === "th" ? "สุดสัปดาห์" : "Weekend", v: nextWeekend(today) },
+      { k: "nextweek",lbl: LANG === "th" ? "สัปดาห์หน้า" : "Next week", v: nextWeek(today) }
+    ];
+    qd.innerHTML = qdDefs.map(d => "<button type='button' data-d='" + d.v + "'>" + d.lbl + "</button>").join("");
+    qd.querySelectorAll("button").forEach(b => b.addEventListener("click", () => {
+      dateEl.value = b.dataset.d; renderTags(); renderOffsets();
+    }));
+    const qTime = [
+      { h: "09:00", lbl: LANG === "th" ? "เช้า" : "Morning" },
+      { h: "12:00", lbl: LANG === "th" ? "เที่ยง" : "Noon" },
+      { h: "15:00", lbl: LANG === "th" ? "บ่าย" : "Afternoon" },
+      { h: "18:00", lbl: LANG === "th" ? "เย็น" : "Evening" },
+      { h: "21:00", lbl: LANG === "th" ? "กลางคืน" : "Night" }
+    ];
+    qt.innerHTML = qTime.map(x => "<button type='button' data-t='" + x.h + "'>" + x.h + " · " + x.lbl + "</button>").join("");
+    qt.querySelectorAll("button").forEach(b => b.addEventListener("click", () => {
+      timeEl.value = b.dataset.t; renderTags(); renderOffsets();
+    }));
+  }
+  renderQuick();
+  window.renderQuickRem = renderQuick; /* re-rendu au switch langue */
+  window.renderTagsRem = renderTags;
+  dateEl.addEventListener("change", renderTags);
+  timeEl.addEventListener("change", () => { renderTags(); renderOffsets(); });
+  urgentBtn.addEventListener("click", () => {
+    urgent = !urgent;
+    urgentBtn.classList.toggle("on", urgent);
+    urgentBtn.setAttribute("aria-pressed", String(urgent));
+    renderTags();
+  });
+  /* 📍 lieu facultatif : champ immédiat + géoloc parallèle → reverse geocoding Nominatim (adresse réelle) */
+  const locInput = document.getElementById("rem-locinput");
+  const locField = document.getElementById("rem-locfield");
+  const locOk = document.getElementById("rem-loc-ok");
+  function showLocInput() { locInput.classList.remove("hidden"); locField.focus(); }
+  function hideLocInput() { locInput.classList.add("hidden"); locField.value = ""; }
+  function locBtnOn() { locBtn.classList.add("on"); locBtn.setAttribute("aria-pressed", "true"); renderTags(); }
+  function locBtnOff() { locBtn.classList.remove("on"); locBtn.setAttribute("aria-pressed", "false"); }
+  locBtn.addEventListener("click", () => {
+    if (loc) { /* déjà défini → retirer */
+      loc = null; locBtnOff(); hideLocInput(); renderTags(); return;
+    }
+    showLocInput(); /* champ affiché IMMÉDIATEMENT (plus d'attente) */
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(async pos => {
+        const { latitude, longitude } = pos.coords;
+        /* reverse geocoding → adresse réelle dans le champ */
+        try {
+          const r = await fetch("https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=" +
+            latitude + "&lon=" + longitude + "&zoom=18", { headers: { "Accept": "application/json" } });
+          const j = await r.json();
+          const addr = j && j.display_name ? j.display_name.split(",").slice(0, 3).join(",") : "";
+          if (addr && !locField.value.trim()) locField.value = addr;
+        } catch (e) { /* pas d'adresse → champ libre */ }
+      }, () => {}, { enableHighAccuracy: false, timeout: 8000 });
+    }
+  });
+  locOk.addEventListener("click", () => {
+    const v = locField.value.trim();
+    if (!v) { hideLocInput(); return; }
+    loc = v.startsWith("http") ? v : "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(v);
+    locBtn.classList.add("on"); locBtn.setAttribute("aria-pressed", "true");
+    hideLocInput(); renderTags();
+  });
+  locField.addEventListener("keydown", e => { if (e.key === "Enter") locOk.click(); });
+  /* date par défaut = vide → le label affiche « เพิ่มวันที่ » / « Add a date »
+     (à la création, add() utilisera bkkToday() si vide) */
+  dateEl.value = "";
+  renderTags();
+  renderOffsets();
+  let adding = false;
+  const add = async () => {
+    if (adding) return; /* verrou : ignore les doubles Entrée/clics pendant la création */
+    const txt = input.value.trim();
+    if (!txt) { input.focus(); return; }
+    input.value = ""; /* vide IMMÉDIATEMENT : évite la concaténation si l'utilisateur retape */
+    adding = true;
+    const time = timeEl.value || null;
+    const date = dateEl.value || bkkToday();
+    let payload = { title: txt, date, start_time: time };
+    const b = time ? bkkFromInputs() : null;
+    if (b) payload = { title: txt, date: b.date, start_time: b.time };
+    payload.remind_offsets = [...offsetSel].sort((a, z) => z - a);
+    if (urgent) payload.priority = "urgent";
+    /* lieu : committe le champ ouvert si l'utilisateur a tapé sans cliquer ✓ / Entrée */
+    if (!loc && locField && !locField.classList.contains("hidden")) {
+      const v = locField.value.trim();
+      if (v) loc = v.startsWith("http") ? v : "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(v);
+    }
+    if (loc) payload.location = loc;
+    try {
+      const created = await ReminderSyncService.createReminder(payload);
+      const row = Array.isArray(created) ? created[0] : created;
+      if (row && row.id) { REMINDERS.push(row); remSyncState[row.id] = "synced"; }
+      timeEl.value = "";
+      urgent = false; urgentBtn.classList.remove("on"); urgentBtn.setAttribute("aria-pressed", "false");
+      loc = null; locBtn.classList.remove("on"); locBtn.setAttribute("aria-pressed", "false");
+      renderTags(); renderOffsets(); remRender();
+    } catch (e) { /* état local : marqué pending, retry au prochain load */ }
+    finally { adding = false; }
+  };
+  document.getElementById("rem-add-btn").addEventListener("click", add);
+  input.addEventListener("keydown", e => { if (e.key === "Enter") add(); });
+  remLoad();
+  setInterval(remLoad, 60000); // polling discret
+}
+document.addEventListener("DOMContentLoaded", remSetup);
 let CAL = { year: 0, month: 0, view: "month", sel: null, events: [], loading: true, inited: false };
 
 const CAT_COLOR = { perso: "c-perso", travail: "c-travail", sante: "c-sante", anniv: "c-anniv", autres: "c-autres" };
@@ -931,7 +1847,7 @@ async function loadEvents() {
     CAL.events = (Array.isArray(data) ? data : []).map(e => ({
       id: e.id, title: e.title, date: e.date, category: e.category || "autres",
       start_time: (e.start_time || "").slice(0, 5), end_time: (e.end_time || "").slice(0, 5),
-      created_via: e.created_via || ""
+      created_via: e.created_via || "", location: e.location || "", note: e.note || ""
     }));
   } catch (e) {
     try {
@@ -992,6 +1908,28 @@ function calBind() {
   }, { passive: true });
 }
 function calDs(d) { return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; }
+function calLegend() {
+  const el = document.getElementById("j-cal-legend");
+  if (!el) return;
+  const T = LANG === "th";
+  const cats = [
+    ["c-perso", "🧡", T ? "ส่วนตัว" : "personal"],
+    ["c-travail", "💼", T ? "งาน" : "work"],
+    ["c-sante", "🩺", T ? "สุขภาพ" : "health"],
+    ["c-anniv", "🎂", T ? "วันเกิด" : "birthday"],
+    ["c-autres", "📌", T ? "อื่นๆ" : "other"],
+  ];
+  const lg = c => "<span class='lg'>" + c + "</span>";
+  el.innerHTML = "<span class='lg-title'>" + (T ? "🔑 คำอธิบายสัญลักษณ์" : "🔑 Legend") + "</span>" +
+    lg("<i class='" + cats[0][0] + "'></i> " + cats[0][2]) +
+    cats.slice(1).map(c => lg("<i class='" + c[0] + "'></i> " + c[2])).join("") +
+    lg("<span class='w'>🌧️</span> " + (T ? "ฝน" : "rain")) +
+    lg("<span class='w'>⛅</span> " + (T ? "มีเมฆ" : "cloudy")) +
+    lg("<span class='w'>☀️</span> " + (T ? "แดด" : "sun")) +
+    lg("🎉 " + (T ? "วันหยุด" : "holiday")) +
+    lg("🌿 " + (T ? "วันพักผ่อน" : "rest day")) +
+    lg("<span style='display:inline-block;width:8px;height:8px;border-radius:50%;background:#ff9f43'></span> " + (T ? "วันนี้" : "today"));
+}
 function calMove(dir) {
   const d = new Date(CAL.year, CAL.month + dir, 1);
   CAL.year = d.getFullYear(); CAL.month = d.getMonth();
@@ -1010,7 +1948,7 @@ function calRenderSkeleton() {
   el.innerHTML = "<div class='cal-skel'>" + "<span></span>".repeat(42) + "</div>";
   const m = ["January","February","March","April","May","June","July","August","September","October","November","December"];
   const ye = document.getElementById("cal-year");
-  if (ye) ye.textContent = (LANG === "th" ? ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"] : (LANG === "en" ? m : ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"]))[CAL.month] + " " + CAL.year;
+  if (ye) ye.textContent = (LANG === "th" ? ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"] : m)[CAL.month] + " " + CAL.year;
 }
 function calRender() {
   if (CAL.view === "week") return calRenderWeek();
@@ -1018,15 +1956,12 @@ function calRender() {
   const el = document.getElementById("j-cal");
   if (!el) return;
   document.querySelectorAll(".cal-v").forEach(b => b.classList.toggle("active", b.dataset.v === "month"));
-  const labels = LANG === "th" ? ["จ","อ","พ","พฤ","ศ","ส","อา"] : (LANG === "en" ? ["M","T","W","T","F","S","S"] : ["L","M","M","J","V","S","D"]);
+  const labels = LANG === "th" ? ["จ","อ","พ","พฤ","ศ","ส","อา"] : ["M","T","W","T","F","S","S"];
   const months = LANG === "th"
     ? ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน",
        "กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"]
-    : LANG === "en"
-    ? ["January","February","March","April","May","June",
-       "July","August","September","October","November","December"]
-    : ["Janvier","Février","Mars","Avril","Mai","Juin",
-       "Juillet","Août","Septembre","Octobre","Novembre","Décembre"];
+    : ["January","February","March","April","May","June",
+       "July","August","September","October","November","December"];
   const ye = document.getElementById("cal-year");
   if (ye) ye.textContent = months[CAL.month] + " " + CAL.year;
   const first = new Date(CAL.year, CAL.month, 1);
@@ -1044,8 +1979,8 @@ function calRender() {
     const hasWeather = w && w.tmax !== undefined && w.tmax !== null;
     const evs = calEventsOn(ds);
     const isToday = ds === todayDs;
-    const isSun = (new Date(ds).getDay() === 0 || new Date(ds).getDay() === 6);
-    let cls = mood ? "m" + mood.mood : (isSun ? "sun" : "day");
+    const isSun = new Date(ds).getDay() === 0;
+    let cls = isSun ? "sun" : "day";
     if (extra === "other") cls += " other";
     if (isToday) cls += " today";
     if (CAL.sel === ds) cls += " sel";
@@ -1054,9 +1989,9 @@ function calRender() {
       evs.slice(0, 3).map((e, i) => "<i class='" + catOf(e.category) + (evs.length === 1 ? " only" : "") + "'></i>").join("") +
       (evs.length > 3 ? "<i class='dots-more' style='font-size:7px;font-weight:900;color:#c44a74'>+" + (evs.length - 3) + "</i>" : "") +
       "</span>" : "";
-    const wico = hasWeather && !mood ? "<span class='w'>" + (w.pop >= 40 ? "🌧️" : (w.pop >= 15 ? "⛅" : "☀️")) + "</span>" : "";
+    const wico = hasWeather ? "<span class='w'>" + (w.pop >= 40 ? "🌧️" : (w.pop >= 15 ? "⛅" : "☀️")) + "</span>" : "";
     const holDot = hol(ds) ? "<span class='hol'></span>" : "";
-    const badge = isSun ? "<span class='sunb'>" + (LANG === "th" ? "วันพักผ่อน 🌿" : (LANG === "en" ? "Rest 🌿" : "Repos 🌿")) + "</span>" : "";
+    const badge = isSun ? "<span class='sunb'>" + (LANG === "th" ? "วันพักผ่อน 🌿" : "Rest 🌿") + "</span>" : "";
     const ari = "aria-label='" + ds + (evs.length ? " " + evs.length + " events" : "") + "'";
     return "<td><div class='d " + cls + "' tabindex='0' " + ari + " data-ds='" + ds + "'>" + num +
       (dots || wico || holDot || badge ? "<span style='display:flex;flex-direction:column;align-items:center;gap:1px'>" + badge + dots + wico + holDot + "</span>" : "") +
@@ -1091,13 +2026,14 @@ function calRender() {
     dv.addEventListener("click", click);
     dv.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); click(); } });
   });
+  calLegend();
 }
 
 function calRenderWeek() {
   const el = document.getElementById("j-cal");
   if (!el) return;
   document.querySelectorAll(".cal-v").forEach(b => b.classList.toggle("active", b.dataset.v === "week"));
-  const labels = LANG === "th" ? ["จ","อ","พ","พฤ","ศ","ส","อา"] : (LANG === "en" ? ["M","T","W","T","F","S","S"] : ["L","M","M","J","V","S","D"]);
+  const labels = LANG === "th" ? ["จ","อ","พ","พฤ","ศ","ส","อา"] : ["M","T","W","T","F","S","S"];
   const base = CAL.sel ? new Date(CAL.sel) : new Date();
   const dow = (base.getDay() + 6) % 7;
   const monday = new Date(base); monday.setDate(base.getDate() - dow);
@@ -1111,7 +2047,7 @@ function calRenderWeek() {
     const evs = calEventsOn(ds);
     const mood = (S.joy.moods || []).find(x => x.date === ds);
     const isToday = ds === calDs(new Date());
-    let cls = mood ? "m" + mood.mood : ((d.getDay() === 0 || d.getDay() === 6) ? "sun" : "day");
+    let cls = d.getDay() === 0 ? "sun" : "day";
     if (isToday) cls += " today";
     if (CAL.sel === ds) cls += " sel";
     const dots = evs.length ? "<span class='dots'>" + evs.slice(0, 3).map((e, i) => "<i class='" + catOf(e.category) + "'></i>").join("") + "</span>" : "";
@@ -1123,6 +2059,7 @@ function calRenderWeek() {
   el.querySelectorAll(".d[data-ds]").forEach(dv => dv.addEventListener("click", () => {
     CAL.sel = dv.dataset.ds; calRenderWeek(); calOpenDay(CAL.sel);
   }));
+  calLegend();
 }
 
 function calRenderAgenda() {
@@ -1130,11 +2067,11 @@ function calRenderAgenda() {
   if (!el) return;
   document.querySelectorAll(".cal-v").forEach(b => b.classList.toggle("active", b.dataset.v === "agenda"));
   const ye = document.getElementById("cal-year");
-  ye.textContent = LANG === "th" ? "รายการนัดหมาย" : (LANG === "en" ? "Agenda" : "Agenda");
+  ye.textContent = LANG === "th" ? "รายการนัดหมาย" : "Agenda";
   const days = [...new Set(CAL.events.map(e => e.date))].sort();
   if (!days.length) {
     el.innerHTML = "<div style='text-align:center;color:#b9b2bc;font-size:13px;padding:22px'>" +
-      (LANG === "th" ? "ไม่มีนัดหมาย" : (LANG === "en" ? "no events" : "aucun événement")) + "</div>";
+      (LANG === "th" ? "ไม่มีนัดหมาย" : "no events") + "</div>";
     return;
   }
   let html = "<div class='cal-agenda'>";
@@ -1148,6 +2085,7 @@ function calRenderAgenda() {
   el.querySelectorAll(".ag-day").forEach(dv => dv.addEventListener("click", () => {
     CAL.sel = dv.dataset.ds; calOpenDay(CAL.sel);
   }));
+  calLegend();
 }
 
 /* Panneau latéral — vraies données du jour (humeur, repas, météo, fête) + événements réels */
@@ -1161,51 +2099,71 @@ function calOpenDay(ds) {
   const mealsDay = (S.joy.meals || []).filter(x => x.date === ds);
   const hol = (S.holidays || {})[ds];
   const T = LANG === "th";
-  const L = (th, en, fr) => LANG === "th" ? th : (LANG === "en" ? en : fr);
   let h = "";
 
   const sec = (label, rows) => { if (!rows) return ""; return "<div class='sec'><div class='sec-t'>" + label + "</div>" + rows + "</div>"; };
   const row = (ico, tx, small) => "<div class='row'><span class='ico'>" + ico + "</span><div class='tx'>" + tx + (small ? "<small>" + small + "</small>" : "") + "</div></div>";
 
-  /* Samedi + dimanche = jours de repos (toujours affiché en premier) */
-  const dd = new Date(ds).getDay();
-  if (dd === 0 || dd === 6) {
-    h += sec(L("วันหยุด", "Rest day", "Jour de repos"), row("🌿", L("วันพักผ่อน", "Rest day", "Jour de repos"), L("วันหยุดสุดสัปดาห์ พักผ่อนสบายๆ", "Weekend — relax", "Week-end — détente")));
+  /* Dimanche = jour de congé (toujours affiché en premier) */
+  if (new Date(ds).getDay() === 0) {
+    h += sec(T ? "วันหยุด" : "Rest day", row("🌿", T ? "วันพักผ่อน" : "Rest day", T ? "วันอาทิตย์ พักผ่อนสบายๆ" : "Sunday — relax"));
   }
 
-  /* Mood (vraie donnée) */
+  /* Mood (vraie donnée) — échelle 1-5 (1=meilleur, 5=pire) + émotion + résumé */
   if (m && m.mood) {
-    const em = ["😭","😟","😐","🙂","😍"][m.mood - 1];
-    h += sec(L("อารมณ์", "Mood", "Humeur"), row(em, MOODS[LANG][m.mood], m.note || L("อารมณ์ประจำวัน", "daily mood", "humeur du jour")));
+    const em = MOOD_EMO[m.mood] || "😐";
+    const feel = (MOOD_FEEL[T ? "th" : "en"] || {})[m.mood] || "";
+    h += sec(T ? "อารมณ์" : "Mood", row(em, MOODS[T ? "th" : "en"][m.mood] + (feel ? " — " + feel : ""),
+      (T ? (m.summary || m.summary_en) : (m.summary_en || m.summary)) || m.note || (T ? "อารมณ์ประจำวัน" : "daily mood")));
   }
-  /* Repas (vraie donnée) */
-  if (mealsDay.length) {
-    h += sec(L("อาหาร", "Meals", "Repas"), mealsDay.map(x =>
-      row(x.emoji || "🍽️", x.word || L("อาหาร", "meal", "repas"), L("กิน", "ate", "mangé") + " · " + x.at)).join(""));
+  /* Repas (vraie donnée) + photo du jour intégrée en miniature 300px */
+  const mealsRows = mealsDay.map(x =>
+    row(x.emoji || "🍽️", x.word || (T ? "อาหาร" : "meal"),
+      (T ? "กิน" : "ate") + " · " + (x.ts ? fmtMealPhotoTime(x.ts) : x.at))).join("");
+  const mp = MEAL_PHOTOS[ds] || null;
+  const mpUrl = mp ? (typeof mp === "string" ? mp : mp.url) : "";
+  const mpTs = mp && typeof mp === "object" ? mp.ts : 0;
+  const mpTime = mpTs ? fmtMealPhotoTime(mpTs) : "";
+  const mealPhotoBlock = mpUrl
+    ? "<div style='display:flex;justify-content:center;align-items:center;flex-direction:column;padding:6px 0 2px'>" +
+      "<img class='photo-sm' src='" + mpUrl + "' alt='meal photo' " +
+      "style='width:140px;height:140px;object-fit:cover;border-radius:12px'>" +
+      (mpTime ? "<span style='font-size:11px;color:#8a8590;margin-top:4px'>📸 " + mpTime + (T ? " เวลากรุงเทพ" : " · Paris") + "</span>" : "") +
+      "</div>"
+    : "";
+  if (mealsDay.length || mpUrl) {
+    h += sec(T ? "อาหาร" : "Meals", mealsRows + mealPhotoBlock);
   }
   /* Météo (vraie donnée) */
   if (w && w.tmax !== undefined && w.tmax !== null) {
     const rain = w.pop >= 40 ? "🌧️" : (w.pop >= 15 ? "⛅" : "☀️");
-    h += sec(L("อากาศ", "Weather", "Météo"), row(rain, w.tmax + "° / " + w.tmin + "°", L("สภาพอากาศกรุงเทพ", "Bangkok weather", "Météo à Paris") + " · ☔ " + w.pop + "%"));
+    h += sec(T ? "อากาศ" : "Weather", row(rain, w.tmax + "° / " + w.tmin + "°", (T ? "สภาพอากาศกรุงเทพ" : "Bangkok weather") + " · ☔ " + w.pop + "%"));
   }
-  /* Jour férié (vraie donnée) */
+  /* Fête thaïlandaise (vraie donnée) */
   if (hol) {
-    h += sec(L("วันสำคัญ", "Public holiday", "Jour férié"), row("🎉", hol[LANG] || hol.fr, L("วันหยุดและเทศกาล", "holiday & festival", "férié & fête")));
+    h += sec(T ? "วันสำคัญ" : "Thai holiday", row("🎉", hol[LANG], T ? "วันหยุดและเทศกาล" : "holiday & festival"));
   }
   /* Événements réels (Supabase) */
   if (evs.length) {
-    h += sec(L("กิจกรรม", "Events", "Événements"), evs.map(e =>
-      "<div class='row'><span class='ico'>" + catIcon(e.category) + "</span><div class='tx'>" + e.title + (e.created_via === "telegram" ? " ✈️" : "") +
-        "<small>" + catName(e.category, LANG) + (e.start_time ? " · " + e.start_time + (e.end_time ? "–" + e.end_time : "") : "") + "</small></div>" +
-        "<button type='button' class='cal-ev-del' data-id='" + e.id + "' aria-label='Delete'>✕</button></div>").join(""));
+    h += sec(T ? "กิจกรรม" : "Events", evs.map(e =>
+      "<div class='row'>" +
+        "<span class='ico'>" + catIcon(e.category) + "</span>" +
+        "<div class='tx'>" + e.title + (e.created_via === "telegram" ? " ✈️" : "") +
+          (e.note ? "<small style='color:#8a8590;font-weight:400'>📝 " + e.note + "</small>" : "") +
+          "<small>" + catName(e.category, LANG) + (e.start_time ? " · " + remFmtTimeBkk(e.date, e.start_time) + (e.end_time ? "–" + remFmtTimeBkk(e.date, e.end_time) : "") : "") + "</small>" +
+        "</div>" +
+        "<button type='button' class='cal-ev-del' data-id='" + e.id + "' data-date='" + ds + "' title='" +
+        (T ? "ลบเหตุการณ์นี้" : "delete this event") + "'>✕</button>" +
+      "</div>").join(""));
   }
-  body.innerHTML = h || "<div class='cal-ev-empty'>" + L("ไม่มีข้อมูลวันนี้", "no data this day", "aucune donnée ce jour") + "</div>";
+  body.innerHTML = h || "<div class='cal-ev-empty'>" + (T ? "ไม่มีข้อมูลวันนี้" : "no data this day") + "</div>";
   _calPanel.classList.add("open");
   _calOverlay.classList.add("open");
 }
 
 function renderCal(moods) {
   if (!CAL.inited) { CAL.inited = true; calInit(); }
+  else calRender(); // re-rendu au changement de langue (mois, jours, légende)
 }
 
 function openDay(ds) {
@@ -1215,26 +2173,36 @@ function openDay(ds) {
   document.getElementById("m-title").textContent = ds.slice(5);
   let body = "";
 
-  /* Mood */
+  /* Mood — échelle 1-5 (1=meilleur, 5=pire) + émotion + résumé */
   if (m && m.mood) {
-    const em = ["😭","😟","😐","🙂","😍"][m.mood - 1];
+    const em = MOOD_EMO[m.mood] || "😐";
+    const feel = (MOOD_FEEL[LANG] || {})[m.mood] || "";
     body += "<div class='mrow'><div class='ico'>" + em + "</div><div><div class='lb'>" +
-      (LANG === "th" ? "อารมณ์" : (LANG === "en" ? "MOOD" : "HUMEUR")) + "</div><div class='vl'>" + MOODS[LANG][m.mood] +
-      (m.note ? "<br><span style='font-size:12px;color:#8a8590;font-weight:400'>" + m.note + "</span>" : "") +
+      (LANG === "th" ? "อารมณ์" : "MOOD") + "</div><div class='vl'>" + MOODS[LANG][m.mood] +
+      (feel ? " — " + feel : "") +
+      ((LANG === "en" ? (m.summary_en || m.summary) : (m.summary || m.summary_en)) || m.note ? "<br><span style='font-size:12px;color:#8a8590;font-weight:400'>" + ((LANG === "en" ? (m.summary_en || m.summary) : (m.summary || m.summary_en)) || m.note) + "</span>" : "") +
       "</div></div></div>";
   }
-  /* Repas */
-  if (mealsDay.length) {
+  /* Repas + photo du jour */
+  if (mealsDay.length || MEAL_PHOTOS[ds]) {
+    const _mp = MEAL_PHOTOS[ds] || null;
+    const _mpUrl = _mp ? (typeof _mp === "string" ? _mp : _mp.url) : "";
+    const _mpTime = _mp && typeof _mp === "object" && _mp.ts ? fmtMealPhotoTime(_mp.ts) : "";
     body += "<div class='mrow'><div class='ico'>🍜</div><div><div class='lb'>" +
-      (LANG === "th" ? "กิน" : (LANG === "en" ? "MEALS" : "REPAS")) + "</div><div class='vl'>" +
-      mealsDay.map(x => x.emoji + " " + (x.word || "") + " <span style='font-size:11px;color:#8a8590'>" + x.at + "</span>").join(" · ") +
+      (LANG === "th" ? "กิน" : "MEALS") + "</div><div class='vl'>" +
+      mealsDay.map(x => x.emoji + " " + (x.word || "") + " <span style='font-size:11px;color:#8a8590'>" +
+        (x.ts ? fmtMealPhotoTime(x.ts) : x.at) + "</span>").join(" · ") +
+      (_mpUrl ? "<div style='margin-top:6px;text-align:center'><img class='photo-sm' src='" + _mpUrl + "' alt='meal photo' " +
+        "style='width:140px;height:140px;object-fit:cover;border-radius:12px'>" +
+        (_mpTime ? "<div style='font-size:11px;color:#8a8590;margin-top:4px'>📸 " + _mpTime + (LANG === "th" ? " เวลากรุงเทพ" : " · Paris") + "</div>" : "") +
+        "</div>" : "") +
       "</div></div></div>";
   }
   /* Météo */
   if (w && w.tmax !== undefined && w.tmax !== null) {
-    const rain = w.pop >= 40 ? "🌧️ " + (LANG === "th" ? "ฝน" : (LANG === "en" ? "rain" : "pluie")) : (w.pop >= 15 ? "⛅" : "☀️");
+    const rain = w.pop >= 40 ? "🌧️ " + (LANG === "th" ? "ฝน" : "rain") : (w.pop >= 15 ? "⛅" : "☀️");
     body += "<div class='mrow'><div class='ico'><span class='wico'>" + rain + "</span></div><div><div class='lb'>" +
-      (LANG === "th" ? "สภาพอากาศกรุงเทพ" : (LANG === "en" ? "BANGKOK WEATHER" : "MÉTÉO PARIS")) + "</div><div class='vl'>" +
+      (LANG === "th" ? "สภาพอากาศกรุงเทพ" : "BANGKOK WEATHER") + "</div><div class='vl'>" +
       w.tmax + "° / " + w.tmin + "° <span style='font-size:12px;color:#8a8590'>· ☔ " + w.pop + "%</span>" +
       "</div></div></div>";
   }
@@ -1242,12 +2210,12 @@ function openDay(ds) {
   const hol = (S.holidays || {})[ds];
   if (hol) {
     body += "<div class='mrow'><div class='ico'>🎉</div><div><div class='lb'>" +
-      (LANG === "th" ? "วันสำคัญ" : (LANG === "en" ? "PUBLIC HOLIDAY" : "JOUR FÉRIÉ")) + "</div><div class='vl'>" + (hol[LANG] || hol.fr) +
+      (LANG === "th" ? "วันสำคัญ" : "THAI HOLIDAY") + "</div><div class='vl'>" + hol[LANG] +
       "</div></div></div>";
   }
   /* Aucune donnée */
   if (!body) body = "<div class='mrow'><div class='ico'>🕳️</div><div><div class='vl'>" +
-    (LANG === "th" ? "ไม่มีข้อมูลวันนี้" : (LANG === "en" ? "no data for this day" : "aucune donnée pour ce jour")) + "</div></div></div>";
+    (LANG === "th" ? "ไม่มีข้อมูลวันนี้" : "no data for this day") + "</div></div></div>";
 
   document.getElementById("m-body").innerHTML = body;
   document.getElementById("modal").classList.add("open");
@@ -1262,7 +2230,7 @@ const LOGIN_QUOTES = {
   en: [
     "\"Your clever little pig, living and caring — entirely at home, just for you.\"",
     "\"A warm-hearted AI pig who grows with you, and never leaves your home.\"",
-    "\"Meet Papapig: big heart, small snout, zero clouds — all yours, all local.\"",
+    "\"Meet MenThorPig: big heart, small snout, zero clouds — all yours, all local.\"",
     "\"He feels, he grows, he stays home — your private little pig companion.\"",
     "\"One pig, two lives, endless warmth — and every memory stays with you.\"",
     "\"Your cozy, private companion who eats, sleeps, and grows with you.\"",
@@ -1280,27 +2248,6 @@ const LOGIN_QUOTES = {
     "\"A pig who cares about your day — and naps when you do.\"",
     "\"Smart enough to know you, wise enough to keep everything between us.\"",
     "\"Born at home, raised with love — your pig, your memories, your rules.\""
-  ],
-  fr: [
-    "\"Ton petit cochon malin, vivant et attentionné — entièrement chez toi, rien que pour toi.\"",
-    "\"Un cochon IA au grand cœur qui grandit avec toi et ne quitte jamais ta maison.\"",
-    "\"Voici Papapig : grand cœur, petit groin, zéro cloud — tout à toi, tout local.\"",
-    "\"Il ressent, il grandit, il reste à la maison — ton compagnon cochon tout privé.\"",
-    "\"Un cochon, deux vies, une chaleur sans fin — et chaque souvenir reste avec toi.\"",
-    "\"Ton compagnon douillet et privé qui mange, dort et grandit avec toi.\"",
-    "\"Un petit cochon au grand cœur, qui vit en sécurité sur ta machine.\"",
-    "\"Élève un ami minuscule qui t'écoute vraiment — pas de cloud, juste toi.\"",
-    "\"Remplis son ventre, partage ta journée, garde tes secrets bien au chaud.\"",
-    "\"Un pote tamagotchi qui te comprend, hors ligne et rien qu'à toi.\"",
-    "\"Ton cochon vit ici, grandit ici — et tes histoires ne voyagent jamais.\"",
-    "\"Nourris-le, regarde-le grandir — et chaque mot partagé reste à la maison.\"",
-    "\"Il écoute, il se souvient, il grandit — un cochon qui te connaît vraiment.\"",
-    "\"Pas de cloud, pas d'inconnus — juste toi et ton cochon, qui grandissez ensemble.\"",
-    "\"Élève ton petit cochon — il apprend, il ressent, il reste à la maison.\"",
-    "\"Tes journées dans ses yeux, sa vie dans tes mains — toujours privé.\"",
-    "\"Un cochon qui se soucie de ta journée — et fait la sieste quand tu dors.\"",
-    "\"Assez malin pour te connaître, assez sage pour tout garder entre nous.\"",
-    "\"Né à la maison, élevé avec amour — ton cochon, tes souvenirs, tes règles.\""
   ],
   th: [
     "\"หมูน้อยแสนฉลาด คอยดูแลอยู่เคียงข้างคุณ — อยู่บ้านคุณตลอด เป็นของคุณคนเดียว\"",
@@ -1328,8 +2275,7 @@ const LOGIN_QUOTES = {
 window._quoteIdx = Math.floor(Math.random() * LOGIN_QUOTES.en.length);
 function showQuote() {
   const h = document.querySelector("#login h1");
-  const q = LOGIN_QUOTES[LANG] || LOGIN_QUOTES.en;
-  if (h) h.textContent = q[window._quoteIdx];
+  if (h) h.textContent = LOGIN_QUOTES[LANG][window._quoteIdx];
 }
 
 /* Témoignages flottants autour du cochon — pool bilingue, tirage aléatoire à chaque chargement */
@@ -1360,7 +2306,7 @@ const TESTIMONIALS = {
   ]
 };
 function fillTestimonials() {
-  const arr = TESTIMONIALS[LANG] || TESTIMONIALS.en;
+  const arr = TESTIMONIALS[LANG];
   let i = Math.floor(Math.random() * arr.length);
   let j = Math.floor(Math.random() * (arr.length - 1));
   if (j >= i) j++;
@@ -1406,31 +2352,68 @@ _calPanel.querySelector(".cal-panel-head").addEventListener("click", e => {
   if (!e.target.classList.contains("cal-panel-close")) calPanelClose();
 });
 document.addEventListener("keydown", e => { if (e.key === "Escape") calPanelClose(); });
-
-/* ── SUPPRESSION D'ÉVÉNEMENT (délégué, capte les .cal-ev-del rendus dynamiquement) ── */
-document.addEventListener("click", async e => {
+/* Suppression d'un événement (bouton ✕ par ligne) */
+document.addEventListener("click", e => {
   const btn = e.target.closest(".cal-ev-del");
   if (!btn) return;
   e.stopPropagation();
   const id = btn.dataset.id;
-  if (!id) return;
-  const msg = LANG === "th" ? "ลบเหตุการณ์นี้?" : (LANG === "en" ? "Delete this event?" : "Supprimer cet événement ?");
-  if (!window.confirm(msg)) return;
-  btn.disabled = true; btn.textContent = "…";
-  try {
-    const r = await fetch(SB_URL + "/rest/v1/events?id=eq." + encodeURIComponent(id), {
-      method: "DELETE",
-      headers: { apikey: SB_ANON, Authorization: "Bearer " + SB_ANON, Prefer: "return=minimal" }
-    });
-    if (!r.ok) throw new Error("HTTP " + r.status);
+  const ds = btn.dataset.date;
+  if (!id || !window.confirm((LANG === "th" ? "ลบเหตุการณ์นี้?" : "Delete this event?"))) return;
+  fetch(SB_URL + "/rest/v1/events?id=eq." + encodeURIComponent(id), {
+    method: "DELETE",
+    headers: { apikey: SB_ANON, Authorization: "Bearer " + SB_ANON }
+  }).then(r => {
+    if (!r.ok) throw new Error("http " + r.status);
     CAL.events = CAL.events.filter(x => x.id !== id);
     calRender();
-    calOpenDay(CAL.sel);
-  } catch (err) {
-    btn.disabled = false; btn.textContent = "✕";
-    alert(LANG === "th" ? "ลบไม่สำเร็จ ลองใหม่" : (LANG === "en" ? "Delete failed, retry" : "Suppression échouée, réessaie"));
-  }
+    calOpenDay(ds);
+  }).catch(() => alert(LANG === "th" ? "ลบไม่สำเร็จ ลองอีกครั้ง" : "Delete failed, try again"));
 });
+/* Suppression d'un repas détecté à tort (bouton ✕ sur les pills 🍜) — table hidden_meals */
+/* Suppression d'une photo repas (bouton ✕ sur les 📸) — table hidden_meal_photos */
+document.addEventListener("click", e => {
+  const btn = e.target.closest(".meal-del");
+  if (!btn) return;
+  e.stopPropagation();
+  const ts = btn.dataset.ts;
+  const ds = btn.dataset.date;
+  if (!ts && !ds) return;
+  if (!window.confirm(LANG === "th" ? "ลบรายการนี้?" : "Remove this item?")) return;
+  let url = "", body = null;
+  if (ts) { url = SB_URL + "/rest/v1/hidden_meals"; body = JSON.stringify({ meal_ts: parseInt(ts, 10) }); }
+  else { url = SB_URL + "/rest/v1/hidden_meal_photos"; body = JSON.stringify({ photo_date: ds }); }
+  fetch(url, {
+    method: "POST",
+    headers: { apikey: SB_ANON, Authorization: "Bearer " + SB_ANON, "Content-Type": "application/json", Prefer: "return=minimal" },
+    body: body
+  }).then(r => {
+    if (!r.ok) throw new Error("http " + r.status);
+    const card = btn.closest(".meal");
+    if (card) card.remove();
+  }).catch(() => alert(LANG === "th" ? "ลบไม่สำเร็จ ลองอีกครั้ง" : "Delete failed, try again"));
+});
+</script>
+<div id="meal-zoom" role="dialog" aria-label="Photo"><img src="" alt=""></div>
+<script>
+  /* Zoom photo repas : clic → plein écran, re-clic → taille de base (toggle) */
+  (function () {
+    const z = document.getElementById("meal-zoom");
+    const img = z.querySelector("img");
+    z.addEventListener("click", () => { z.classList.remove("open"); img.src = ""; });
+    document.addEventListener("click", e => {
+      const t = e.target;
+      if (t && t.tagName === "IMG" && (t.classList.contains("photo") || t.classList.contains("photo-sm"))) {
+        e.preventDefault();
+        if (z.classList.contains("open") && img.src.split("?")[0] === t.src.split("?")[0]) {
+          z.classList.remove("open"); img.src = ""; return; // re-clic même photo → réduit
+        }
+        img.src = t.src.split("?")[0];
+        z.classList.add("open");
+      }
+    });
+    document.addEventListener("keydown", e => { if (e.key === "Escape" && z.classList.contains("open")) { z.classList.remove("open"); img.src = ""; } });
+  })();
 </script>
 </body>
 </html>
