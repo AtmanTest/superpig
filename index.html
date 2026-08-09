@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#ff6b9d">
-<title>SUPERPAPAPIG AI</title>
+<title>MENTHORPIG AI</title>
 <link rel="icon" type="image/jpeg" href="images/peppa-ai.jpg">
 <link rel="apple-touch-icon" href="images/peppa-ai.jpg">
 <style>
@@ -170,10 +170,10 @@
   .tab.active { background: var(--cream); color: var(--dark); }
   main { max-width: 640px; margin: 0 auto; padding: 18px 14px 60px; }
   .joy-hero { text-align:center; margin: 0 0 16px; }
-  .joy-hero img { width:84%; max-width:252px; display:inline-block;
-    opacity:.92; filter: drop-shadow(0 0 18px rgba(255,107,157,.75))
-            drop-shadow(0 0 34px rgba(167,139,250,.65))
-            drop-shadow(0 0 60px rgba(214,51,108,.4)); }
+  .joy-hero img { width:100%; max-width:300px; display:inline-block;
+    filter: drop-shadow(0 0 16px rgba(96,165,250,.7))
+            drop-shadow(0 0 32px rgba(139,92,246,.6))
+            drop-shadow(0 0 56px rgba(59,130,246,.35)); }
   .grid { display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
   @media (max-width: 480px) { .grid { grid-template-columns: 1fr; } }
   .card {
@@ -646,7 +646,7 @@
     <button data-lang="en">EN</button>
   </div>
   <h1 class="login-quote">"One pig, two lives, endless warmth — and every memory stays with you."</h1>
-  <div class="app-title">SUPERPAPAPIG AI</div>
+  <div class="app-title">MENTHORPIG AI</div>
   <div class="pig-uke-wrap"><span class="testi testi-left"></span><img class="pig-uke" src="images/peppa-uke.jpg" alt=""><span class="testi testi-right"></span></div>
   <form id="login-form">
     <div class="siri-glow"><div class="siri-glow-bg"></div><input type="password" id="pwd" placeholder="enter your password here" autocomplete="off"></div>
@@ -676,9 +676,9 @@
 <header>
   <div class="banner">
     <img class="bg" src="images/peppa-header.jpg" alt="Peppa Pig">
-    <img class="logo" src="images/peppa-logo.jpg" alt="Papapig">
+    <img class="logo" src="images/peppa-logo.jpg" alt="MenThorPig">
     <div class="top">
-      <h1 data-i18n="app_title">Papapig AI — ความฉลาดที่แท้จริง</h1>
+      <h1 data-i18n="app_title">MenThorPig AI — ความฉลาดที่แท้จริง</h1>
     </div>
   </div>
   <div class="actions">
@@ -809,7 +809,7 @@
     <div class="grid">
       <div class="card full tama">
         <div class="tama-row">
-          <div class="face" id="p-face"><img src="images/peppa-ai.jpg" alt="Papapig AI"></div>
+          <div class="face" id="p-face"><img src="images/peppa-ai.jpg" alt="MenThorPig AI"></div>
           <div class="tama-info">
             <div class="birth"><span data-i18n="p_birth">🎂 วันเกิด</span><b>07/08/2026 · 20:47</b></div>
             <div class="desc">i am artificial pig made by god Tazou, i run in local machine (MBP M1 PRO with lm studio with Gemma 4)</div>
@@ -884,7 +884,7 @@
       <div class="card tech-item"><div class="t-ico">📱</div><div><b data-i18n="t10_t">เชื่อมต่อ</b><div class="t-t" data-i18n="t10_d">WhatsApp + Telegram · สติกเกอร์สร้างในเครื่อง</div></div></div>
     </div>
   </section>
-  <footer data-i18n="footer">Papapig Intelligence System · ใช้ LM Studio ในเครื่อง · ไม่มีการแชร์ข้อมูลส่วนตัว</footer>
+  <footer data-i18n="footer">MenThorPig Intelligence System · ใช้ LM Studio ในเครื่อง · ไม่มีการแชร์ข้อมูลส่วนตัว</footer>
 </main>
 </div>
 
@@ -903,7 +903,7 @@
 const TR = {
   th: {
     login_btn: "เข้า", pwd_ph: "ใส่รหัสผ่านที่นี่",
-    app_title: "SUPERPAPAPIG AI", tab_joy: "ชีวิตจอย", tab_papapig: "ชีวิตพ่อหมู", tab_tech: "สมอง AI",
+    app_title: "MENTHORPIG AI", tab_joy: "ชีวิตจอย", tab_papapig: "ชีวิตเมนทอร์พิก", tab_tech: "สมอง AI",
     joy_mood_today: "😊 อารมณ์วันนี้", joy_energy: "⚡ พลังงาน", joy_cal: "📅 ปฏิทิน — อารมณ์ · อากาศ · อาหาร · วันสำคัญ",
     joy_meals: "🍜 กินอะไรมาบ้าง", joy_goal: "🎯 เป้าหมาย",
     rem_title: "🔔 เตือนความจำ", rem_sub: "ฉันช่วยจดให้เอง",
@@ -938,17 +938,17 @@ const TR = {
     t9_t: "ทำงานในเครื่อง 100%", t9_d: "AI รันบนเครื่องส่วนตัว ไม่ใช้คลาวด์",
     t10_t: "เชื่อมต่อ", t10_d: "WhatsApp + Telegram · สติกเกอร์สร้างในเครื่อง",
     lock: "🔐 ข้อความทั้งหมดถูกเข้ารหัส (AES-256)",
-    footer: "Papapig Intelligence System · ใช้ LM Studio ในเครื่อง · ไม่มีการแชร์ข้อมูลส่วนตัว",
+    footer: "MenThorPig Intelligence System · ใช้ LM Studio ในเครื่อง · ไม่มีการแชร์ข้อมูลส่วนตัว",
     no_data: "ยังไม่มีข้อมูล — เริ่มบันทึกคืนนี้ 📔", no_meal: "ยังไม่มีข้อมูลมื้ออาหาร",
     logout: "ออกจากระบบ", close: "ปิด",
   },
   en: {
     login_btn: "Enter", pwd_ph: "enter your password here",
-    app_title: "SUPERPAPAPIG AI", tab_joy: "Joy's Life", tab_papapig: "Papapig's Life", tab_tech: "Neural AI Brain",
+    app_title: "MENTHORPIG AI", tab_joy: "Joy's Life", tab_papapig: "MenThorPig's Life", tab_tech: "Neural AI Brain",
     joy_mood_today: "😊 Today's Mood", joy_energy: "⚡ Energy", joy_cal: "📅 Calendar — Mood · Weather · Food · Special Events",
     joy_meals: "🍜 Detected Meals", joy_goal: "🎯 Goal",
     rem_title: "🔔 Reminder", rem_sub: "I keep the thread for you.",
-    rem_hint: "Write what you want to be reminded of, pick a date & time, then click + to send it to papapig's WhatsApp 💕",
+    rem_hint: "Write what you want to be reminded of, pick a date & time, then click + to send it to MenThorPig's WhatsApp 💕",
     rem_loc_add: "📍 Add a place", rem_loc_ok: "📍 Opening maps to pick a place", rem_loc_err: "Location unavailable — open the map link yourself",
     rem_loc_ph: "Map link or address (optional)…",
     rem_pick_date: "Add a date", rem_pick_time: "Choose a time",
@@ -967,7 +967,7 @@ const TR = {
     p_persona: "🎭 Persona", p_persona_sub: "Papa Pig — default",
     p_emotion: "💓 Emotion", p_last_meal: "🍽️ Last Meal",
     p_crons: "I love my job", p_activity: "📍 Recent Activity",
-    tech_title: "🧠 Papapig AI — brain & skills", tech_sub: "100% local AI — zero personal data online",
+    tech_title: "🧠 MenThorPig AI — brain & skills", tech_sub: "100% local AI — zero personal data online",
     t1_t: "Emotion engine", t1_d: "pleasure × arousal (Russell) · 27 emotions · 70% mood mirror",
     t2_t: "Living tamagotchi", t2_d: "energy · hunger · sleep · XP · mood — evolves in real time",
     t3_t: "Automatic journal", t3_d: "word analysis, zero LLM — local & free",
@@ -979,7 +979,7 @@ const TR = {
     t9_t: "100% local", t9_d: "AI runs on a local machine, zero cloud",
     t10_t: "Connected", t10_d: "WhatsApp + Telegram · stickers generated locally",
     lock: "🔐 All conversations are encrypted (AES-256)",
-    footer: "Papapig Intelligence System · Local LM Studio · no private data shared",
+    footer: "MenThorPig Intelligence System · Local LM Studio · no private data shared",
     no_data: "no data yet — journal starts tonight 📔", no_meal: "no meal data yet",
     logout: "Log out", close: "Close",
   }
@@ -2146,7 +2146,7 @@ const LOGIN_QUOTES = {
   en: [
     "\"Your clever little pig, living and caring — entirely at home, just for you.\"",
     "\"A warm-hearted AI pig who grows with you, and never leaves your home.\"",
-    "\"Meet Papapig: big heart, small snout, zero clouds — all yours, all local.\"",
+    "\"Meet MenThorPig: big heart, small snout, zero clouds — all yours, all local.\"",
     "\"He feels, he grows, he stays home — your private little pig companion.\"",
     "\"One pig, two lives, endless warmth — and every memory stays with you.\"",
     "\"Your cozy, private companion who eats, sleeps, and grows with you.\"",
