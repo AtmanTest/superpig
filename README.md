@@ -34,10 +34,3 @@ message → perception (langue, emojis, mots-clés thaï)
 python3 papapig_webpush.py   # génère state.json + push GitHub
 ```
 (cron : toutes les 30 min, silencieux)
-
-## Section Reminder (rappel générique, bidirectionnel)
-- **Stockage** : table Supabase `events` (colonnes : `title`, `date`, `start_time`, `status` [todo/in_progress/done/pending], `priority` [low/normal/high], `is_private`, `created_via` [site/whatsapp], `profile`, `sync_id`).
-- **Site → WhatsApp** : actions du site (créer / cocher Terminé) → `POST`/`PATCH` REST Supabase (policy anon limitée aux valeurs valides) → le cron `reminder_events.py` (15 min) relance J-1/H-3 via `hermes send`.
-- **WhatsApp → Site** : `events_writer.py` (cron 2 min) scan le log, détecte RDV/rappels (`เตือน`, `rappelle-moi`… + heure), INSERT → le site (poll 60 s) affiche avec badge « Importé de WhatsApp ». Dédup par curseur d'octets ; `REMIND_WORDS` limite les faux positifs (les mots courants comme `กลับบ้าน` ne déclenchent rien).
-- **Récap WhatsApp** : bouton du site → RPC `request_wa_summary()` (SECURITY DEFINER) → insert `reminder_commands` → cron `wa_summary_sender.py` (2 min) envoie le résumé du jour à Joy.
-- **Environnement attendu (jamais dans index.html)** : `SUPABASE_URL`, clé service_role (server-side) `~/.hermes/profiles/papapig/supabase_svc.key`, `GITHUB_PAT` `~/.hermes/.github_pat`, envoi WhatsApp via `hermes -p penguinpig send`. Aucun secret n'est embarqué côté client (clé anon publique uniquement, RLS restreinte).

@@ -1,107 +1,28 @@
 {
-  "generated_at": "2026-08-09 08:30 Bangkok",
+  "generated_at": "2026-08-09 09:00 Bangkok",
   "joy": {
     "mood_today": null,
     "mood_note": "",
-    "moods": [
-      {
-        "date": "2026-08-07",
-        "mood": 4,
-        "mood_am": null,
-        "mood_pm": 4,
-        "note": "ฉันเหนื่อยมากเลย",
-        "summary": "เหนื่อยมากเลยวันนี้ เพิ่งเลิกงานกลับบ้านแล้วก็ยังคิดถึงเรื่องงานไม่หายเลย",
-        "summary_en": "Just got off work and heading home, so damn exhausted today, honestly just wanna crash and forget everything.",
-        "axe": "นอนเร็วขึ้น 💤"
-      }
-    ],
-    "meals": [
-      {
-        "emoji": "☕",
-        "at": "23:13",
-        "date": "2026-08-07",
-        "word": "มอคค่า",
-        "ts": 1786119212
-      },
-      {
-        "emoji": "🍽️",
-        "at": "02:08",
-        "date": "2026-08-06",
-        "word": "ข้าว",
-        "ts": 1785956887
-      },
-      {
-        "emoji": "🍵",
-        "at": "01:21",
-        "date": "2026-08-05",
-        "word": "ชา",
-        "ts": 1785867667
-      }
-    ],
-    "meal_photos": {
-      "2026-08-08": {
-        "url": "images/meals/2026-08-08.jpg",
-        "ts": 1786206315
-      }
-    },
+    "moods": [],
+    "meals": [],
     "energy": 70,
     "goal": "",
-    "streak": 0,
-    "mood_summary": ""
+    "streak": 0
   },
   "papapig": {
     "persona": "papapig",
     "energy": 85,
-    "hunger": 100,
+    "hunger": 40,
     "sleep": 60,
-    "xp": 125,
+    "xp": 120,
     "level": 2,
     "valence": 0.3,
     "activation": 0.5,
     "emotion": "joie",
-    "last_meal_emoji": "☕",
-    "last_meal_at": "23:13",
-    "crons": [
-      {
-        "name": "papapig-news",
-        "status": "active"
-      },
-      {
-        "name": "papapig-emotions-update",
-        "status": "active"
-      },
-      {
-        "name": "papapig-bedtime-sticker",
-        "status": "active"
-      },
-      {
-        "name": "papapig-morning-sticker",
-        "status": "active"
-      },
-      {
-        "name": "papapig-journal",
-        "status": "active"
-      },
-      {
-        "name": "papapig-daily-message",
-        "status": "active"
-      },
-      {
-        "name": "papapig-bedtime-reminder",
-        "status": "active"
-      },
-      {
-        "name": "papapig-weekly-review",
-        "status": "active"
-      }
-    ],
-    "activity": [
-      {
-        "t": "🏠 กลับถึงบ้าน",
-        "d": "08-06 22:10"
-      }
-    ],
-    "last_meal_ts": 1786119212
+    "last_meal_emoji": null,
+    "last_meal_at": null,
+    "crons": [],
+    "activity": []
   },
   "holidays": {
     "2026-01-01": {
