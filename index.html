@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#ff6b9d">
-<title>Papapig 🐷</title>
+<title>SUPERPAPAPIG AI</title>
 <link rel="icon" type="image/jpeg" href="images/peppa-ai.jpg">
 <link rel="apple-touch-icon" href="images/peppa-ai.jpg">
 <style>
@@ -170,7 +170,10 @@
   .tab.active { background: var(--cream); color: var(--dark); }
   main { max-width: 640px; margin: 0 auto; padding: 18px 14px 60px; }
   .joy-hero { text-align:center; margin: 0 0 16px; }
-  .joy-hero img { width:100%; max-width:300px; display:inline-block; }
+  .joy-hero img { width:84%; max-width:252px; display:inline-block;
+    opacity:.92; filter: drop-shadow(0 0 18px rgba(255,107,157,.75))
+            drop-shadow(0 0 34px rgba(167,139,250,.65))
+            drop-shadow(0 0 60px rgba(214,51,108,.4)); }
   .grid { display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
   @media (max-width: 480px) { .grid { grid-template-columns: 1fr; } }
   .card {
@@ -643,7 +646,7 @@
     <button data-lang="en">EN</button>
   </div>
   <h1 class="login-quote">"One pig, two lives, endless warmth — and every memory stays with you."</h1>
-  <div class="app-title">SuperPapapig App</div>
+  <div class="app-title">SUPERPAPAPIG AI</div>
   <div class="pig-uke-wrap"><span class="testi testi-left"></span><img class="pig-uke" src="images/peppa-uke.jpg" alt=""><span class="testi testi-right"></span></div>
   <form id="login-form">
     <div class="siri-glow"><div class="siri-glow-bg"></div><input type="password" id="pwd" placeholder="enter your password here" autocomplete="off"></div>
@@ -692,7 +695,7 @@
 <main>
   <!-- ── ONGLET JOY ── -->
   <section id="view-joy">
-    <div class="joy-hero"><img src="images/joy.jpg" alt="Joy 💕"></div>
+    <div class="joy-hero"><img src="images/joy-oval.png" alt="Tazou 💕"></div>
     <div class="grid">
       <div class="card">
         <h3 data-i18n="joy_mood_today">😊 อารมณ์วันนี้</h3>
@@ -900,7 +903,7 @@
 const TR = {
   th: {
     login_btn: "เข้า", pwd_ph: "ใส่รหัสผ่านที่นี่",
-    app_title: "Papapig AI — ความฉลาดที่แท้จริง", tab_joy: "ชีวิตจอย", tab_papapig: "ชีวิตพ่อหมู", tab_tech: "สมอง AI",
+    app_title: "SUPERPAPAPIG AI", tab_joy: "ชีวิตจอย", tab_papapig: "ชีวิตพ่อหมู", tab_tech: "สมอง AI",
     joy_mood_today: "😊 อารมณ์วันนี้", joy_energy: "⚡ พลังงาน", joy_cal: "📅 ปฏิทิน — อารมณ์ · อากาศ · อาหาร · วันสำคัญ",
     joy_meals: "🍜 กินอะไรมาบ้าง", joy_goal: "🎯 เป้าหมาย",
     rem_title: "🔔 เตือนความจำ", rem_sub: "ฉันช่วยจดให้เอง",
@@ -941,7 +944,7 @@ const TR = {
   },
   en: {
     login_btn: "Enter", pwd_ph: "enter your password here",
-    app_title: "Papapig AI — Real Intelligence", tab_joy: "Joy's Life", tab_papapig: "Papapig's Life", tab_tech: "Neural AI Brain",
+    app_title: "SUPERPAPAPIG AI", tab_joy: "Joy's Life", tab_papapig: "Papapig's Life", tab_tech: "Neural AI Brain",
     joy_mood_today: "😊 Today's Mood", joy_energy: "⚡ Energy", joy_cal: "📅 Calendar — Mood · Weather · Food · Special Events",
     joy_meals: "🍜 Detected Meals", joy_goal: "🎯 Goal",
     rem_title: "🔔 Reminder", rem_sub: "I keep the thread for you.",
