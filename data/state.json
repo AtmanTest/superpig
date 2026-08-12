@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-12 23:30 Bangkok",
+  "generated_at": "2026-08-13 00:00 Bangkok",
   "joy": {
     "mood_today": 3,
     "mood_note": "annule",
@@ -158,11 +158,6 @@
     }
   },
   "weather": {
-    "2026-07-29": {
-      "tmax": 32.4,
-      "tmin": 25.6,
-      "pop": 98
-    },
     "2026-07-30": {
       "tmax": 31.3,
       "tmin": 25.2,
@@ -297,6 +292,11 @@
       "tmax": 29.3,
       "tmin": 25.3,
       "pop": 89
+    },
+    "2026-08-26": {
+      "tmax": 31.0,
+      "tmin": 25.4,
+      "pop": 84
     }
   }
 }
